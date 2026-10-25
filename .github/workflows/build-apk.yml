@@ -1,0 +1,37 @@
+name: Build APK
+on:
+  workflow_dispatch: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack project
+        run: unzip -q apk_project.zip -d proj
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - name: Install
+        working-directory: proj
+        run: npm install
+      - name: Add Android
+        working-directory: proj
+        run: npx cap add android
+      - name: App icons
+        working-directory: proj
+        continue-on-error: true
+        run: npm install --no-save @capacitor/assets && npx capacitor-assets generate --android
+      - name: Sync
+        working-directory: proj
+        run: npx cap sync android
+      - name: Stable signing key
+        working-directory: proj
+        run: mkdir -p ~/.android && cp ci/debug.keystore ~/.android/debug.keystore
+      - name: Build
+        working-directory: proj/android
+        run: chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: attendance-apk
+          path: proj/android/app/build/outputs/apk/debug/app-debug.apk
