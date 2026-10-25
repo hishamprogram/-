@@ -6,8 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unpack project
-        run: unzip -q apk_project.zip -d proj
+        with: { fetch-depth: 0 }
+      - name: Unpack newest project zip
+        run: |
+          ZIP=$(for f in apk_project*.zip; do echo "$(git log -1 --format=%ct -- "$f") $f"; done | sort -n | tail -1 | cut -d' ' -f2-)
+          echo "Using: $ZIP"
+          unzip -q "$ZIP" -d proj
+          grep -o "APP_VERSION='[^']*'" proj/www/index.html
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - uses: actions/setup-java@v4
