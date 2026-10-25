@@ -15,9 +15,15 @@ jobs:
       - name: Install
         working-directory: proj
         run: npm install
+      - name: Bundle Excel library
+        working-directory: proj
+        run: cp node_modules/xlsx/dist/xlsx.full.min.js www/xlsx.full.min.js
       - name: Add Android
         working-directory: proj
         run: npx cap add android
+      - name: Native print and save bridge
+        working-directory: proj
+        run: cp ci/MainActivity.java android/app/src/main/java/com/remas/attendance/MainActivity.java
       - name: App icons
         working-directory: proj
         continue-on-error: true
