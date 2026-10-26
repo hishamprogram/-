@@ -1,0 +1,147 @@
+name: Build APK
+on:
+  workflow_dispatch: {}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - name: Create project
+        run: |
+          mkdir -p proj/www proj/assets
+          cp index.html proj/www/index.html
+          cp debug.keystore proj/debug.keystore
+          cp icon.png proj/assets/icon.png
+          cp icon.png proj/assets/icon-only.png
+          grep -o "APP_VERSION='[0-9.]*'" proj/www/index.html
+          cat > proj/package.json <<'EOF'
+          {
+            "name": "remas-attendance",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "@capacitor/android": "^6.1.2",
+              "@capacitor/app": "^6.0.1",
+              "@capacitor/core": "^6.1.2",
+              "xlsx": "0.18.5"
+            },
+            "devDependencies": { "@capacitor/cli": "^6.1.2" }
+          }
+          EOF
+          cat > proj/capacitor.config.json <<'EOF'
+          {
+            "appId": "com.remas.attendance",
+            "appName": "نظام الدوام",
+            "webDir": "www",
+            "server": { "androidScheme": "https" }
+          }
+          EOF
+          cat > proj/MainActivity.java <<'EOF'
+          package com.remas.attendance;
+
+          import android.content.ContentValues;
+          import android.content.Context;
+          import android.net.Uri;
+          import android.os.Bundle;
+          import android.os.Environment;
+          import android.print.PrintAttributes;
+          import android.print.PrintManager;
+          import android.provider.MediaStore;
+          import android.util.Base64;
+          import android.webkit.JavascriptInterface;
+          import android.webkit.WebView;
+          import android.widget.Toast;
+
+          import com.getcapacitor.BridgeActivity;
+
+          import java.io.OutputStream;
+
+          public class MainActivity extends BridgeActivity {
+
+              @Override
+              public void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  try {
+                      getBridge().getWebView().addJavascriptInterface(new NativeBridge(), "AndroidApp");
+                  } catch (Throwable t) {
+                      // الجسر غير متاح: يعمل التطبيق دون الطباعة والحفظ الأصليين
+                  }
+              }
+
+              public class NativeBridge {
+                  @JavascriptInterface
+                  public void print(final String title, final boolean landscape) {
+                      runOnUiThread(new Runnable() {
+                          @Override
+                          public void run() {
+                              try {
+                                  WebView w = getBridge().getWebView();
+                                  PrintManager pm = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+                                  PrintAttributes.MediaSize size = landscape
+                                          ? PrintAttributes.MediaSize.ISO_A4.asLandscape()
+                                          : PrintAttributes.MediaSize.ISO_A4;
+                                  PrintAttributes attrs = new PrintAttributes.Builder()
+                                          .setMediaSize(size)
+                                          .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
+                                          .build();
+                                  pm.print(title, w.createPrintDocumentAdapter(title), attrs);
+                              } catch (Throwable t) {
+                                  Toast.makeText(MainActivity.this, "تعذرت الطباعة", Toast.LENGTH_SHORT).show();
+                              }
+                          }
+                      });
+                  }
+
+                  @JavascriptInterface
+                  public String save(String name, String mime, String b64) {
+                      try {
+                          byte[] data = Base64.decode(b64, Base64.DEFAULT);
+                          ContentValues v = new ContentValues();
+                          v.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+                          v.put(MediaStore.MediaColumns.MIME_TYPE, mime);
+                          v.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+                          Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, v);
+                          if (uri == null) return "err";
+                          OutputStream os = getContentResolver().openOutputStream(uri);
+                          os.write(data);
+                          os.close();
+                          return "ok";
+                      } catch (Throwable t) {
+                          return "err";
+                      }
+                  }
+              }
+          }
+          EOF
+      - name: Install
+        working-directory: proj
+        run: npm install
+      - name: Bundle Excel library
+        working-directory: proj
+        run: cp node_modules/xlsx/dist/xlsx.full.min.js www/xlsx.full.min.js
+      - name: Add Android
+        working-directory: proj
+        run: npx cap add android
+      - name: Native print and save bridge
+        working-directory: proj
+        run: cp MainActivity.java android/app/src/main/java/com/remas/attendance/MainActivity.java
+      - name: App icons
+        working-directory: proj
+        continue-on-error: true
+        run: npm install --no-save @capacitor/assets && npx capacitor-assets generate --android
+      - name: Sync
+        working-directory: proj
+        run: npx cap sync android
+      - name: Stable signing key
+        run: mkdir -p ~/.android && cp proj/debug.keystore ~/.android/debug.keystore
+      - name: Build
+        working-directory: proj/android
+        run: chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: attendance-apk
+          path: proj/android/app/build/outputs/apk/debug/app-debug.apk
