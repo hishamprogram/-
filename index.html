@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نظام الدوام والمتابعة</title>
+<meta name="theme-color" content="#1d4e89">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="الدوام">
+<style>
+.credit{text-align:center;font-size:10px;color:var(--mut);margin:6px 0 -4px;white-space:nowrap;direction:ltr;opacity:.85;line-height:1.6}.sm2{font-weight:400;font-size:.85em}
+:root{--accbase:#1d4e89;--bg:#f2f4f8;--panel:#fff;--ink:#14213d;--mut:#5b667a;--line:#d9dfe8;--acc:var(--accbase);--btn:var(--accbase);--acc2:color-mix(in srgb,var(--accbase) 11%,var(--panel));--ok:#15803d;--okbg:#e3f5e9;--bad:#b42318;--badbg:#fde8e6;--warn:#b45309;--warnbg:#fdf0dc;--shade:#cfd5de;--font:system-ui,-apple-system,'Segoe UI',Tahoma,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1420;--panel:#172030;--ink:#e8edf5;--mut:#9aa6ba;--line:#2a3649;--acc:color-mix(in srgb,var(--accbase) 55%,#fff);--btn:color-mix(in srgb,var(--accbase) 72%,#fff);--ok:#4ade80;--okbg:#17382a;--bad:#f87171;--badbg:#3d1f21;--warn:#fbbf24;--warnbg:#3a2d12;--shade:#3a4559;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1420;--panel:#172030;--ink:#e8edf5;--mut:#9aa6ba;--line:#2a3649;--acc:color-mix(in srgb,var(--accbase) 55%,#fff);--btn:color-mix(in srgb,var(--accbase) 72%,#fff);--ok:#4ade80;--okbg:#17382a;--bad:#f87171;--badbg:#3d1f21;--warn:#fbbf24;--warnbg:#3a2d12;--shade:#3a4559;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--font)}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.hdr{background:var(--accbase);color:#fff;display:flex;gap:12px;align-items:center;justify-content:space-between;padding:8px 16px;flex-wrap:wrap}
+.hdr .l{display:flex;gap:10px;align-items:center}.hdr img{height:34px;border-radius:6px;background:#fff;padding:2px}
+.hdr h1{font-size:17px;margin:0;font-weight:800}
+.hdr .u{display:flex;gap:8px;align-items:center;font-size:13px;flex-wrap:wrap}
+.chip2{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:99px;padding:2px 11px;font-size:12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;background:#9ca3af;display:inline-block}.dot.on{background:#4ade80}.dot.off{background:#f87171}
+.hb{border:0;background:rgba(255,255,255,.16);color:#fff;border-radius:7px;padding:4px 11px;cursor:pointer;font-size:13px}
+.hb:hover{background:rgba(255,255,255,.28)}
+.nav{display:flex;gap:4px;overflow-x:auto;background:var(--panel);border-bottom:1px solid var(--line);padding:6px 16px}
+.nav button{border:0;background:none;padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;font-weight:500;color:var(--mut)}
+.nav button.on{background:var(--acc2);color:var(--acc);font-weight:800}
+.banner{background:var(--warnbg);color:var(--warn);padding:8px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;font-weight:700;flex-wrap:wrap}
+main{padding:16px;max-width:1500px;margin:0 auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:17px}.card h3{margin:12px 0 6px;font-size:14px;color:var(--mut)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+.bar label,.fg label{display:flex;flex-direction:column;font-size:12px;color:var(--mut);gap:2px}
+input,select,textarea{background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:6px 9px;min-width:0}
+input[type=checkbox]{width:auto}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.btn{background:var(--btn);color:#fff;border:0;border-radius:7px;padding:7px 14px;cursor:pointer;font-weight:700}
+.btn.s{background:var(--acc2);color:var(--acc)}.btn.d{background:var(--badbg);color:var(--bad)}
+.btn.sm{padding:3px 9px;font-size:12px}.btn:disabled{opacity:.5;cursor:not-allowed}
+.sp{flex:1}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table.t{border-collapse:collapse;width:100%;font-size:13.5px}
+table.t th,table.t td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+table.t th{background:var(--acc2);color:var(--acc);position:sticky;top:0}
+table.t tr.inactive td{opacity:.55}
+.pill{display:inline-block;padding:1px 9px;border-radius:99px;font-size:12px;background:var(--acc2);color:var(--acc)}
+.pill.tmp,.pill.warn{background:var(--warnbg);color:var(--warn)}.pill.ok{background:var(--okbg);color:var(--ok)}.pill.bad{background:var(--badbg);color:var(--bad)}
+.grid{border-collapse:collapse;width:100%;font-size:12.5px}
+.grid th,.grid td{border:1px solid var(--mut);padding:3px 5px;text-align:center;height:26px}
+.grid td.n,.grid th.n{text-align:right;white-space:nowrap}
+.grid th{background:var(--acc2);color:var(--ink)}
+.grid td.out{background:var(--shade)}
+.grid th.now{background:var(--btn);color:#fff}
+.attw{overflow:auto;max-height:calc(100vh - 250px);--w1:30px;--w2:150px}
+@media(max-width:560px){.attw{--w1:26px;--w2:112px}}
+.att{border-collapse:separate;border-spacing:0;min-width:100%}
+.att th,.att td{border:0;border-bottom:1px solid var(--mut);border-left:1px solid var(--mut)}
+.att thead th{position:sticky;top:0;z-index:4}
+.att .c1,.att .c2,.att .cn{position:sticky;background:var(--panel);z-index:3}
+.att thead .c1,.att thead .c2,.att thead th.cn{z-index:6}
+.att .c1{right:0;width:var(--w1);min-width:var(--w1);max-width:var(--w1);padding:0}
+.att .c2{right:var(--w1);width:var(--w2);min-width:var(--w2);max-width:var(--w2);text-align:right;white-space:normal;font-size:12px;line-height:1.25;box-shadow:-3px 0 0 rgba(0,0,0,.1)}
+.att .cn{right:calc(var(--w1) + var(--w2));min-width:86px}
+.att thead th:not(.c1):not(.c2){min-width:86px}
+.att thead .c1,.att thead .c2{background:var(--acc2)}
+.att thead th.cn{background:var(--btn);color:#fff}
+.att td.cn.out{background-color:var(--shade)}
+.vt td.vact,.vt th.vact{position:sticky;left:0;background:var(--panel);box-shadow:3px 0 6px rgba(0,0,0,.12);z-index:2;white-space:nowrap}
+.att small{color:var(--mut);font-weight:400}
+.sheet.cmp1 .grid{font-size:9px;table-layout:auto;width:100%;border-collapse:collapse}.sheet.cmp1 .grid th,.sheet.cmp1 .grid td{padding:0 2px;line-height:1.15;height:auto;border:1px solid #000}.sheet.cmp1 .dt{margin:3px 0 1px;font-size:11px;font-weight:800;break-after:avoid}.sheet.cmp1 tr{break-inside:avoid}.sheet.cmp1 table{margin-bottom:2mm}
+.sheet.cmp .grid{font-size:8px;table-layout:fixed;width:100%}
+.sheet.cmp .grid th,.sheet.cmp .grid td{padding:0 1px;height:auto;line-height:1.15;overflow:hidden}
+.sheet.cmp .grid td.n,.sheet.cmp .grid th.n{white-space:normal;font-size:8.5px}
+.sheet.cmp .dt{margin:5px 0 2px;font-size:11px}
+.sheet.cmp .blk{break-inside:avoid;margin-bottom:4mm}
+.sheet.cmp .cols{column-count:2;column-gap:5mm}
+.sheet.cmp .cols .blk{break-inside:auto}
+.sheet.cmp .cols tr{break-inside:avoid}
+.sheet.cmp .lg{font-size:8px;margin-top:3px}
+.grid th.now .btn{background:#fff;color:var(--btn)}
+.grid th.now .nowb{display:block;font-size:10px;background:#fff;color:var(--btn);border-radius:99px;padding:0 6px;margin:2px auto 0;width:max-content;font-weight:800}
+.grid td.now{background-image:linear-gradient(color-mix(in srgb,var(--btn) 24%,transparent),color-mix(in srgb,var(--btn) 24%,transparent));box-shadow:inset 3px 0 0 var(--btn),inset -3px 0 0 var(--btn)}.grid td.ok{color:var(--ok);font-weight:800}.grid td.bad{color:var(--bad);font-weight:800}
+.grid select{padding:1px 2px;font-size:12px}
+.grid td.wk{background:repeating-linear-gradient(45deg,rgba(245,158,11,.38),rgba(245,158,11,.38) 5px,rgba(253,230,138,.38) 5px,rgba(253,230,138,.38) 10px)}
+.grid td.rest{background:#bbf7d0;color:#065f46;font-weight:800}
+.ckb{width:34px;height:30px;border-radius:8px;border:1px solid var(--mut);background:transparent;font:700 15px inherit;cursor:pointer;color:var(--bad)}
+.ckb.s1{background:var(--okbg);color:var(--ok);border-color:var(--ok)}
+.ckb.s2{background:#16a34a;color:#fff;border-color:#15803d}
+.ckb:disabled{opacity:.6;cursor:default}
+.sheet.cmp2 .grid{font-size:12px;table-layout:fixed;width:100%;border-collapse:collapse}
+.sheet.cmp2 .grid th,.sheet.cmp2 .grid td{padding:3px 2px;line-height:1.25;border:1px solid #000;overflow:hidden}
+.sheet.cmp2 .grid thead th{background:#e5e5e5;font-weight:800}
+.sheet.cmp2 .grid th.dh{background:#cfcfcf;font-size:13.5px;text-align:right;padding:4px 6px}
+.sheet.cmp2 .grid th.dh span{font-weight:400;font-size:11px}
+.sheet.cmp2 .grid td.n,.sheet.cmp2 .grid th.n{white-space:normal;text-align:right;padding-right:4px;font-size:12px}
+.sheet.cmp2 .grid td.st{font-weight:800}
+.sheet.cmp2 .grid tr.tot td{background:#f0f0f0;font-size:11px;text-align:right;padding:2px 6px}
+.sheet.cmp2 .lg{font-size:10.5px;margin-top:6px}
+.sheet.cmp2 .cols{column-count:2;column-gap:4mm;padding:0 1px}
+.sheet.cmp2 .cols .blk{break-inside:auto;margin-bottom:0}.sheet.cmp2 .cols .blk+.blk .grid{margin-top:-1px}.sheet.cmp2 .cols thead{break-after:avoid}
+.sheet.cmp2 .cols tr{break-inside:avoid}
+.ani{min-width:170px;width:100%;padding:3px 6px}.anc{min-width:180px}
+.vsel{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.dt{font-weight:800;margin:14px 0 4px;font-size:15px}
+.hint{color:var(--mut);font-size:12.5px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.stat b{display:block;font-size:26px;color:var(--acc);font-variant-numeric:tabular-nums}.stat span{font-size:12.5px;color:var(--mut)}
+.prog{height:8px;background:var(--acc2);border-radius:9px;overflow:hidden;min-width:120px}.prog i{display:block;height:100%;background:var(--btn)}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+#modal.on{display:flex}
+#modal .box{background:var(--panel);border-radius:12px;padding:18px;max-width:640px;width:100%;max-height:92vh;overflow:auto}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fg .w{grid-column:1/-1}
+@media(max-width:560px){.fg{grid-template-columns:1fr}}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:8px;z-index:99;display:none;max-width:90vw}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:var(--acc2);color:var(--acc);border-radius:99px;padding:2px 10px;display:flex;gap:6px;align-items:center}
+.chip b{cursor:pointer;color:var(--bad)}
+.permg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px 12px}
+.permg label{flex-direction:row!important;align-items:center;gap:6px!important;color:var(--ink)!important;font-size:13px!important}
+.sw{display:flex;gap:8px;flex-wrap:wrap}.sw i{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent}.sw i.on{border-color:var(--ink)}
+/* تسجيل الدخول */
+#login{min-height:100vh;display:grid;grid-template-columns:1.15fr 1fr;background:var(--bg)}
+.brand{background:var(--accbase);color:#fff;padding:48px;display:flex;flex-direction:column;justify-content:center;gap:14px;position:relative;overflow:hidden}
+.brand::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 46px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 46px)}
+.brand>*{position:relative}.brand h1{font-size:34px;margin:0;font-weight:800;line-height:1.3}.brand p{margin:0;opacity:.85;max-width:420px}
+.brand img{height:64px;width:auto;align-self:flex-start;background:#fff;border-radius:10px;padding:4px}
+.strip{display:flex;gap:3px;margin-top:10px;direction:ltr}.strip i{width:16px;height:34px;border-radius:3px;background:rgba(255,255,255,.9)}.strip i.o{background:rgba(255,255,255,.22)}
+.lform{display:flex;align-items:center;justify-content:center;padding:24px}
+.lbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;width:100%;max-width:380px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.lbox h2{margin:0 0 14px}.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--acc2);border-radius:9px;padding:3px;margin-bottom:14px}
+.seg button{border:0;background:none;padding:7px;border-radius:7px;cursor:pointer;font-weight:700;color:var(--mut)}.seg button.on{background:var(--panel);color:var(--acc);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.lbox label{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--mut);margin-bottom:10px}.lbox .btn{width:100%;padding:10px}
+@media(max-width:800px){#login{grid-template-columns:1fr}.brand{padding:26px 20px}.brand h1{font-size:24px}}
+#printArea{display:none}
+.sheet{font-family:var(--font);color:#000;background:#fff}
+.sheet .meta{display:flex;justify-content:space-between;gap:10px;font-size:12px;border-bottom:2px solid #000;padding-bottom:4px;margin-bottom:8px;align-items:center}
+.sheet .meta img{height:46px;margin-left:10px;vertical-align:middle}.sheet .meta h1{font-size:18px;margin:0;display:inline}
+.sheet .grid th,.sheet .grid td{border:1px solid #000;color:#000}.sheet .grid th{background:#e5e5e5}.sheet .grid td.out{background:#c4c4c4}
+.sheet .grid td.ok,.sheet .grid td.bad{color:#000}.sheet .grid td.wk{background:repeating-linear-gradient(45deg,#b5b5b5,#b5b5b5 3px,#e9e9e9 3px,#e9e9e9 6px)}
+.nw{white-space:nowrap}
+.sheet .grid td.rest{background:#9be8b4;color:#000;font-weight:800}
+.pg{width:100%;border-collapse:collapse}.pg>thead{display:table-header-group}.pg>thead>tr>td,.pg>tbody>tr>td{padding:0;border:0}
+.sheet .dt{break-after:avoid}.sheet tr{break-inside:avoid}.pg>tbody>tr{break-inside:auto}
+@media print{body{background:#fff}body>:not(#printArea){display:none!important}#printArea{display:block}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+<style id="pg">@page{size:A4 landscape;margin:10mm}</style>
+</head>
+<body>
+<div id="login" hidden></div>
+<div id="app" hidden>
+ <div class="hdr"><div class="l"><img id="hlogo" alt="" hidden><h1 id="ttl"></h1></div>
+  <div class="u"><span id="who"></span>
+   <span class="chip2" id="cNet" data-act="netInfo"><i class="dot"></i><span>متصل</span></span>
+   <span class="chip2" id="cOn" data-act="onlineList">👥 <span>1</span></span>
+   <span class="chip2" id="cBell" data-act="notif">🔔 <span>0</span></span>
+   <span id="sync" style="opacity:.85;font-size:12px"></span><button class="hb" data-act="gear">⚙ الإعدادات</button><button class="hb" data-act="pw">كلمة المرور</button><button class="hb" data-act="logoutAsk">خروج</button></div></div>
+ <div class="banner" id="rv" hidden><span id="rvt"></span><button class="btn sm" data-act="exitReview">إنهاء المراجعة</button></div>
+ <div class="banner" id="stw" hidden style="background:var(--badbg);color:var(--bad)">⚠ تعذّر حفظ البيانات على هذا الجهاز (التخزين ممتلئ أو غير متاح). نزّل نسخة احتياطية الآن وزامن مع السحابة. <button class="btn sm" data-act="bkExp">تنزيل نسخة</button></div>
+ <div class="banner" id="upd" hidden style="background:var(--okbg);color:var(--ok)"><span id="updt"></span><button class="btn sm" data-act="applyUpd">تحديث الآن</button></div>
+ <div class="nav" id="nav"></div>
+ <main id="main"></main>
+</div>
+<div id="modal"><div class="box" id="mbox"></div></div>
+<div id="toast"></div>
+<div id="printArea"></div>
+<script type="text/plain" id="gs-src">
+// نظام الدوام والمتابعة - نقطة المزامنة السحابية (Google Apps Script Web App)
+// النشر: Deploy > New deployment > Web app > Execute as: Me > Who has access: Anyone
+// ثم انسخ رابط /exec والصقه في إعدادات التطبيق.
+// عند تعديل الكود: Deploy > Manage deployments > Edit > New version.
+
+const FILE_NAME = 'hr-attendance-data.json';
+const SECRET = ''; // مفتاح أمان اختياري (اتركه فارغًا لتعطيله)
+const SECURE_MODE = true; // الوضع الآمن: دخول من الخادم + كل مستخدم يستلم بياناته المسموحة فقط
+const COLLS = ['users', 'depts', 'emps', 'viol', 'vtypes', 'rates', 'ropen', 'rlaws', 'notes', 'nreads', 'anotes', 'log'];
+
+function doGet(e) {
+  return out_({ ok: true, service: 'hr-sync', time: new Date().toISOString() });
+}
+
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(25000);
+  } catch (err) {
+    return out_({ ok: false, error: 'الخادم مشغول، أعد المحاولة' });
+  }
+  try {
+    const req = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+    if (SECRET && req.key !== SECRET) return out_({ ok: false, error: 'مفتاح الأمان غير صحيح' });
+    if (req.action === 'ping') return out_({ ok: true, pong: true, secure: SECURE_MODE });
+
+    let data = readDb_();
+
+    if (!SECURE_MODE) {
+      if (req.action === 'sync' && req.data) {
+        data = data ? mergeVn_(data, req.data) : normalize_(req.data);
+        writeDb_(data);
+        monthlyBackup_(data);
+      }
+      return out_({ ok: true, data: data || null, at: Date.now() });
+    }
+
+    // ===== الوضع الآمن: التحقق من الهوية وتصفية البيانات حسب الصلاحية =====
+    if (req.action === 'login') {
+      if (!data) return out_({ ok: false, code: 'NODATA', error: 'لا توجد بيانات على الخادم بعد. ارفع البيانات الأولى من جهاز المدير.' });
+      const lim = checkLock_(req);
+      if (lim) return out_({ ok: false, code: 'LOCK', error: lim });
+      const A = verifyLogin_(data, req);
+      if (!A) { noteFail_(req); return out_({ ok: false, code: 'BAD', error: 'بيانات الدخول غير صحيحة أو الحساب غير مفعّل' }); }
+      clearFail_(req);
+      const rp = reply_(data, A, {}); return out_({ ok: true, secure: true, token: tokenFor_(A.k, A.rec), k: A.k, id: A.rec.id, data: rp.data, full: true, seq: rp.seq, sig: rp.sig, at: Date.now() });
+    }
+    if (req.action === 'sync') {
+      if (!data) {
+        // أول رفع للبيانات فقط (لا توجد نسخة على الخادم)
+        if (req.data && req.boot) { data = normalize_(req.data); writeDb_(data); return out_({ ok: true, data: data, at: Date.now() }); }
+        return out_({ ok: false, code: 'NODATA', error: 'لا توجد بيانات على الخادم بعد' });
+      }
+      const A = verifyToken_(data, req);
+      if (!A) return out_({ ok: false, code: 'AUTH', error: 'انتهت الجلسة أو التطبيق قديم — سجّل الدخول من جديد' });
+      if (req.data) {
+        data = mergeIncoming_(data, normalize_(req.data), A);
+        writeDb_(data);
+        monthlyBackup_(data);
+      }
+      return out_(reply_(data, A, req));
+    }
+    return out_({ ok: false, code: 'AUTH', error: 'طلب غير مسموح' });
+  } catch (err) {
+    return out_({ ok: false, error: String(err && err.message || err) });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ---------- الإدخال والإخراج ----------
+function out_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function findFile_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('FILE_ID');
+  if (id) {
+    try {
+      const f = DriveApp.getFileById(id);
+      if (!f.isTrashed()) return f;
+    } catch (err) {
+      // يُعاد البحث بالاسم
+    }
+  }
+  const it = DriveApp.getFilesByName(FILE_NAME);
+  while (it.hasNext()) {
+    const f = it.next();
+    if (!f.isTrashed()) { props.setProperty('FILE_ID', f.getId()); return f; }
+  }
+  return null;
+}
+
+function readDb_() {
+  const f = findFile_();
+  if (!f) return null;
+  const txt = f.getBlob().getDataAsString('UTF-8');
+  if (!txt) return null;
+  return normalize_(JSON.parse(txt));
+}
+
+function writeDb_(db) {
+  const content = JSON.stringify(db);
+  const f = findFile_();
+  if (f) {
+    f.setContent(content);
+  } else {
+    const nf = DriveApp.createFile(FILE_NAME, content, MimeType.PLAIN_TEXT);
+    PropertiesService.getScriptProperties().setProperty('FILE_ID', nf.getId());
+  }
+}
+
+function monthlyBackup_(db) {
+  const name = 'hr-backup-' + Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM') + '.json';
+  const it = DriveApp.getFilesByName(name);
+  if (!it.hasNext()) DriveApp.createFile(name, JSON.stringify(db), MimeType.PLAIN_TEXT);
+}
+
+// ---------- الدمج الذكي (مطابق لمنطق التطبيق) ----------
+function normalize_(o) {
+  o = o || {};
+  COLLS.forEach(function (c) { if (!Array.isArray(o[c])) o[c] = []; });
+  if (!o.att || typeof o.att !== 'object') o.att = {};
+  if (!o.presence || typeof o.presence !== 'object') o.presence = {};
+  if (!o.settings || typeof o.settings !== 'object') o.settings = { u: 0 };
+  o.v = 2;
+  return o;
+}
+
+function mergeColl_(a, b) {
+  const m = {};
+  (a || []).forEach(function (r) { m[r.id] = r; });
+  (b || []).forEach(function (r) {
+    const o = m[r.id];
+    if (!o || (r.u || 0) > (o.u || 0)) m[r.id] = r;
+  });
+  return Object.keys(m).map(function (k) { return m[k]; });
+}
+
+function mergeAtt_(a, b) {
+  const win = (b.u || 0) > (a.u || 0) ? b : a;
+  const lose = win === a ? b : a;
+  const copy = {};
+  Object.keys(win).forEach(function (k) { copy[k] = win[k]; });
+  if (win.d) {
+    copy.e = {};
+  } else {
+    const e = {};
+    Object.keys(lose.e || {}).forEach(function (k) { e[k] = lose.e[k]; });
+    Object.keys(win.e || {}).forEach(function (k) { e[k] = win.e[k]; });
+    copy.e = e;
+  }
+  return copy;
+}
+
+function mergeDb_(L, R) {
+  L = normalize_(L);
+  R = normalize_(R);
+  const o = {};
+  Object.keys(L).forEach(function (k) { o[k] = L[k]; });
+  COLLS.forEach(function (c) { o[c] = mergeColl_(L[c], R[c]); });
+  o.log = o.log.sort(function (p, q) { return (q.u || 0) - (p.u || 0); });
+
+  o.att = {};
+  Object.keys(L.att).forEach(function (k) { o.att[k] = L.att[k]; });
+  Object.keys(R.att).forEach(function (k) {
+    o.att[k] = o.att[k] ? mergeAtt_(o.att[k], R.att[k]) : R.att[k];
+  });
+
+  o.settings = ((R.settings.u || 0) > (L.settings.u || 0)) ? R.settings : L.settings;
+
+  const now = Date.now();
+  o.presence = {};
+  Object.keys(L.presence).forEach(function (k) { o.presence[k] = L.presence[k]; });
+  Object.keys(R.presence).forEach(function (k) {
+    if (!o.presence[k] || R.presence[k].t > o.presence[k].t) o.presence[k] = R.presence[k];
+  });
+  Object.keys(o.presence).forEach(function (k) {
+    if (now - o.presence[k].t > 86400000) delete o.presence[k];
+  });
+  o.v = 2;
+  return o;
+}
+
+// ===================== الوضع الآمن =====================
+function sha256_(s) {
+  const b = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, s, Utilities.Charset.UTF_8);
+  return b.map(function (x) { return ('0' + (x & 255).toString(16)).slice(-2); }).join('');
+}
+// نفس بصمة التطبيق (SHA-256، أو البديل عند غياب crypto في المتصفح)
+function hashLike_(stored, s) {
+  if (String(stored || '').charAt(0) === 'x') {
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return 'x' + h;
+  }
+  return sha256_(s);
+}
+function normNo_(s) {
+  return String(s == null ? '' : s)
+    .replace(/[٠-٩]/g, function (c) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(c); })
+    .replace(/[۰-۹]/g, function (c) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(c); }).trim();
+}
+function salt_() {
+  const p = PropertiesService.getScriptProperties();
+  let s = p.getProperty('SALT');
+  if (!s) { s = Utilities.getUuid() + Utilities.getUuid(); p.setProperty('SALT', s); }
+  return s;
+}
+function tokenFor_(k, rec) {
+  return sha256_(salt_() + '|' + k + '|' + rec.id + '|' + (rec.pass || '') + '|' + (rec.def ? 1 : 0));
+}
+function verifyLogin_(db, req) {
+  const un = String(req.un || '').trim(), pw = String(req.pw == null ? '' : req.pw);
+  if (!un || !pw) return null;
+  if (req.type === 'e') {
+    const no = normNo_(un);
+    const em = db.emps.filter(function (x) { return !x.d && String(normNo_(x.no)) === no; })[0];
+    if (!em || !em.portal || em.active === false) return null;
+    const ok = em.pass ? hashLike_(em.pass, 'e:' + no + ':' + pw) === em.pass : pw === String(em.no);
+    return ok ? { k: 'e', rec: em } : null;
+  }
+  const u = db.users.filter(function (x) { return !x.d && x.username === un; })[0];
+  if (!u) return null;
+  const ok = u.def ? pw === 'admin123' : hashLike_(u.pass, u.username + ':' + pw) === u.pass;
+  return ok ? { k: 'u', rec: u } : null;
+}
+function verifyToken_(db, req) {
+  const w = req.who || {};
+  if (!req.tok || (w.k !== 'u' && w.k !== 'e') || !w.id) return null;
+  const list = w.k === 'u' ? db.users : db.emps;
+  const rec = list.filter(function (x) { return x.id === w.id && !x.d; })[0];
+  if (!rec) return null;
+  if (w.k === 'e' && (!rec.portal || rec.active === false)) return null;
+  if (tokenFor_(w.k, rec) !== req.tok) return null;
+  return { k: w.k, rec: rec };
+}
+// حماية من تخمين كلمات المرور: 8 محاولات خاطئة = إيقاف 10 دقائق لهذا الاسم
+function failKey_(req) { return 'F_' + String(req.type || 'u') + '_' + String(req.un || '').toLowerCase().slice(0, 40); }
+function checkLock_(req) {
+  const v = PropertiesService.getScriptProperties().getProperty(failKey_(req));
+  if (!v) return '';
+  const o = JSON.parse(v);
+  if (o.n >= 8 && Date.now() - o.t < 600000) return 'محاولات كثيرة خاطئة. أعد المحاولة بعد 10 دقائق.';
+  return '';
+}
+function noteFail_(req) {
+  const p = PropertiesService.getScriptProperties(), k = failKey_(req), v = p.getProperty(k);
+  let o = v ? JSON.parse(v) : { n: 0, t: 0 };
+  if (Date.now() - o.t > 600000) o = { n: 0, t: 0 };
+  o.n++; o.t = Date.now();
+  p.setProperty(k, JSON.stringify(o));
+}
+function clearFail_(req) { PropertiesService.getScriptProperties().deleteProperty(failKey_(req)); }
+
+function myKey_(A) { return A.k + A.rec.id; }
+function scopeOf_(A) {
+  // all = كل الأقسام؛ set = الأقسام المسموحة
+  if (A.k === 'e') { const s = {}; s[A.rec.dept] = 1; return { all: false, set: s }; }
+  const d = A.rec.depts || [];
+  if (A.rec.role === 'admin' || !d.length) return { all: true, set: {} };
+  const s = {}; d.forEach(function (x) { s[x] = 1; });
+  return { all: false, set: s };
+}
+function inScope_(sc, dept) { return sc.all || !!sc.set[dept]; }
+function empDeptMap_(db) { const m = {}; db.emps.forEach(function (e) { m[e.id] = e.dept; }); return m; }
+function strip_(o, keys) { const c = {}; Object.keys(o).forEach(function (k) { if (keys.indexOf(k) < 0) c[k] = o[k]; }); return c; }
+
+// ما يُرسَل إلى جهاز المستخدم فقط
+function scoped_(db, A) {
+  if (A.k === 'u' && A.rec.role === 'admin') return db;
+  const me = myKey_(A), sc = scopeOf_(A), dm = empDeptMap_(db), P = (A.k === 'u' ? A.rec.perms : {}) || {};
+  const o = normalize_({});
+  o.settings = db.settings; o.v = 2;
+  const portal = (db.settings && db.settings.portal) || {};
+  o.notes = db.notes.filter(function (n) { return n.to === me || n.to === '*' + A.k || n.from === me; });
+  o.nreads = db.nreads.filter(function (r) { return String(r.id).slice(-(me.length + 1)) === '|' + me; });
+  o.presence = db.presence;
+  if (A.k === 'e') {
+    const em = A.rec;
+    o.emps = [em];
+    o.depts = db.depts.filter(function (d) { return d.id === em.dept; });
+    Object.keys(db.att).forEach(function (k) {
+      if (k.split('|')[1] !== em.dept) return;
+      const r = db.att[k], e = {};
+      if (r.e && r.e[em.id] !== undefined) e[em.id] = r.e[em.id];
+      const c = strip_(r, ['e']); c.e = e; o.att[k] = c;
+    });
+    if (portal.viol) o.viol = db.viol.filter(function (v) { return v.emp === em.id; });
+    if (portal.rate) o.rates = db.rates.filter(function (v) { return v.emp === em.id; });
+    return o;
+  }
+  const rateAny = P.rate_view || P.rate_do || P.rate_open || P.rate_laws;
+  o.users = db.users.map(function (u) { return u.id === A.rec.id ? u : { id: u.id, username: u.username, name: u.name, role: u.role, d: u.d, u: u.u }; });
+  o.depts = db.depts.filter(function (d) { return inScope_(sc, d.id); });
+  o.emps = db.emps.filter(function (e) { return inScope_(sc, e.dept); }).map(function (e) { return strip_(e, ['pass']); });
+  o.viol = db.viol.filter(function (v) { return inScope_(sc, dm[v.emp]) && (P.viol_view || v.by === A.rec.id); });
+  o.vtypes = db.vtypes;
+  o.rates = rateAny ? db.rates.filter(function (r) { return inScope_(sc, r.dept || dm[r.emp]) && (P.rate_view || r.by === A.rec.id); }) : [];
+  o.ropen = rateAny ? db.ropen.filter(function (r) { return inScope_(sc, String(r.id).split('|')[1]); }) : [];
+  o.rlaws = rateAny ? db.rlaws : [];
+  o.anotes = db.anotes.filter(function (a) { return inScope_(sc, a.dept); });
+  Object.keys(db.att).forEach(function (k) { if (inScope_(sc, k.split('|')[1])) o.att[k] = db.att[k]; });
+  return o;
+}
+
+// دمج مع ترقيم خادمي: كل سجل يتغير يأخذ رقم _s أكبر، فيستلم كل جهاز التغييرات منذ آخر رقم عرفه
+// ترقيم المخالفات: يعطي الخادم رقمًا تسلسليًا موحدًا لكل مخالفة بلا رقم (vn)
+function numberViol_(db, onChange) {
+  let n = Number(db.vseq) || 0;
+  db.viol.forEach(function (v) { if (v.vn && v.vn > n) n = v.vn; });
+  db.viol.filter(function (v) { return !v.vn; })
+    .sort(function (a, b) { return String(a.at || '').localeCompare(String(b.at || '')) || ((a.u || 0) - (b.u || 0)); })
+    .forEach(function (v) { v.vn = ++n; if (onChange) onChange(v); });
+  db.vseq = n;
+}
+function vnMap_(db) { const m = {}; (db.viol || []).forEach(function (v) { if (v.vn) m[v.id] = v.vn; }); return m; }
+function mergeVn_(L, R) {
+  const b = vnMap_(normalize_(L));
+  const o = mergeDb_(L, R);
+  o.viol.forEach(function (v) { if (!v.vn && b[v.id]) v.vn = b[v.id]; });
+  numberViol_(o);
+  return o;
+}
+function mergeStamp_(L, R) {
+  L = normalize_(L);
+  const vnB = vnMap_(L);
+  const before = {};
+  COLLS.forEach(function (c) { before[c] = {}; L[c].forEach(function (r) { before[c][r.id] = r; }); });
+  const oldAtt = {}; Object.keys(R.att || {}).forEach(function (k) { const o = L.att[k]; oldAtt[k] = o ? JSON.stringify([o.u, o.e, o.d]) : ''; });
+  const oldSet = L.settings;
+  let seq = Number(L.seq) || 0;
+  const o = mergeDb_(L, R);
+  COLLS.forEach(function (c) { o[c].forEach(function (r) { if (before[c][r.id] !== r) r._s = ++seq; }); });
+  Object.keys(oldAtt).forEach(function (k) {
+    const n = o.att[k];
+    if (n && JSON.stringify([n.u, n.e, n.d]) !== oldAtt[k]) n._s = ++seq;
+  });
+  o.viol.forEach(function (v) { if (!v.vn && vnB[v.id]) { v.vn = vnB[v.id]; v._s = ++seq; } });
+  numberViol_(o, function (v) { v._s = ++seq; });
+  if (o.settings !== oldSet) o.settings._s = ++seq;
+  o.seq = seq;
+  return o;
+}
+function sigOf_(db, A) {
+  const r = A.rec;
+  return sha256_(JSON.stringify([A.k, r.role || '', (r.depts || []).slice().sort(), r.perms || {}, r.portal || 0, (db.settings && db.settings.portal) || {}, r.dept || ''])).slice(0, 16);
+}
+// رد المزامنة: تفاضلي إن أمكن وإلا كامل
+function reply_(db, A, req) {
+  const sig = sigOf_(db, A), seq = Number(db.seq) || 0;
+  const full = scoped_(db, A);
+  const since = Number(req.since) || 0;
+  if (!(req.delta && typeof req.since === 'number' && req.sig === sig && since <= seq)) {
+    return { ok: true, data: full, full: true, seq: seq, sig: sig, at: Date.now() };
+  }
+  const d = normalize_({});
+  COLLS.forEach(function (c) { d[c] = (full[c] || []).filter(function (r) { return (r._s || 0) > since; }); });
+  Object.keys(full.att || {}).forEach(function (k) { if ((full.att[k]._s || 0) > since) d.att[k] = full.att[k]; });
+  d.presence = full.presence || {};
+  d.settings = (full.settings && (full.settings._s || 0) > since) ? full.settings : { u: 0 };
+  return { ok: true, data: d, full: false, seq: seq, sig: sig, at: Date.now() };
+}
+
+function hasAny_(P, list) { for (let i = 0; i < list.length; i++) if (P[list[i]]) return true; return false; }
+
+// ما يُقبل من جهاز المستخدم (كل شيء خارج الصلاحية يُتجاهل)
+function mergeIncoming_(db, inc, A) {
+  if (A.k === 'u' && A.rec.role === 'admin') return mergeStamp_(db, inc);
+  const me = myKey_(A), sc = scopeOf_(A), dm = empDeptMap_(db), sub = normalize_({});
+  const byId = function (list) { const m = {}; list.forEach(function (r) { m[r.id] = r; }); return m; };
+  sub.presence = {};
+  if (inc.presence && inc.presence[me]) sub.presence[me] = inc.presence[me];
+  sub.nreads = inc.nreads.filter(function (r) { return String(r.id).slice(-(me.length + 1)) === '|' + me; });
+
+  if (A.k === 'e') {
+    const mine = inc.emps.filter(function (x) { return x.id === A.rec.id; })[0];
+    if (mine && (mine.u || 0) > (A.rec.u || 0) && mine.pass) {
+      const c = {}; Object.keys(A.rec).forEach(function (k) { c[k] = A.rec[k]; });
+      c.pass = mine.pass; c.u = mine.u; sub.emps = [c];
+    }
+    return mergeStamp_(db, sub);
+  }
+  const P = A.rec.perms || {};
+  const sEmp = byId(db.emps), sViol = byId(db.viol);
+  // كلمة المرور الخاصة بالمستخدم فقط
+  const myU = inc.users.filter(function (x) { return x.id === A.rec.id; })[0];
+  if (myU && (myU.u || 0) > (A.rec.u || 0)) {
+    const c = {}; Object.keys(A.rec).forEach(function (k) { c[k] = A.rec[k]; });
+    c.pass = myU.pass; c.def = !!myU.def && A.rec.def; c.name = myU.name || c.name; c.u = myU.u; sub.users = [c];
+  }
+  if (P.depts_edit) sub.depts = inc.depts.filter(function (d) { return inScope_(sc, d.id); });
+  if (hasAny_(P, ['emps_edit', 'emps_status', 'emps_import', 'emps_delete', 'roster_edit'])) {
+    sub.emps = inc.emps.filter(function (e) {
+      const o = sEmp[e.id];
+      return inScope_(sc, e.dept) && (!o || inScope_(sc, o.dept));
+    }).map(function (e) {
+      const o = sEmp[e.id], c = strip_(e, ['pass']);
+      if (o && o.pass) c.pass = o.pass;
+      if (!o && e.pass) c.pass = e.pass;
+      if (o && normNo_(o.no) !== normNo_(e.no)) c.pass = '';
+      if (o && P.emps_edit && e.pass) c.pass = e.pass;
+      return c;
+    });
+  }
+  if (hasAny_(P, ['att_take', 'att_unlock'])) {
+    Object.keys(inc.att).forEach(function (k) { if (inScope_(sc, k.split('|')[1])) sub.att[k] = inc.att[k]; });
+    sub.anotes = inc.anotes.filter(function (a) { return inScope_(sc, a.dept); });
+  }
+  sub.viol = inc.viol.filter(function (v) {
+    const e = sEmp[v.emp], o = sViol[v.id];
+    if (!e || !inScope_(sc, e.dept)) return false;
+    if (!o) return !!P.viol_add;
+    if (v.d && !o.d) return !!P.viol_delete;
+    return !!P.viol_edit && !o.d;
+  });
+  if (P.rate_do || P.rate_open) sub.rates = inc.rates.filter(function (r) { return inScope_(sc, r.dept || dm[r.emp]); });
+  if (P.rate_open) sub.ropen = inc.ropen.filter(function (r) { return inScope_(sc, String(r.id).split('|')[1]); });
+  if (P.rate_laws) sub.rlaws = inc.rlaws;
+  if (P.notify_send) sub.notes = inc.notes.filter(function (n) { return n.from === me; });
+  const logIds = byId(db.log);
+  sub.log = inc.log.filter(function (l) { return !logIds[l.id] && !l.d; }).slice(0, 500);
+  return mergeStamp_(db, sub);
+}
+</script>
+<script>
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const APP_VERSION='2026.10.28.1';
+const uid=()=>Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-4);
+let lastU=0;const nextU=()=>{lastU=Math.max(Date.now(),lastU+1);return lastU};
+const DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const HOURS=[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+const fmtR=h=>((h%12)||12)+'-'+(((h+1)%12)||12)+'<small style="font-weight:400">'+(h<12?'ص':'م')+'</small>';
+const fmtH=h=>h===24?'12 ل':((h%12)||12)+(h<12?'ص':'م');
+const pad=n=>String(n).padStart(2,'0');
+const dstr=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const todayStr=()=>dstr(new Date());
+const wd=d=>new Date(d+'T12:00:00').getDay();
+const dayName=d=>DAYS[wd(d)];
+const addDays=(d,n)=>{const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return dstr(x)};
+const monthOf=d=>d.slice(0,7);
+const monthLabel=m=>MONTHS[+m.slice(5,7)-1]+' '+m.slice(0,4);
+const normNo=s=>String(s==null?'':s).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).trim();
+const normName=s=>String(s||'').replace(/[أإآ]/g,'ا').replace(/\s+/g,' ').trim();
+const fmtDT=iso=>{try{return new Date(iso).toLocaleString('ar-EG',{dateStyle:'short',timeStyle:'short'})}catch(e){return iso||''}};
+
+/* ===== الصلاحيات ===== */
+const PERMS=[
+ {k:'emps_view',t:'عرض بيانات الموظفين'},{k:'emps_edit',t:'إضافة وتعديل الموظفين',w:1},{k:'emps_status',t:'تفعيل وإيقاف الموظفين',w:1},
+ {k:'emps_import',t:'استيراد الموظفين والأقسام',w:1},{k:'emps_delete',t:'حذف الموظفين',w:1},{k:'depts_edit',t:'إدارة الأقسام وإعداد الحافز',w:1},
+ {k:'roster_view',t:'كشف الدوام اليومي'},{k:'roster_edit',t:'تعديل الدوام والراحة والإجازات',w:1},
+ {k:'att_take',t:'التعقيب (تحضير الساعات)',w:1},{k:'att_unlock',t:'فتح وتعديل الساعات المحفوظة',w:1},
+ {k:'reports_view',t:'عرض التقارير'},{k:'reports_export',t:'طباعة وتصدير التقارير'},
+ {k:'viol_view',t:'عرض المخالفات'},{k:'viol_add',t:'تسجيل المخالفات',w:1},{k:'viol_edit',t:'تعديل المخالفات',w:1},{k:'viol_delete',t:'حذف المخالفات',w:1},
+ {k:'rate_view',t:'عرض التقييم والحافز'},{k:'rate_do',t:'تقييم الموظفين',w:1},{k:'rate_open',t:'فتح وإغلاق التقييم وحذف التقييمات',w:1},{k:'rate_laws',t:'إدارة لوائح التقييم وأسعارها',w:1},{k:'purge',t:'تفريغ سلة المحذوفات والسجل (من تاريخ إلى تاريخ)',w:1},{k:'viol_print',t:'طباعة المخالفات حسب المستخدم'},{k:'notify_send',t:'إرسال الإشعارات للمستخدمين',w:1}];
+const ROLES={admin:'مدير النظام',sup:'مشرف / معقّب',view:'مستعرض'};
+const PRESET={admin:Object.fromEntries(PERMS.map(p=>[p.k,1])),
+ sup:{emps_view:1,emps_edit:1,roster_view:1,roster_edit:1,att_take:1,reports_view:1,reports_export:1,viol_view:1,viol_add:1,viol_print:1,rate_view:1,rate_do:1,notify_send:1},
+ view:{emps_view:1,roster_view:1,reports_view:1,reports_export:1,viol_view:1,rate_view:1}};
+const TABS={home:'الرئيسية',emps:'الموظفون',depts:'الأقسام',roster:'كشف الدوام',att:'التعقيب',reports:'التقارير',viol:'المخالفات',rate:'التقييم والحافز',users:'المستخدمون',trash:'سلة المحذوفات',settings:'الإعدادات'};
+const DEF_TABS=['home','emps','depts','roster','att','reports','viol','rate','users','trash'];
+
+/* ===== التخزين ===== */
+const KEY='hr_attendance_v2',OLD='hr_attendance_v1',LKEY='hr_local_v1',SKEY='hr_snaps_v1';
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}};
+const COLLS=['users','depts','emps','viol','vtypes','rates','ropen','rlaws','notes','nreads','anotes','log'];
+function defaults(){const t=1;return{v:2,users:[{id:'u_admin',username:'admin',name:'مدير النظام',role:'admin',perms:{},depts:[],pass:'',def:true,u:t}],depts:[],emps:[],viol:[],
+ vtypes:['تأخر عن الدوام','غياب بدون عذر','ترك العمل قبل الانتهاء','مخالفة سلوكية','إهمال في العمل'].map((n,i)=>({id:'vt'+i,name:n,u:t})),
+ rates:[],ropen:[],rlaws:[],notes:[],nreads:[],anotes:[],log:[],att:{},presence:{},settings:{u:0,org:'',phone:'',logo:'',tabs:[...DEF_TABS],portal:{info:1,att:1,viol:1,rate:1}}}}
+function migrate(o){const d=defaults();o=Object.assign(d,o||{});
+ if(!o.v||o.v<2){const t=nextU();
+  o.users=(o.users||[]).map(u=>({perms:PRESET[u.role]||{},...u,perms:u.perms&&Object.keys(u.perms).length?u.perms:(PRESET[u.role]||{}),u:u.u||t}));
+  o.depts=(o.depts||[]).map(x=>({incentiveOn:0,incentive:0,...x,u:x.u||t}));
+  o.emps=(o.emps||[]).map(e=>({active:true,offType:'full',bf:'',bt:'',portal:false,...e,u:e.u||t}));
+  o.viol=(o.viol||[]).map(v=>({time:'',byName:v.by||'',at:'',...v,u:v.u||t}));
+  o.vtypes=(o.vtypes||[]).map((n,i)=>typeof n==='string'?{id:'vt'+i,name:n,u:1}:n);
+  if(o.tabs){o.settings.tabs=[...DEF_TABS];o.settings.org=o.settings.org||'';delete o.tabs}
+  const att={};for(const k in (o.att||{})){const r=o.att[k];if(r.e){att[k]=r;continue}const e={};(r.s||[]).forEach(id=>e[id]=(r.p||[]).includes(id)?1:0);att[k]={e,by:r.by,at:r.at,u:Date.parse(r.at)||t}}
+  o.att=att;o.v=2}
+ COLLS.forEach(c=>{if(!Array.isArray(o[c]))o[c]=[]});if(!o.presence)o.presence={};if(!o.settings.portal)o.settings.portal={info:1,att:1,viol:1,rate:1};
+ if(!o.settings.tabs)o.settings.tabs=[...DEF_TABS];
+ o.rates=o.rates.map(r=>{if(r.score===undefined||r.law!==undefined)return r;const d=o.depts.find(x=>x.id===(r.dept))||{},inc=+d.incentive||0;
+  return{id:r.id,emp:r.emp,dept:r.dept,month:r.month,date:r.month+'-01',time:'',law:'',lawName:'تقييم سابق ('+r.score+'/100)',price:+(inc*(100-r.score)/100).toFixed(2),note:r.note||'',by:r.by,byName:r.byName,at:r.at,u:r.u||1,d:r.d}});
+ return o}
+function loadDb(){let s=ls.get(KEY);if(s){try{return migrate(JSON.parse(s))}catch(e){}}s=ls.get(OLD);if(s){try{return migrate(JSON.parse(s))}catch(e){}}return defaults()}
+let db=loadDb(),realDb=null,reviewing=null,dbv=0,saveCnt=0;
+let loc=Object.assign({scriptUrl:'',key:'',auto:true,theme:'auto',acc:'#1d4e89',attOrder:'recent',notified:[]},(()=>{try{return JSON.parse(ls.get(LKEY)||'{}')}catch(e){return{}}})());
+const saveLoc=()=>ls.set(LKEY,JSON.stringify(loc));
+/* ===== طبقة التخزين: localStorage للحجم الصغير + IndexedDB دائم (يتجاوز حدّ ~5MB) ===== */
+const LS_MAX=1800000,SNAP_KEEP=12,SMETA='hr_snapmeta_v1';
+let idbP=null,persistFail=false,pDirty=false,pTimer=null,lastSize=0,persistedOK=null;
+function idbOpen(){if(idbP)return idbP;idbP=new Promise((res,rej)=>{try{const r=indexedDB.open('hr_store',1);r.onupgradeneeded=()=>{r.result.createObjectStore('kv')};r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);r.onblocked=()=>rej(new Error('blocked'))}catch(e){rej(e)}});idbP.catch(()=>{});return idbP}
+const idbGet=k=>idbOpen().then(d=>new Promise((res,rej)=>{const q=d.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)}));
+const idbPut=(k,v)=>idbOpen().then(d=>new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res(true);t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error||new Error('abort'))}));
+const idbDel=k=>idbOpen().then(d=>new Promise((res,rej)=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').delete(k);t.oncomplete=()=>res(true);t.onerror=()=>rej(t.error)}));
+function persist(){if(reviewing)return;pDirty=true;clearTimeout(pTimer);pTimer=setTimeout(persistNow,300)}
+async function persistNow(){clearTimeout(pTimer);if(!pDirty||reviewing)return;pDirty=false;let str;
+ try{str=JSON.stringify(db)}catch(e){persistFail=true;updStore();return}
+ lastSize=str.length;let lsOk=false;if(str.length<=LS_MAX)lsOk=ls.set(KEY,str);
+ let idbOk=false;try{idbOk=await idbPut('db',str)}catch(e){}
+ persistFail=!(lsOk||idbOk);updStore()}
+/* عند الإقلاع: دمج نسخة IndexedDB (إن وُجدت) مع المحلية دون استبدال، ثم ترحيل النسخ الاحتياطية القديمة */
+async function idbBoot(){
+ try{if(navigator.storage&&navigator.storage.persist)persistedOK=await navigator.storage.persist()}catch(e){}
+ try{const str=await idbGet('db');if(str&&str!==ls.get(KEY)&&!reviewing){const o=JSON.parse(str);db=mergeDb(db,o);dbv++;pDirty=true}}catch(e){}
+ try{await migrateSnaps()}catch(e){}
+ pDirty=true;persistNow();if(session&&!reviewing)render();else updStore()}
+async function migrateSnaps(){const raw=ls.get(SKEY);if(!raw)return;let a=[];try{a=JSON.parse(raw)}catch(e){return}
+ let ok=true;for(const x of a){if(!x||!x.data)continue;try{await idbPut('snap:'+x.id,JSON.stringify(x.data))}catch(e){ok=false;break}}
+ if(ok){const meta=a.map(x=>({id:x.id,at:x.at,month:x.month,label:x.label,auto:!!x.auto,size:x.data?JSON.stringify(x.data).length:0}));ls.set(SMETA,JSON.stringify(meta));try{localStorage.removeItem(SKEY)}catch(e){}}}
+function save(){if(reviewing)return;dbv++;saveCnt++;persist();if(!loc.dirty){loc.dirty=1;saveLoc()}scheduleSync()}
+const live=c=>db[c].filter(x=>!x.d);
+function put(c,rec){rec.u=nextU();const a=db[c],i=a.findIndex(x=>x.id===rec.id);if(i<0)a.push(rec);else a[i]=rec;return rec}
+function del(c,id){const r=db[c].find(x=>x.id===id);if(r){r.d=1;r.dt=new Date().toISOString();r.dby=who().name;r.u=nextU()}}
+function logA(a,x){db.log.push({id:uid(),u:nextU(),t:new Date().toISOString(),by:who().name,a,x:x||''});}
+const attRec=k=>{const r=db.att[k];return r&&!r.d?r:null};
+
+/* ===== الدمج الذكي ===== */
+function mergeColl(a,b){const m=new Map();for(const r of a||[])m.set(r.id,r);for(const r of b||[]){const o=m.get(r.id);if(!o){m.set(r.id,r);continue}
+  if((r.u||0)>(o.u||0))m.set(r.id,(r.vn==null&&o.vn!=null)?{...r,vn:o.vn}:r);else if(o.vn==null&&r.vn!=null)m.set(r.id,{...o,vn:r.vn})}return[...m.values()]}
+function mergeAtt(a,b){const win=(b.u||0)>(a.u||0)?b:a,lose=win===a?b:a;return{...win,e:win.d?{}:{...lose.e,...win.e}}}
+function mergeDb(L,R){R=migrate(JSON.parse(JSON.stringify(R)));const o={...L};
+ COLLS.forEach(c=>o[c]=mergeColl(L[c],R[c]));
+ o.log=o.log.sort((p,q)=>q.u-p.u);
+ o.att={...L.att};for(const k in R.att){o.att[k]=o.att[k]?mergeAtt(o.att[k],R.att[k]):R.att[k]}
+ o.settings=(R.settings.u||0)>(L.settings.u||0)?R.settings:L.settings;
+ o.presence={...L.presence};const now=Date.now();for(const k in R.presence){if(!o.presence[k]||R.presence[k].t>o.presence[k].t)o.presence[k]=R.presence[k]}
+ for(const k in o.presence)if(now-o.presence[k].t>864e5)delete o.presence[k];
+ o.v=2;return o}
+
+/* ===== الدخول والصلاحيات ===== */
+let session=null;
+const base=()=>reviewing?realDb:db;
+const curUser=()=>session&&session.k==='u'?base().users.find(u=>u.id===session.id&&!u.d):null;
+const curEmp=()=>session&&session.k==='e'?base().emps.find(e=>e.id===session.id&&!e.d):null;
+const who=()=>curUser()||curEmp()||{name:'—',id:''};
+const isAdmin=()=>!reviewing&&curUser()?.role==='admin';
+function can(k){const u=curUser();if(!u)return false;const p=PERMS.find(x=>x.k===k);if(reviewing&&p&&p.w)return false;if(u.role==='admin')return true;return !!(u.perms&&u.perms[k])}
+async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){let h=5381;for(const c of s)h=((h<<5)+h+c.charCodeAt(0))|0;return'x'+h}}
+const dept=id=>live('depts').find(d=>d.id===id);
+const visDepts=()=>{const u=curUser();return live('depts').filter(d=>!u||u.role==='admin'||!u.depts?.length||u.depts.includes(d.id)).sort((a,b)=>a.name.localeCompare(b.name,'ar'))};
+const allEmpsOf=id=>live('emps').filter(e=>e.dept===id).sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+const empsOf=id=>allEmpsOf(id).filter(e=>e.active!==false);
+const empById=id=>db.emps.find(e=>e.id===id&&!e.d);
+
+/* ===== منطق الدوام ===== */
+const hasBreak=e=>e.bf!==''&&e.bf!=null&&e.bt!==''&&e.bt!=null;
+const isOff=(e,date)=>e.off!==''&&e.off!=null&&+e.off===wd(date);
+const isHalfOff=e=>e.offType==='half';
+const shiftTo=(e,date)=>isOff(e,date)&&isHalfOff(e)?Math.min(+e.to,+e.from+4):+e.to; /* نهاية حصرية: 8→16 = الساعات 8..15 */
+const inBrk=(e,h)=>hasBreak(e)&&h>=+e.bf&&h<(+e.bt>+e.bf?+e.bt:+e.bf+1);
+function inShift(e,date,h){if(isOff(e,date)&&!isHalfOff(e))return false;if(h<+e.from||h>=shiftTo(e,date))return false;if(inBrk(e,h))return false;return true}
+let aiV=-1,ai={},aiT=new Set();
+function attIdx(){if(aiV===dbv)return ai;ai={};aiT=new Set();for(const k in db.att){const r=db.att[k];if(r.d)continue;const[date,dpk,h]=k.split('|');aiT.add(date+'|'+dpk);const d=ai[date]||(ai[date]={});for(const id in r.e){const o=d[id]||(d[id]={s:0,p:0,h:{}}),v=r.e[id];if(v===2){o.h[+h]=2;continue}o.s++;if(v)o.p++;o.h[+h]=v?1:0}}aiV=dbv;return ai}
+const halfDays=h=>Math.floor(h/3)*0.5;
+const wkH=(e,date,h)=>isOff(e,date)&&h>=+e.from&&h<+e.to&&!inShift(e,date,h);
+const isBreakH=(e,date,h)=>inBrk(e,h)&&h>=+e.from&&h<shiftTo(e,date)&&!(isOff(e,date)&&!isHalfOff(e));
+/* حساب اليوم لموظف: ساعات الحضور كلها (داخل الدوام وخارجه) تُحتسب حضورًا؛ غياب ساعات الدوام يُخصم منه ما عمله الموظف بدلها خارج دوامه؛ ساعات الراحة لا تُحتسب؛ كل 3 ساعات = نصف يوم (بحد أقصى يوم) */
+/* كل 3 ساعات = نصف يوم؛ مجموع الحضور والغياب في اليوم لا يتجاوز يومًا (نصفين): عند التجاوز يُخفَّض الجانب الأكبر حتى ينال كل جانب نصيبه */
+function balance(pb,ab){while(pb+ab>2){if(pb>ab)pb--;else if(ab>pb)ab--;else{pb--;ab--}}return{pb,ab}}
+function dayCalc(e,date){const o=attIdx()[date]?.[e.id];if(!o&&!aiT.has(date+'|'+e.dept))return null;const hh=o?o.h:{};let s=0,pin=0,ain=0,pex=0;
+ for(const k in hh){const h=+k,v=hh[k];if(v===2)continue;if(inShift(e,date,h)){s++;v?pin++:ain++}else if(v)pex++}
+ /* ساعات الدوام التي لم تُعقَّب تُحتسب غيابًا افتراضيًا (الماضية فقط، وفي اليوم الحالي ما قبل الساعة الحالية) */
+ const td=todayStr(),nh=nowSlot();if(date<=td){for(const h of HOURS){if(hh[h]!==undefined||!inShift(e,date,h))continue;if(date===td&&!(h<nh.h))continue;s++;ain++}}
+ const p=pin+pex,a=Math.max(0,ain-pex),bal=balance(Math.floor(p/3),Math.floor(a/3));return{s,p,a,pin,ain,pex,dp:bal.pb/2,da:bal.ab/2}}
+const credit=(e,date)=>{const c=dayCalc(e,date);return c?c.dp:0};
+const offWorked=(e,date)=>{if(!isOff(e,date))return false;const c=dayCalc(e,date);return !!c&&c.pex>0&&c.dp>0};
+function entitlement(e,date){if(!isOff(e,date)||date>todayStr()||offWorked(e,date))return 0;let prior=0;for(let k=1;k<=6;k++)prior+=credit(e,addDays(date,-k));
+ if(isHalfOff(e))return prior>=3?0.5:0;return prior>=4?1:prior>=3?0.5:0}
+function empSummary(e,from,to){let s=0,p=0,a=0,dp=0,da=0,lp=0,la=0,ent=0,offDays=0;let d=from,n=0;while(d<=to&&n++<400){const c=dayCalc(e,d);if(c){s+=c.s;p+=c.p;a+=c.a;dp+=c.dp;da+=c.da;lp+=c.p%3;la+=c.a%3}if(isOff(e,d)&&d<=todayStr()&&!offWorked(e,d)){offDays++;ent+=entitlement(e,d)}d=addDays(d,1)}
+ return{s,p,a,dp,da,ent,offDays,total:dp+ent,lp,la}}
+function dayStatus(e,date){const o=dayCalc(e,date),off=isOff(e,date),parts=[];
+ if(o){const dp=o.dp,da=o.da;if(dp>0)parts.push(dp>=1?'ح':'ح½');if(da>0)parts.push(da>=1?'غ':'غ½')}
+ if(off&&!offWorked(e,date)){if(date<=todayStr()){const en=entitlement(e,date);parts.push(en>=1?'ع':en>0?'ع½':'ع✗')}else parts.push(isHalfOff(e)?'ع½':'ع')}
+ if(!parts.length)return o?'—':(date>todayStr()?'':'لم يُعقَّب');return parts.join(' + ')}
+
+/* ===== واجهة عامة ===== */
+const ui={tab:'home',date:todayStr(),deptId:'',q:'',fd:'',ft:'',fs:'active',draft:{},unl:{},lt:'u',
+ rep:{type:'sum',from:todayStr().slice(0,8)+'01',to:todayStr(),dept:'',etype:'',scope:'all'},vf:{dept:'',from:'',to:'',q:'',by:'',rfrom:'',rto:'',month:todayStr().slice(0,7),nfrom:'',nto:''},rm:todayStr().slice(0,7),rd:''};
+const modalOpen=()=>$('#modal').classList.contains('on');
+function openModal(h){$('#mbox').dataset.exit='';$('#mbox').innerHTML=h;$('#modal').classList.add('on')}
+function closeModal(){$('#modal').classList.remove('on')}
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',2800)}
+function confirmBox(msg,act,v,btn){openModal(`<h2>تأكيد</h2><p>${msg}</p><div class="bar"><button class="btn d" data-act="${act}" data-v="${esc(v||'')}">${btn||'تأكيد'}</button><button class="btn s" data-act="close">إلغاء</button></div>`)}
+const opts=(arr,sel,ph)=>(ph!=null?`<option value="">${ph}</option>`:'')+arr.map(([v,t])=>`<option value="${esc(v)}"${String(v)===String(sel)?' selected':''}>${esc(t)}</option>`).join('');
+const hourOpts=(sel,from,to,blank)=>{const a=[];for(let h=from;h<=to;h++)a.push([h,fmtH(h)]);return opts(a,sel,blank?'—':null)};
+const dayOpts=sel=>opts(DAYS.map((d,i)=>[i,d]),sel,'— لا يوجد —');
+const deptOpts=(sel,ph)=>opts(visDepts().map(d=>[d.id,d.name]),sel,ph);
+function applyUI(){const r=document.documentElement;if(loc.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',loc.theme);r.style.setProperty('--accbase',loc.acc||'#1d4e89');const tc=document.querySelector('meta[name=theme-color]');if(tc)tc.setAttribute('content',loc.acc||'#1d4e89')}
+const orgName=()=>db.settings.org||'نظام الدوام والمتابعة';
+
+/* ===== شاشة الدخول ===== */
+function showLogin(){$('#app').hidden=true;const l=$('#login');l.hidden=false;
+ const o=orgName(),lg=db.settings.logo;
+ l.innerHTML=`<div class="brand">${lg?`<img src="${lg}" alt="">`:''}<h1>${esc(o)}</h1><p>إدارة الموظفين ومتابعة الدوام بالساعة، مع التقارير والمخالفات والتقييم.</p>
+ <div class="strip">${HOURS.map(h=>`<i class="${h>=8&&h<=16&&h!==12?'':'o'}"></i>`).join('')}</div>${db.settings.phone?`<p>للتواصل: <span dir="ltr">${esc(db.settings.phone)}</span></p>`:''}</div>
+ <div class="lform"><form class="lbox" id="lf"><h2>تسجيل الدخول</h2><div class="seg"><button type="button" data-act="lt" data-v="u" class="${ui.lt==='u'?'on':''}">المستخدمون</button><button type="button" data-act="lt" data-v="e" class="${ui.lt==='e'?'on':''}">الموظفون</button></div>
+ <label>${ui.lt==='u'?'اسم المستخدم':'الرقم الوظيفي'}<input id="lu" autocomplete="username" required></label><label>كلمة المرور<input id="lp" type="password" autocomplete="current-password" required></label>
+ <button class="btn" type="submit">دخول</button><button type="button" class="btn s" data-act="loginSync" style="margin-top:8px">☁ إعداد المزامنة لهذا الجهاز${scriptReady()?' ✓':''}</button><div class="credit">by : Hisham alkuhali — 774367028</div><div id="le" class="hint" style="color:var(--bad);margin-top:8px;min-height:18px"></div>
+ <div class="hint" style="margin-top:6px">${online?'':'⚠ غير متصل بالإنترنت — التطبيق يعمل محليًا. '}</div><div class="hint">${ui.lt==='e'?'كلمة المرور الأولى هي رقمك الوظيفي ما لم يحدد المدير غيرها.':(db.users.some(u=>u.def&&!u.d)?'الدخول الأول: admin / admin123 (غيّرها بعد الدخول).':'')}</div></form></div>`}
+
+/* ===== الهيكل ===== */
+function render(){applyUI();setTimeout(updInstall,0);const u=curUser(),e=curEmp();
+ if(!u&&!e){showLogin();return}
+ $('#login').hidden=true;$('#app').hidden=false;
+ $('#ttl').textContent=orgName();const lg=db.settings.logo;$('#hlogo').hidden=!lg;if(lg)$('#hlogo').src=lg;
+ $('#who').textContent=(u?u.name+' — '+ROLES[u.role]:e.name+' — موظف');
+ $('#rv').hidden=!reviewing;if(reviewing)$('#rvt').textContent='وضع المراجعة (قراءة فقط): '+reviewing.label;
+ updChips();updBell();
+ if(e){$('#nav').innerHTML='';$('#main').innerHTML=portalHtml();return}
+ const tabs=[...db.settings.tabs.filter(t=>TABS[t]),...DEF_TABS.filter(t=>!db.settings.tabs.includes(t))].filter(t=>TABPERM[t]());
+ if(!tabs.includes(ui.tab)&&ui.tab!=='settings')ui.tab=tabs[0];
+ $('#nav').innerHTML=tabs.map(t=>`<button class="${t===ui.tab?'on':''}" data-act="tab" data-v="${t}">${TABS[t]}</button>`).join('');
+ panel()}
+const TABPERM={home:()=>true,emps:()=>can('emps_view'),depts:()=>can('emps_view'),roster:()=>can('roster_view'),att:()=>can('att_take')||can('att_unlock'),reports:()=>can('reports_view'),viol:()=>can('viol_view')||can('viol_add'),rate:()=>can('rate_view')||can('rate_do'),users:()=>isAdmin(),trash:()=>isAdmin()||can('purge'),settings:()=>true};
+function panel(){const keep=!ui.reset;ui.reset=false;const sc=[...document.querySelectorAll('#main .tw')].map(x=>x.scrollLeft),wy=window.scrollY;
+ $('#main').innerHTML=({home:pHome,emps:pEmps,depts:pDepts,roster:pRoster,att:pAtt,reports:pReports,viol:pViol,rate:pRate,users:pUsers,trash:pTrash,settings:pSettings})[ui.tab]();
+ if(ui.tab==='settings')updStore();
+ if(keep){document.querySelectorAll('#main .tw').forEach((x,i)=>{if(sc[i])x.scrollLeft=sc[i]});window.scrollTo(0,wy)}else{window.scrollTo(0,0);if(ui.tab==='att')scrollNow()}}
+let online=navigator.onLine;
+const onlineUsers=()=>{const n=Date.now();return Object.entries(db.presence).filter(([k,v])=>n-v.t<180000)}
+function updChips(){const c=$('#cNet');if(!c)return;c.querySelector('i').className='dot '+(online?'on':'off');c.querySelector('span').textContent=online?'متصل':'غير متصل';
+ $('#cOn span').textContent=Math.max(1,onlineUsers().length)}
+function setSt(t){const s=$('#sync');if(s)s.textContent=t||''}
+
+/* ===== الرئيسية ===== */
+function pHome(){const td=todayStr(),vd=visDepts(),ids=new Set(vd.map(d=>d.id));const emps=live('emps').filter(e=>ids.has(e.dept));
+ const act=emps.filter(e=>e.active!==false).length,mo=monthOf(td);
+ const vc=live('viol').filter(v=>violVisible(v)&&v.date.startsWith(mo)&&emps.some(e=>e.id===v.emp)).length;
+ const rows=vd.map(d=>{const es=empsOf(d.id);if(!es.length)return'';const hs=HOURS.filter(h=>es.some(e=>inShift(e,td,h)));const sv=hs.filter(h=>attRec(td+'|'+d.id+'|'+h)).length;
+  const pct=hs.length?Math.round(sv/hs.length*100):100;return`<tr><td>${esc(d.name)}</td><td>${es.length}</td><td>${sv} / ${hs.length}</td><td><div class="prog"><i style="width:${pct}%"></i></div></td></tr>`}).join('');
+ return`<div class="stats"><div class="stat"><b>${act}</b><span>موظف نشط</span></div><div class="stat"><b>${vd.length}</b><span>قسم</span></div><div class="stat"><b>${vc}</b><span>مخالفات ${monthLabel(mo)}</span></div><div class="stat"><b>${Math.max(1,onlineUsers().length)}</b><span>مستخدم متصل</span></div></div>
+ <div class="card"><h2>طباعة الأقسام وأعداد العمال</h2><div class="bar"><label>القسم<select data-ch="hd">${deptOpts(ui.hd||'','كل الأقسام')}</select></label><button class="btn" data-act="prCount">طباعة (بدون أسماء)</button></div><div class="hint">تطبع اسم القسم وعدد العمال النشطين فيه (أساسي / مؤقت) دون أسماء.</div></div>
+ <div class="card"><h2>تقدّم التعقيب اليوم — ${dayName(td)} ${td}</h2><div class="tw"><table class="t"><thead><tr><th>القسم</th><th>الموظفون</th><th>الساعات المحفوظة</th><th>التقدم</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="hint" style="padding:16px">لا توجد أقسام فيها موظفون نشطون.</td></tr>'}</tbody></table></div></div>`}
+
+/* ===== الموظفون ===== */
+function filteredEmps(){const q=ui.q.trim().toLowerCase(),vd=new Set(visDepts().map(d=>d.id));
+ return live('emps').filter(e=>vd.has(e.dept)&&(!ui.fd||e.dept===ui.fd)&&(!ui.ft||e.type===ui.ft)&&(ui.fs==='all'||(ui.fs==='active'?e.active!==false:e.active===false))&&(!q||e.name.toLowerCase().includes(q)||String(e.no).toLowerCase().includes(q)))
+ .sort((a,b)=>(dept(a.dept)?.name||'').localeCompare(dept(b.dept)?.name||'','ar')||a.name.localeCompare(b.name,'ar'))}
+const brk=e=>hasBreak(e)?fmtH(+e.bf)+' - '+fmtH(+e.bt):'—';
+const offTxt=e=>e.off===''||e.off==null?'—':DAYS[e.off]+(isHalfOff(e)?' (نصف)':'');
+function empRows(){return filteredEmps().map((e,i)=>`<tr class="${e.active===false?'inactive':''}"><td>${i+1}</td><td>${esc(e.no)}</td><td>${esc(e.name)}</td><td>${esc(dept(e.dept)?.name||'—')}</td>
+ <td><span class="pill ${e.type==='مؤقت'?'tmp':''}">${e.type}</span></td><td><span class="nw">${fmtH(+e.from)} - ${fmtH(+e.to)}</span></td><td>${brk(e)}</td><td>${offTxt(e)}</td>
+ <td><span class="pill ${e.active===false?'bad':'ok'}">${e.active===false?'موقوف':'نشط'}</span>${e.portal?' <span class="pill">بوابة</span>':''}</td>
+ <td>${can('emps_edit')?`<button class="btn sm s" data-act="editEmp" data-v="${e.id}">تعديل</button> `:''}${can('emps_status')?`<button class="btn sm ${e.active===false?'':'d'}" data-act="togEmp" data-v="${e.id}">${e.active===false?'تفعيل':'إيقاف'}</button> `:''}${can('emps_delete')?`<button class="btn sm d" data-act="delEmp" data-v="${e.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="10" class="hint" style="padding:18px">لا يوجد موظفون مطابقون.</td></tr>'}
+function pEmps(){return`<div class="card"><h2>بيانات الموظفين</h2>
+ <div class="bar">${can('emps_edit')?`<button class="btn" data-act="addEmp">+ إضافة موظف</button>`:''}${can('emps_import')?`<button class="btn s" data-act="impEmp">استيراد موظفين</button><button class="btn s" data-act="tpl">تنزيل قالب</button>`:''}<span class="sp"></span>
+ <label>بحث<input id="q" data-in="q" value="${esc(ui.q)}" placeholder="اسم أو رقم وظيفي"></label>
+ <label>القسم<select data-ch="fd">${deptOpts(ui.fd,'الكل')}</select></label><label>النوع<select data-ch="ft">${opts([['أساسي','أساسي'],['مؤقت','مؤقت']],ui.ft,'الكل')}</select></label>
+ <label>الحالة<select data-ch="fs">${opts([['active','النشطون'],['inactive','الموقوفون'],['all','الكل']],ui.fs)}</select></label></div>
+ <div class="bar"><span class="hint">طباعة:</span><button class="btn s sm" data-act="prEmp" data-v="أساسي">الأساسيون</button><button class="btn s sm" data-act="prEmp" data-v="مؤقت">المؤقتون</button><button class="btn s sm" data-act="prEmp" data-v="">الكل</button><span class="hint">(من نافذة الطباعة اختر "حفظ كـ PDF")</span></div>
+ <div class="tw"><table class="t"><thead><tr><th>#</th><th>الرقم الوظيفي</th><th>الاسم</th><th>القسم</th><th>النوع</th><th>الدوام</th><th>الراحة</th><th>الأسبوعية</th><th>الحالة</th><th></th></tr></thead><tbody id="eb">${empRows()}</tbody></table></div></div>`}
+function empForm(e){if(!live('depts').length){toast('أضف أو استورد الأقسام أولاً');return}
+ e=e||{no:'',name:'',dept:ui.fd||visDepts()[0]?.id||'',type:'أساسي',from:8,to:16,bf:'',bt:'',off:5,offType:'full',active:true,portal:false};
+ openModal(`<h2>${e.id?'تعديل موظف':'إضافة موظف'}</h2><form id="ef" class="fg" data-id="${e.id||''}">
+ <label>الرقم الوظيفي<input name="no" required value="${esc(e.no)}"></label><label>الاسم<input name="name" required value="${esc(e.name)}"></label>
+ <label>القسم<select name="dept">${deptOpts(e.dept)}</select></label><label>النوع<select name="type">${opts([['أساسي','أساسي'],['مؤقت','مؤقت']],e.type)}</select></label>
+ <label>بداية الدوام<select name="from">${hourOpts(e.from,7,24)}</select></label><label>نهاية الدوام<select name="to">${hourOpts(e.to,7,24)}</select></label>
+ <label>بداية الراحة<select name="bf">${hourOpts(e.bf,7,24,1)}</select></label><label>نهاية الراحة<select name="bt">${hourOpts(e.bt,7,24,1)}</select></label>
+ <label>الإجازة الأسبوعية<select name="off">${dayOpts(e.off)}</select></label><label>نوع الإجازة<select name="offType">${opts([['full','يوم كامل'],['half','نصف يوم (يداوم 4 ساعات من بداية دوامه)']],e.offType||'full')}</select></label>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" name="active" ${e.active!==false?'checked':''}>موظف نشط (يظهر في الكشوف)</label>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" name="portal" ${e.portal?'checked':''}>السماح بدخول الموظف برقمه الوظيفي</label>
+ <label class="w">كلمة مرور بوابة الموظف (اتركها فارغة للإبقاء، والافتراضي هو الرقم الوظيفي)<input name="pass" type="password" autocomplete="new-password"></label>
+ <div class="w bar" style="margin:0"><button class="btn" type="submit">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)}
+function parseRows(text){const lines=text.split(/\r?\n/).filter(l=>l.trim());if(!lines.length)return[];
+ const dl=lines[0].includes('\t')?'\t':(lines[0].includes(';')&&!lines[0].includes(',')?';':',');
+ return lines.map(l=>l.split(dl).map(c=>c.replace(/^"|"$/g,'').trim()))}
+function mapEmpRows(rows){if(!rows.length)return[];let ix={no:0,name:1,dept:2,type:3};const h=rows[0].map(c=>String(c));
+ if(h.some(c=>/اسم|رقم|قسم|name|id/i.test(c))){h.forEach((c,i)=>{if(/رقم|id|no/i.test(c)&&!/اسم/.test(c))ix.no=i;else if(/اسم|name/i.test(c))ix.name=i;else if(/قسم|dept/i.test(c))ix.dept=i;else if(/نوع|صفة|type/i.test(c))ix.type=i});rows=rows.slice(1)}
+ return rows.map(r=>({no:normNo(r[ix.no]),name:String(r[ix.name]==null?'':r[ix.name]).trim(),dept:String(r[ix.dept]==null?'':r[ix.dept]).trim(),type:/مؤقت|temp/i.test(String(r[ix.type]||''))?'مؤقت':null})).filter(r=>r.no&&r.name)}
+function deptByName(name,create){name=name.trim();if(!name)return null;const k=normName(name);let d=live('depts').find(x=>normName(x.name)===k);if(!d&&create){d=put('depts',{id:uid(),name,incentiveOn:0,incentive:0})}return d?d.id:null}
+function importEmps(list,defType,create,update){let add=0,dup=0,upd=0,nod=0;const byNo=new Map(live('emps').map(e=>[String(normNo(e.no)),e]));
+ list.forEach(r=>{const ex=byNo.get(r.no);const did=deptByName(r.dept,create);
+  if(ex){if(update){if(did)ex.dept=did;ex.name=r.name;if(r.type)ex.type=r.type;put('emps',ex);upd++}else dup++;return}
+  if(!did){nod++;return}
+  const e=put('emps',{id:uid(),no:r.no,name:r.name,dept:did,type:r.type||defType,from:8,to:16,bf:'',bt:'',off:5,offType:'full',active:true,portal:false});byNo.set(r.no,e);add++});
+ logA('استيراد موظفين',`أُضيف ${add}، مكرر ${dup}، محدّث ${upd}`);save();return{add,dup,upd,nod}}
+async function readText(f){const buf=await f.arrayBuffer(),u=new Uint8Array(buf);
+ if(u[0]===0xFF&&u[1]===0xFE)return new TextDecoder('utf-16le').decode(buf);if(u[0]===0xFE&&u[1]===0xFF)return new TextDecoder('utf-16be').decode(buf);
+ try{return new TextDecoder('utf-8',{fatal:true}).decode(buf).replace(/^﻿/,'')}catch(e){}
+ try{return new TextDecoder('windows-1256').decode(buf)}catch(e){return new TextDecoder().decode(buf)}}
+let xlP=null;
+function loadXLSX(){if(window.XLSX)return Promise.resolve();
+ if(xlP)return xlP;const one=src=>new Promise((res,rej)=>{const s=document.createElement('script');const tm=setTimeout(()=>rej(new Error('t')),15000);s.src=src;s.onload=()=>{clearTimeout(tm);window.XLSX?res():rej(new Error('x'))};s.onerror=()=>{clearTimeout(tm);rej(new Error('e'))};document.head.appendChild(s)});
+ return xlP=one('xlsx.full.min.js').catch(()=>{if(!navigator.onLine)throw new Error('تحميل مكتبة Excel لأول مرة يحتاج اتصالاً بالإنترنت (ملفات CSV والصق يعملان دون اتصال)');return one('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js')}).catch(()=>{xlP=null;throw new Error('تعذر تحميل مكتبة Excel')})}
+/* حفظ الملفات: في تطبيق أندرويد عبر الجسر الأصلي إلى مجلد التنزيلات، وفي المتصفح بالطريقة المعتادة */
+async function saveFile(blob,name){if(window.AndroidApp){const b64=await new Promise(r=>{const f=new FileReader();f.onload=()=>r(String(f.result).split(',')[1]||'');f.readAsDataURL(blob)});
+  let res='';try{res=AndroidApp.save(name,blob.type||'application/octet-stream',b64)}catch(e){res='err'}toast(res==='ok'?'تم حفظ الملف في مجلد التنزيلات: '+name:'تعذر حفظ الملف');return}
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click()}
+async function readFileRows(f){if(/\.(xlsx|xls)$/i.test(f.name)){await loadXLSX();const wb=XLSX.read(await f.arrayBuffer());return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:''})}
+ return parseRows(await readText(f))}
+
+/* ===== الأقسام ===== */
+function pDepts(){const rows=visDepts().map((d,i)=>`<tr><td>${i+1}</td><td>${esc(d.name)}</td><td>${empsOf(d.id).length}</td><td>${allEmpsOf(d.id).length-empsOf(d.id).length}</td><td>${d.incentiveOn?`<span class="pill ok">حافز ${esc(d.incentive)}</span>`:'<span class="pill">بلا حافز</span>'}</td>
+ <td>${can('depts_edit')?`<button class="btn sm s" data-act="editDept" data-v="${d.id}">تعديل</button> <button class="btn sm d" data-act="delDept" data-v="${d.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6" class="hint" style="padding:18px">لا توجد أقسام بعد. استورد الأقسام أولاً ثم الموظفين.</td></tr>';
+ return`<div class="card"><h2>الأقسام</h2>${can('depts_edit')?`<form id="df" class="bar"><label>اسم القسم<input id="dn" required></label><button class="btn" type="submit">+ إضافة</button>${can('emps_import')?`<button class="btn s" type="button" data-act="impDept">استيراد أقسام</button>`:''}</form>`:''}
+ <div class="tw"><table class="t"><thead><tr><th>#</th><th>القسم</th><th>موظفون نشطون</th><th>موقوفون</th><th>الحافز</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`}
+
+/* ===== كشف الدوام ===== */
+const LEAD_HEAD='<th>م</th><th>الرقم الوظيفي</th><th class="n">اسم الموظف</th><th>الدوام من</th><th>إلى</th><th>الراحة من</th><th>إلى</th><th>الأسبوعية</th>';
+function leadCells(e,i,date,edit){const hs=(k,v,a,b,bl)=>edit?`<select data-rk="${k}" data-e="${e.id}">${hourOpts(v,a,b,bl)}</select>`:(v===''||v==null?'—':fmtH(+v));
+ const offc=edit?`<select data-rk="off" data-e="${e.id}">${dayOpts(e.off)}</select> <select data-rk="offType" data-e="${e.id}">${opts([['full','كاملة'],['half','نصف']],e.offType||'full')}</select>`:offTxt(e);
+ return`<td>${i+1}</td><td>${esc(e.no)}</td><td class="n">${esc(e.name)}</td><td>${hs('from',e.from,7,24)}</td><td>${hs('to',e.to,7,24)}</td><td>${hs('bf',e.bf,7,24,1)}</td><td>${hs('bt',e.bt,7,24,1)}</td><td>${offc}${isOff(e,date)?' ✔':''}</td>`}
+const HEAD_H=()=>HOURS.map(h=>`<th>${((h%12)||12)}-${(((h+1)%12)||12)}</th>`).join('');
+function rosterTable(d,date,edit){const es=empsOf(d.id);
+ return`<div class="dt">${esc(d.name)}</div><table class="grid"><thead><tr>${LEAD_HEAD}${HEAD_H()}</tr></thead><tbody>${es.map((e,i)=>`<tr>${leadCells(e,i,date,edit)}${HOURS.map(h=>`<td class="${inShift(e,date,h)?'':'out'}"></td>`).join('')}</tr>`).join('')}</tbody></table>`}
+const rosterDepts=()=>visDepts().filter(d=>(!ui.deptId||d.id===ui.deptId)&&empsOf(d.id).length);
+function pRoster(){const ed=can('roster_edit');return`<div class="card"><h2>كشف الدوام اليومي</h2><div class="bar">
+ <label>التاريخ<input type="date" data-ch="date" value="${ui.date}"></label><label>القسم<select data-ch="deptId">${deptOpts(ui.deptId,'كل الأقسام')}</select></label>
+ <span class="sp"></span><button class="btn" data-act="prRoster">طباعة / حفظ PDF</button></div>
+ <div class="hint" style="margin-bottom:8px">${dayName(ui.date)} — المظلل خارج الدوام أو في الراحة أو الإجازة الأسبوعية. تظهر الأقسام التي فيها موظفون نشطون فقط.${ed?' عدّل الدوام والراحة والأسبوعية مباشرة من الجدول.':''}</div>
+ <div class="tw" style="padding:6px">${rosterDepts().map(d=>rosterTable(d,ui.date,ed)).join('')||'<div class="hint">لا توجد أقسام فيها موظفون نشطون.</div>'}</div></div>`}
+
+/* ===== التعقيب ===== */
+const akey=(date,d,h)=>date+'|'+d+'|'+h;
+function nowSlot(){const n=new Date(),hr=n.getHours();return{h:hr===0?24:hr,day:hr===0?addDays(todayStr(),-1):todayStr()}}
+const isNow=h=>{const n=nowSlot();return ui.date===n.day&&h===n.h};
+function scrollNow(){const w=document.querySelector('#main .attw'),th=w&&w.querySelector('th.cn');if(!w||!th)return;let x=0;for(let p=th.previousElementSibling;p&&!p.classList.contains('c2');p=p.previousElementSibling)x+=p.offsetWidth;w.scrollLeft=-x}
+function attCols(){const n=nowSlot();return{pin:(ui.date===n.day&&HOURS.includes(n.h))?n.h:null,cols:[...HOURS]}}
+function pAtt(){const vd=visDepts();if(!vd.length)return'<div class="card hint">أضف أقسامًا وموظفين أولاً.</div>';
+ if(!vd.some(d=>d.id===ui.deptId))ui.deptId=vd[0].id;const d=dept(ui.deptId),es=empsOf(d.id),tk=can('att_take'),ul=can('att_unlock'),{cols,pin}=attCols(),cc=h=>h===pin?' cn':'';
+ const head=cols.map(h=>{const k=akey(ui.date,d.id,h),rec=attRec(k);let ctl='';
+  if(rec&&!ui.unl[k])ctl=`<span class="pill ok">محفوظ</span>${ul?`<br><button class="btn sm s" data-act="unl" data-v="${h}">تعديل</button>`:''}`;
+  else if(tk||(ul&&rec))ctl=`<button class="btn sm s" data-act="allP" data-v="${h}">الكل ✓</button><br><button class="btn sm" data-act="saveH" data-v="${h}">حفظ</button>`;
+  return`<th class="${isNow(h)?'now':''}${cc(h)}">${fmtR(h)}${isNow(h)?'<span class="nowb">الآن</span>':''}<div>${ctl}</div></th>`}).join('');
+ const rows=es.map((e,i)=>{let p=0,s=0;const cells=cols.map(h=>{const k=akey(ui.date,d.id,h),rec=attRec(k),sh=inShift(e,ui.date,h),nw=(isNow(h)?' now':'')+cc(h),wk=wkH(e,ui.date,h)?' wk':'';
+   if(rec&&!ui.unl[k]){const v=rec.e[e.id];if(v===undefined)return`<td class="out${nw}${wk}"></td>`;if(v===2)return`<td class="rest${nw}${wk}">ر</td>`;s++;if(v){p++;return`<td class="ok${nw}${wk}">✓</td>`}return`<td class="bad${nw}${wk}">✗</td>`}
+   const dr=ui.draft[k]||(ui.unl[k]&&rec?rec.e:{});
+   {const v=dr[e.id]===2?2:dr[e.id]?1:0;return`<td class="${sh?'':'out'}${nw}${wk}"><button type="button" class="ckb s${v}" data-act="ck" data-h="${h}" data-e="${e.id}" ${(tk||ul)?'':'disabled'}>${v===2?'ر':v?'✓':'✗'}</button></td>`}}).join('');
+  return`<tr><td class="c1">${i+1}</td><td class="c2"><b>${esc(e.name)}</b>${isOff(e,ui.date)?` <span class="pill warn">${isHalfOff(e)?'نصف إجازة':'إجازة'}</span>`:''}<br><small>${esc(e.no)} · ${fmtH(+e.from)}-${fmtH(+e.to)}</small></td>${cells}<td>${s?p+'/'+s:'—'}</td><td class="anc"><input class="ani" data-an="${e.id}" value="${esc(noteOf(e.id))}" placeholder="ملاحظة" ${(tk||ul)?'':'disabled'}></td></tr>`}).join('');
+ return`<div class="card"><h2>التعقيب والتحضير بالساعة</h2><div class="bar">
+ <label>التاريخ<input type="date" data-ch="date" value="${ui.date}"></label><label>القسم<select data-ch="deptId">${deptOpts(ui.deptId)}</select></label>
+ <span class="sp"></span><span class="pill ok">الساعة الآن: ${fmtH(nowSlot().h)}</span><button class="btn s" data-act="goNow">⏱ الساعة الحالية</button><button class="btn s" data-act="prNotes">🖨 ملاحظات اليوم</button>${can('reports_export')?`<button class="btn s" data-act="prDaily">طباعة تقرير اليوم (كل الأقسام)</button>`:''}</div>
+ <div class="hint" style="margin-bottom:8px">أسماء الموظفين والقسم مثبّتة، والساعة الحالية مثبّتة بجوارها، والساعات القادمة بعدها، وتمرّر الساعات السابقة تحت عمود الأسماء (مرّر لليمين لرؤيتها). المظلل بخطوط = الإجازة الأسبوعية (كاملة أو نصف)، ومن داوم فيها يُحسب ح أو .5ح. اضغط الخلية لتبديلها: ✗ غائب ← ✓ حاضر ← ر (راحة لا تُحتسب غيابًا ولا حضورًا). غير المعلَّم يُحتسب غائبًا. ثم اضغط "حفظ". يمكن تعقيب موظف خارج دوامه (الخلية المظللة). بعد الحفظ تُقفل الساعة ولا يعدّلها إلا من يملك صلاحية الفتح.</div>
+ <div class="tw attw"><table class="grid att"><thead><tr><th class="c1">م</th><th class="c2">${esc(d.name)}<br><small>${ui.date}</small></th>${head}<th>حاضر/مجدول</th><th>ملاحظة</th></tr></thead><tbody>${rows||`<tr><td colspan="${HOURS.length+4}">لا يوجد موظفون نشطون في هذا القسم</td></tr>`}</tbody></table></div></div>`}
+/* سجل ساعات التعقيب: سطر واحد لكل (مستخدم/قسم/يوم) بدل سطر لكل ساعة، لتقليل نمو السجل */
+function logHour(edited,h){const id='hs|'+ui.date+'|'+ui.deptId+'|'+who().id+(edited?'|e':''),r=db.log.find(x=>x.id===id&&!x.d),hrs=r&&r.hrs?r.hrs.slice():[];
+ if(!hrs.includes(h))hrs.push(h);hrs.sort((a,b)=>a-b);
+ put('log',{id,t:r?r.t:new Date().toISOString(),by:who().name,a:edited?'تعديل ساعات محفوظة':'حفظ ساعات',x:(dept(ui.deptId)?.name||'')+' '+ui.date+': '+hrs.map(fmtH).join('، '),hrs})}
+function saveHour(h){const k=akey(ui.date,ui.deptId,h),ex=attRec(k),ul=can('att_unlock');
+ if(ex&&!(ul&&ui.unl[k])){toast('الساعة محفوظة ولا يعدّلها إلا من يملك صلاحية الفتح');return}
+ if(!ex&&!can('att_take')){toast('لا تملك صلاحية التعقيب');return}
+ const dr=ui.draft[k]||(ex?ex.e:{});const es=empsOf(ui.deptId).filter(e=>inShift(e,ui.date,h)||dr[e.id]||(ex&&ex.e[e.id]!==undefined));
+ if(!es.length){toast('لا يوجد موظفون في هذه الساعة');return}
+ const e={};es.forEach(x=>e[x.id]=dr[x.id]===2?2:dr[x.id]?1:0);
+ db.att[k]={e,by:who().name,uid:who().id,at:new Date().toISOString(),u:nextU(),...(ex?{edited:who().name}:{})};
+ logHour(!!ex,h);
+ delete ui.draft[k];delete ui.unl[k];save();toast('تم حفظ الساعة '+((h%12)||12)+'-'+(((h+1)%12)||12));panel()}
+
+function findEmpByInput(v){v=(v||'').trim();if(!v)return null;const no=normNo(v.split('—')[0]);const vis=new Set(visDepts().map(d=>d.id));
+ return live('emps').find(x=>vis.has(x.dept)&&String(normNo(x.no))===no)||live('emps').find(x=>vis.has(x.dept)&&x.name===v)||null}
+function vChips(){const c=$('#vchips');if(!c)return;c.innerHTML=ui.vsel.length?ui.vsel.map(id=>{const e=db.emps.find(x=>x.id===id)||{};return`<span class="chip">${esc(e.name||'؟')} (${esc(e.no||'')}) <b data-act="vRm" data-v="${id}">×</b></span>`}).join(''):'<span class="hint">لم يُضَف أي موظف بعد</span>'}
+function vAddFromInput(){const i=document.querySelector('#vf [name=emp]');if(!i||!i.value.trim())return true;const e=findEmpByInput(i.value);if(!e){toast('الموظف غير موجود');return false}if(!ui.vsel.includes(e.id))ui.vsel.push(e.id);i.value='';vChips();return true}
+
+const noteOf=id=>{const n=db.anotes.find(x=>x.id==='an|'+ui.date+'|'+id&&!x.d);return n?n.text:''};
+function saveNote(empId,text){if(reviewing||!(can('att_take')||can('att_unlock')))return;text=text.trim();const id='an|'+ui.date+'|'+empId,ex=db.anotes.find(n=>n.id===id);
+ if(!text){if(ex&&!ex.d){del('anotes',id);save()}return}
+ if(ex&&!ex.d&&ex.text===text)return;put('anotes',{id,date:ui.date,emp:empId,dept:ui.deptId,text,by:who().name,at:new Date().toISOString()});save();toast('تم حفظ الملاحظة')}
+function notesHtml(date,df){const vd=new Set(visDepts().filter(d=>!df||d.id===df).map(d=>d.id));
+ const L=live('anotes').filter(n=>n.date===date&&vd.has((db.emps.find(e=>e.id===n.emp)||{}).dept)).map(n=>({n,e:db.emps.find(e=>e.id===n.emp)})).sort((a,b)=>(dept(a.e.dept)?.name||'').localeCompare(dept(b.e.dept)?.name||'','ar')||a.e.name.localeCompare(b.e.name,'ar'));
+ const rows=L.map((x,i)=>`<tr><td>${i+1}</td><td class="n">${esc(dept(x.e.dept)?.name||'')}</td><td>${esc(x.e.no)}</td><td class="n">${esc(x.e.name)}</td><td class="n" style="white-space:pre-wrap">${esc(x.n.text)}</td><td>${esc(x.n.by||'')}</td></tr>`).join('');
+ return sheet('ملاحظات التعقيب',dayName(date)+' '+date,`<table class="grid" style="font-size:13px"><colgroup><col style="width:5%"><col style="width:16%"><col style="width:9%"><col style="width:20%"><col style="width:38%"><col style="width:12%"></colgroup><thead><tr><th>م</th><th class="n">القسم</th><th>الرقم</th><th class="n">الموظف</th><th class="n">الملاحظة</th><th>المدخِل</th></tr></thead><tbody>${rows||'<tr><td colspan="6">لا توجد ملاحظات في هذا اليوم.</td></tr>'}</tbody></table>`)}
+
+/* ===== سلة المحذوفات ===== */
+const TRASH_C=[['emps','الموظفون'],['viol','المخالفات'],['depts','الأقسام'],['rates','التقييمات']];
+const trashLbl=(c,r)=>{if(c==='emps')return esc(r.name)+' — '+esc(r.no);if(c==='depts')return esc(r.name);
+ const e=db.emps.find(x=>x.id===r.emp)||{};if(c==='viol')return esc(e.name||'؟')+' — '+esc(r.type||'')+' — '+esc(r.date||'');return esc(e.name||'؟')+' — '+esc(r.lawName||'')+' — '+esc(r.date||'')};
+function pTrash(){if(!(isAdmin()||can('purge')))return'<div class="card hint">لمدير النظام فقط.</div>';
+ const f=ui.tc||'emps',tf=ui.tf||'',tt=ui.tt||'',dd=r=>dstr(new Date(r.dt||r.u)),L=db[f].filter(x=>x.d&&!x.p&&(!tf||dd(x)>=tf)&&(!tt||dd(x)<=tt)).sort((a,b)=>b.u-a.u);
+ return`<div class="card"><h2>سلة المحذوفات</h2><div class="bar"><label>النوع<select data-ch="tc">${opts(TRASH_C,f)}</select></label><label>من تاريخ<input type="date" data-ch="tf" value="${tf}"></label><label>إلى تاريخ<input type="date" data-ch="tt" value="${tt}"></label><button class="btn s sm" data-act="trashAll">كل التواريخ</button><span class="pill">${L.length} عنصر</span>${(isAdmin()||can('purge'))&&L.length?`<button class="btn d sm" data-act="purgeTrash">تفريغ المعروض نهائيًا</button>`:''}</div>
+ <div class="hint" style="margin-bottom:8px">يمكن استعادة أي عنصر محذوف بما يتبعه من بيانات (الحضور والمخالفات تبقى محفوظة). التفريغ يخفي العناصر المعروضة (حسب النوع والتاريخ) نهائيًا ولا يمكن استعادتها بعده، ويُعمَّم على كل الأجهزة عند المزامنة دون أن تعود.</div>
+ <div class="tw"><table class="t"><thead><tr><th>م</th><th>العنصر</th><th>حُذف بواسطة</th><th>وقت الحذف</th><th></th></tr></thead><tbody>${L.map((r,i)=>`<tr><td>${i+1}</td><td class="n">${trashLbl(f,r)}</td><td>${esc(r.dby||'—')}</td><td>${r.dt?esc(fmtDT(r.dt)):esc(dd(r))+' (تقريبي)'}</td><td>${isAdmin()?`<button class="btn sm" data-act="restore" data-c="${f}" data-v="${r.id}">استعادة</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5" class="hint">السلة فارغة.</td></tr>'}</tbody></table></div></div>`}
+
+/* ===== الطباعة والتقارير ===== */
+function hdrHtml(title,sub){const lg=db.settings.logo;return`<div class="meta"><div>${lg?`<img src="${lg}" alt="">`:''}<h1>${esc(orgName())}</h1><div>${esc(title)}${db.settings.phone?' — '+esc(db.settings.phone):''}</div></div><div style="text-align:left"><b>${esc(sub)}</b><br>طُبع بواسطة: ${esc(who().name)} — ${esc(fmtDT(new Date().toISOString()))}</div></div>`}
+const sheet=(title,sub,body,cls)=>`<div class="sheet ${cls||''}"><table class="pg"><thead><tr><td>${hdrHtml(title,sub)}</td></tr></thead><tbody><tr><td>${body}</td></tr></tbody></table></div>`;
+function doPrint(html,land=true){$('#printArea').innerHTML=html;$('#pg').textContent=`@page{size:A4 ${land?'landscape':'portrait'};margin:10mm}`;setTimeout(()=>{if(window.AndroidApp){try{AndroidApp.print(document.title||'تقرير',!!land)}catch(e){toast('تعذرت الطباعة')}}else window.print()},60)}
+function dailyTable(d,date,etype){const es=empsOf(d.id).filter(e=>!etype||e.type===etype);if(!es.length)return'';
+ const rows=es.map((e,i)=>{const o=attIdx()[date]?.[e.id],dc=dayCalc(e,date),p=dc?dc.p:0,a=dc?dc.a:0;
+  const c=HOURS.map(h=>{const v=o?.h[h],w=wkH(e,date,h)?' wk':'';if(v===undefined)return`<td class="${inShift(e,date,h)?'':'out'}${w}"></td>`;if(v===2)return`<td class="rest${w}">ر</td>`;if(v)return`<td class="ok${w}">✓</td>`;return`<td class="bad${w}">✗</td>`}).join('');
+  return`<tr>${leadCells(e,i,date,false)}${c}<td>${p}</td><td>${a}</td><td>${esc(dayStatus(e,date))}</td></tr>`}).join('');
+ return`<div class="dt">${esc(d.name)}</div><table class="grid"><thead><tr>${LEAD_HEAD}${HEAD_H()}<th>حضور</th><th>غياب</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table>`}
+function dailyHtml(date,df,et){const b=visDepts().filter(d=>!df||d.id===df).map(d=>dailyTable(d,date,et)).join('');return sheet('تقرير المتابعة اليومي',dayName(date)+' '+date,b||'<p>لا توجد بيانات.</p>','cmp1')}
+function statusHtml(date,df,et){let out='';visDepts().filter(d=>!df||d.id===df).forEach(d=>{const es=empsOf(d.id).filter(e=>!et||e.type===et);if(!es.length)return;const cnt={};
+  const rows=es.map((e,i)=>{const o=dayCalc(e,date),st=dayStatus(e,date);cnt[st]=(cnt[st]||0)+1;return`<tr><td>${i+1}</td><td>${esc(e.no)}</td><td class="n">${esc(e.name)}</td><td><span class="nw">${fmtH(+e.from)} - ${fmtH(+e.to)}</span></td><td>${o?o.p:0}</td><td>${o?o.a:0}</td><td><b>${esc(st)}</b></td></tr>`}).join('');
+  out+=`<div class="dt">${esc(d.name)}</div><table class="grid"><thead><tr><th>م</th><th>الرقم الوظيفي</th><th class="n">اسم الموظف</th><th>الدوام</th><th>ساعات حضور</th><th>ساعات غياب</th><th>الحالة</th></tr></thead><tbody>${rows}<tr><th colspan="7" class="n">${Object.entries(cnt).map(([k,v])=>k+': '+v).join(' — ')}</th></tr></tbody></table>`});
+ return sheet('حالة الموظفين اليومية (ح حاضر · غ غائب · ع إجازة أسبوعية)',dayName(date)+' '+date,out||'<p>لا توجد بيانات.</p>')}
+function sumHtml(from,to,df,et){let out='';visDepts().filter(d=>!df||d.id===df).forEach(d=>{const es=empsOf(d.id).filter(e=>!et||e.type===et);if(!es.length)return;const t={p:0,a:0,dp:0,da:0,ent:0,tot:0};
+  const rows=es.map((e,i)=>{const r=empSummary(e,from,to);t.p+=r.p;t.a+=r.a;t.dp+=r.dp;t.da+=r.da;t.ent+=r.ent;t.tot+=r.total;
+   return`<tr><td>${i+1}</td><td>${esc(e.no)}</td><td class="n">${esc(e.name)}</td><td>${e.type}</td><td>${r.s}</td><td>${r.p}</td><td>${r.a}</td><td>${r.dp}</td><td>${r.da}</td><td>${r.offDays?r.ent+' / '+r.offDays:'—'}</td><td><b>${r.total}</b></td><td class="n">${[r.lp?r.lp+' س حضور':'',r.la?r.la+' س غياب':''].filter(Boolean).join('، ')}</td></tr>`}).join('');
+  out+=`<div class="dt">${esc(d.name)}</div><table class="grid"><thead><tr><th>م</th><th>الرقم الوظيفي</th><th class="n">اسم الموظف</th><th>النوع</th><th>ساعات مجدولة</th><th>ساعات حضور</th><th>ساعات غياب</th><th>أيام حضور</th><th>أيام غياب</th><th>إجازة أسبوعية ع (المستحق/الأيام)</th><th>الأيام المحتسبة</th><th class="n">ملاحظات</th></tr></thead><tbody>${rows}<tr><th colspan="5">إجمالي القسم</th><th>${t.p}</th><th>${t.a}</th><th>${t.dp}</th><th>${t.da}</th><th>${t.ent}</th><th>${t.tot}</th><th></th></tr></tbody></table>`});
+ return sheet('ملخص الحضور والغياب','من '+from+' إلى '+to,`<div class="hint" style="font-size:11px">تُحسب كل يوم على حدة: كل 3 ساعات حضور = نصف يوم حضور، وكل 3 ساعات غياب داخل الدوام = نصف يوم غياب (وساعات الدوام التي لم تُعقَّب تُعدّ غيابًا)، ويُخصم من الغياب ما عمله الموظف بدلها خارج دوامه، ولا تُحتسب ساعات الراحة. مجموع حضور وغياب اليوم الواحد لا يتجاوز يومًا (نصف + نصف) ويُخفَّض الجانب الأكبر عند التجاوز. الإجازة الأسبوعية ع: تستحق كاملة بعد 4 أيام عمل قبلها، ونصفًا بعد 3 أيام، ولا تُحتسب أقل من ذلك؛ ومن إجازته نصف يوم يستحق نصف ع بعد 3 أيام عمل.</div>${out||'<p>لا توجد بيانات.</p>'}`)}
+const SHORT_D=['أحد','اثن','ثلا','أرب','خمس','جمع','سبت'];
+function dayCell(e,date){const o=dayCalc(e,date),L=[];let dp=0,da=0,ent=0;
+ if(o){dp=o.dp;da=o.da;if(dp>=1)L.push('ح');else if(dp>0)L.push('½ح');if(da>=1)L.push('غ');else if(da>0)L.push('½غ')}
+ if(isOff(e,date)&&date<=todayStr()&&!offWorked(e,date)){ent=entitlement(e,date);L.push(ent>=1?'ع':ent>0?'½ع':'ع✗')}
+ return{dp,da,ent,html:L.join(' + ')}}
+function dstatHtml(date,df,et,scope){let out='';const act=scope==='act',ix=attIdx()[date]||{};const G={f:0,h:0,af:0,ah:0,w:0,n:0};
+ const cnt=(T,c)=>{T.f+=Math.floor(c.dp+1e-9);if(c.dp%1)T.h++;T.af+=Math.floor(c.da+1e-9);if(c.da%1)T.ah++;T.w+=c.ent;T.n++};
+ const line=T=>`ح: <b>${T.f}</b> — ½ح: <b>${T.h}</b> — غ: <b>${T.af}</b> — ½غ: <b>${T.ah}</b> — ع: <b>${T.w}</b> <span class="sm2">(حضور ${T.f+T.h/2} يوم · غياب ${T.af+T.ah/2} يوم)</span>`;
+ visDepts().filter(x=>!df||x.id===df).forEach(dp=>{const es=empsOf(dp.id).filter(e=>(!et||e.type===et)&&(!act||ix[e.id]));if(!es.length)return;const T={f:0,h:0,af:0,ah:0,w:0,n:0};
+  const rows=es.map((e,i)=>{const c=dayCell(e,date),has=e.off!==''&&e.off!=null,wk=has?SHORT_D[+e.off]+(isHalfOff(e)?' ½':''):'—';cnt(T,c);cnt(G,c);
+   return`<tr><td>${i+1}</td><td>${esc(e.no)}</td><td class="n">${esc(e.name)}</td><td>${fmtH(+e.from)}</td><td>${fmtH(+e.to)}</td><td>${wk}</td><td class="st"><span class="nw">${c.html||'—'}</span></td></tr>`}).join('');
+  out+=`<div class="blk"><table class="grid"><colgroup><col style="width:5%"><col style="width:11%"><col style="width:35%"><col style="width:9%"><col style="width:9%"><col style="width:14%"><col style="width:17%"></colgroup>
+  <thead><tr><th colspan="7" class="dh">${esc(dp.name)} <span>(${es.length} موظف)</span></th></tr><tr><th>م</th><th>الرقم</th><th class="n">اسم الموظف</th><th>من</th><th>إلى</th><th>الأسبوعية</th><th>الحالة</th></tr></thead>
+  <tbody>${rows}<tr class="tot"><td colspan="7">${line(T)}</td></tr></tbody></table></div>`});
+ const gt=out?`<div class="blk gt" style="margin-top:6px"><table class="grid"><tbody><tr class="tot"><td>الإجمالي العام (${G.n} موظف${act?' — النشطون لليوم':''}): ${line(G)}</td></tr></tbody></table></div>`:'';
+ return sheet('ملخص حالة التعقيب اليومي'+(act?' (النشطون)':''),dayName(date)+' '+date,`<div class="cols">${out||'<p>لا توجد بيانات.</p>'}</div>${gt}<div class="lg">ح حاضر · غ غائب · ½ح نصف حضور · ½غ نصف غياب · ع إجازة أسبوعية · — لم يُعقَّب · كل 3 ساعات حضور = نصف يوم، وكل 3 ساعات غياب داخل الدوام (أو غير معقَّبة) = نصف يوم غياب</div>`,'cmp2')}
+function reportHtml(){const r=ui.rep;if(r.type==='notes')return notesHtml(r.from,r.dept);if(r.type==='dstat')return dstatHtml(r.from,r.dept,r.etype,r.scope);return r.type==='sum'?sumHtml(r.from,r.to,r.dept,r.etype):r.type==='day'?dailyHtml(r.from,r.dept,r.etype):statusHtml(r.from,r.dept,r.etype)}
+function pReports(){const r=ui.rep,ex=can('reports_export');return`<div class="card"><h2>التقارير</h2><div class="bar">
+ <label>النوع<select data-rp="type">${opts([['sum','ملخص الحضور والغياب'],['day','تقرير المتابعة اليومي'],['status','حالة الموظفين ليوم (ح / غ / ع)'],['dstat','ملخص حالة التعقيب ليوم (A4 أفقي متصل)'],['notes','ملاحظات التعقيب ليوم (ورقة جانبية)']],r.type)}</select></label>
+ <label>${r.type==='sum'?'من':'التاريخ'}<input type="date" data-rp="from" value="${r.from}"></label>${r.type==='sum'?`<label>إلى<input type="date" data-rp="to" value="${r.to}"></label>`:''}
+ <label>القسم<select data-rp="dept">${deptOpts(r.dept,'كل الأقسام')}</select></label><label>الموظفون<select data-rp="etype">${opts([['أساسي','الأساسيون'],['مؤقت','المؤقتون']],r.etype,'الكل')}</select></label>
+ ${r.type==='dstat'?`<label>الطباعة<select data-rp="scope">${opts([['all','الجميع'],['act','النشطون لليوم (من تم تعقيبه)']],r.scope)}</select></label>`:''}<span class="sp"></span>${ex?`<button class="btn s" data-act="xlRep">تصدير Excel</button><button class="btn" data-act="prReport">طباعة / حفظ PDF</button>`:''}</div>
+ <div class="tw" id="repbox" style="padding:10px;background:#fff;color:#000">${reportHtml()}</div></div>`}
+
+/* ===== المخالفات ===== */
+/* بدون صلاحية "عرض المخالفات" لا يرى المستخدم إلا المخالفات التي سجّلها بنفسه */
+const violVisible=v=>can('viol_view')||(!!curUser()&&v.by===curUser().id);
+const regDay=v=>{const d=new Date(v.at);return isNaN(d)?(v.date||''):dstr(d)};
+const vMonth=v=>String(v.date||'').slice(0,7),curMonth=()=>todayStr().slice(0,7);
+const vOpen=v=>isAdmin()||vMonth(v)>=curMonth(); /* الأشهر السابقة مغلقة: التعديل والحذف للمدير فقط */
+function violList(){const f=ui.vf,vd=new Set(visDepts().map(d=>d.id)),useM=f.month&&!f.from&&!f.to&&!f.rfrom&&!f.rto&&!f.nfrom&&!f.nto;
+ return live('viol').filter(v=>{const e=empById(v.emp);return e&&violVisible(v)&&vd.has(e.dept)&&(!useM||vMonth(v)===f.month)&&(!f.nfrom||(v.vn&&v.vn>=+f.nfrom))&&(!f.nto||(v.vn&&v.vn<=+f.nto))&&(!f.dept||e.dept===f.dept)&&(!f.from||v.date>=f.from)&&(!f.to||v.date<=f.to)&&(!f.by||v.by===f.by)&&(!f.rfrom||regDay(v)>=f.rfrom)&&(!f.rto||regDay(v)<=f.rto)&&(!f.q||(e.name+e.no+v.type).includes(f.q))}).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time))}
+const violRow=(v,i,adm)=>{const e=empById(v.emp),ed=can('viol_edit')&&vOpen(v),dl=can('viol_delete')&&vOpen(v);return`<tr>${adm&&can('viol_edit')?`<td><input type="checkbox" data-vchk="${v.id}" ${ui.vchk&&ui.vchk[v.id]?'checked':''}></td>`:''}<td><b>${v.vn||'…'}</b></td><td>${v.date}</td><td>${esc(v.time||'')}</td><td>${esc(e.name)}</td><td>${esc(e.no)}</td><td>${esc(dept(e.dept)?.name)}</td><td>${esc(v.type)}</td><td>${esc(v.pen)}</td><td style="white-space:normal">${esc(v.note)}</td><td>${esc(v.byName)}${v.eby?`<br><small>عُدّلت: ${esc(v.eby)}</small>`:''}</td><td>${esc(fmtDT(v.at))}</td>${adm?`<td class="vact">${ed?`<button class="btn sm" data-act="editViol" data-v="${v.id}">تعديل</button> `:''}${dl?`<button class="btn sm d" data-act="delViol" data-v="${v.id}">حذف</button>`:''}${!ed&&!dl?'<small class="hint">مغلقة</small>':''}</td>`:''}</tr>`};
+const violUsers=()=>{const m={};live('viol').forEach(v=>{if(v.by&&violVisible(v))m[v.by]=v.byName||v.by});return Object.entries(m)};
+const violSheetReg=()=>{const f=ui.vf,l=violList().sort((a,b)=>String(a.at).localeCompare(String(b.at))),G={};l.forEach(v=>(G[regDay(v)]=G[regDay(v)]||[]).push(v));
+ const body=Object.keys(G).sort().map(k=>`<div class="blk" style="break-inside:auto;margin-bottom:10px"><table class="grid"><thead><tr><th colspan="10" class="dh">تاريخ التسجيل: ${dayName(k)} ${k} <span>(${G[k].length} مخالفة)</span></th></tr><tr><th>رقم</th><th>وقت التسجيل</th><th class="n">الموظف</th><th>الرقم</th><th>القسم</th><th>تاريخ المخالفة</th><th>المخالفة</th><th>الجزاء</th><th>ملاحظات</th><th>سُجلت بواسطة</th></tr></thead><tbody>${G[k].map((v,i)=>{const e=empById(v.emp)||{};return`<tr><td><b>${v.vn||''}</b></td><td>${esc(fmtDT(v.at))}</td><td class="n">${esc(e.name)}</td><td>${esc(e.no)}</td><td>${esc(dept(e.dept)?.name)}</td><td>${v.date}</td><td>${esc(v.type)}</td><td>${esc(v.pen)}</td><td style="white-space:normal">${esc(v.note)}</td><td>${esc(v.byName)}</td></tr>`}).join('')}</tbody></table></div>`).join('');
+ return sheet('كشف المخالفات حسب تاريخ التسجيل',(f.rfrom||'—')+' إلى '+(f.rto||'—'),body||'<p>لا توجد مخالفات.</p>')};
+const violSheetBy=()=>{const f=ui.vf,l=violList().reverse(),G={};l.forEach(v=>(G[v.by]=G[v.by]||[]).push(v));
+ const body=Object.keys(G).map(k=>`<div class="blk" style="break-inside:auto;margin-bottom:10px"><table class="grid"><thead><tr><th colspan="10" class="dh">المستخدم: ${esc(G[k][0].byName||k)} <span>(${G[k].length} مخالفة)</span></th></tr><tr><th>رقم</th><th>التاريخ</th><th>الوقت</th><th class="n">الموظف</th><th>الرقم</th><th>القسم</th><th>المخالفة</th><th>الجزاء</th><th>ملاحظات</th><th>وقت التسجيل</th></tr></thead><tbody>${G[k].map((v,i)=>{const e=empById(v.emp);return`<tr><td><b>${v.vn||''}</b></td><td>${v.date}</td><td>${esc(v.time||'')}</td><td class="n">${esc(e.name)}</td><td>${esc(e.no)}</td><td>${esc(dept(e.dept)?.name)}</td><td>${esc(v.type)}</td><td>${esc(v.pen)}</td><td style="white-space:normal">${esc(v.note)}</td><td>${esc(fmtDT(v.at))}</td></tr>`}).join('')}</tbody></table></div>`).join('');
+ return sheet('كشف المخالفات حسب المستخدم',(f.from||'—')+' إلى '+(f.to||'—'),body||'<p>لا توجد مخالفات.</p>')};
+const violMonths=()=>{const m=new Set([curMonth()]);live('viol').forEach(v=>{if(violVisible(v)&&v.date)m.add(vMonth(v))});return[...m].sort().reverse()};
+function pViol(){const f=ui.vf,l=violList(),ce=can('viol_edit'),pr=isAdmin()||can('viol_print');
+ return`<div class="card"><h2>بطاقة المخالفات</h2>${can('viol_view')?'':'<div class="hint" style="margin-bottom:8px">لا تملك صلاحية عرض المخالفات؛ تظهر لك المخالفات التي سجّلتها أنت فقط.</div>'}<div class="bar">${can('viol_add')?`<button class="btn" data-act="addViol">+ تسجيل مخالفة</button>`:''}<span class="sp"></span>
+ <label>الشهر<select data-vf="month">${opts(violMonths().map(m=>[m,m+(m<curMonth()?' (مغلق)':'')]),f.month,'كل الأشهر')}</select></label>
+ <label>القسم<select data-vf="dept">${deptOpts(f.dept,'الكل')}</select></label><label>من<input type="date" data-vf="from" value="${f.from}"></label><label>إلى<input type="date" data-vf="to" value="${f.to}"></label>
+ <label>تاريخ التسجيل من<input type="date" data-vf="rfrom" value="${f.rfrom}"></label><label>إلى<input type="date" data-vf="rto" value="${f.rto}"></label>
+ <label>من رقم<input type="number" min="1" data-vf="nfrom" value="${f.nfrom}" style="width:90px"></label><label>إلى رقم<input type="number" min="1" data-vf="nto" value="${f.nto}" style="width:90px"></label>
+ <label>المستخدم<select data-vf="by">${opts(violUsers(),f.by,'الكل')}</select></label><label>بحث<input data-vf="q" value="${esc(f.q)}"></label><button class="btn s" data-act="prViol">طباعة / حفظ PDF</button><button class="btn s" data-act="prViolNo">طباعة من رقم إلى رقم</button>${pr?`<button class="btn s" data-act="prViolUser">طباعة حسب المستخدم</button><button class="btn s" data-act="prViolReg">طباعة حسب تاريخ التسجيل</button>`:''}</div>
+ <div class="hint" style="margin-bottom:6px">تظهر مخالفات الشهر الحالي افتراضيًا؛ تُغلق الأشهر السابقة تلقائيًا (لا تُعدَّل ولا تُحذف إلا بواسطة المدير) وتظهر باختيار الشهر. الرقم يُمنح تلقائيًا بعد المزامنة (…).</div>
+ ${ce?`<div class="bar" style="margin-bottom:8px;background:var(--acc2);padding:8px;border-radius:10px"><b>تحديد: <span id="vcnt">${Object.keys(ui.vchk||{}).length}</span></b><label>الجزاء للمحدد<input id="vpen" placeholder="إنذار / خصم / ..." style="min-width:170px"></label><button class="btn" data-act="vApplyPen">تطبيق على المحدد</button><button class="btn s sm" data-act="vSelAll">تحديد الكل</button><button class="btn s sm" data-act="vSelNone">إلغاء التحديد</button></div>`:''}
+ <div class="tw"><table class="t vt"><thead><tr>${ce?'<th></th>':''}<th>رقم</th><th>التاريخ</th><th>الوقت</th><th>الموظف</th><th>الرقم الوظيفي</th><th>القسم</th><th>المخالفة</th><th>الجزاء</th><th>ملاحظات</th><th>سُجلت بواسطة</th><th>وقت التسجيل</th><th class="vact"></th></tr></thead><tbody>${l.map((v,i)=>violRow(v,i,1)).join('')||`<tr><td colspan="13" class="hint" style="padding:18px">لا توجد مخالفات.</td></tr>`}</tbody></table></div></div>
+ ${isAdmin()?`<div class="card"><h2>أنواع المخالفات</h2><div class="chips">${live('vtypes').map(t=>`<span class="chip">${esc(t.name)} <b data-act="delVT" data-v="${t.id}">×</b></span>`).join('')}</div><form id="vtf" class="bar" style="margin-top:10px"><input id="vtn" placeholder="نوع جديد" required><button class="btn s">إضافة</button></form></div>`:''}`}
+const violSheet=()=>{const f=ui.vf,byNo=f.nfrom||f.nto,l=byNo?violList().sort((a,b)=>(a.vn||0)-(b.vn||0)):violList().reverse();return sheet(byNo?'كشف المخالفات من رقم '+(f.nfrom||'—')+' إلى رقم '+(f.nto||'—'):'كشف المخالفات',byNo?'':(f.month&&!f.from&&!f.to&&!f.rfrom&&!f.rto?'شهر '+f.month:(f.from||'—')+' إلى '+(f.to||'—')),`<table class="grid"><thead><tr><th>رقم</th><th>التاريخ</th><th>الوقت</th><th class="n">الموظف</th><th>الرقم</th><th>القسم</th><th>المخالفة</th><th>الجزاء</th><th>ملاحظات</th><th>سُجلت بواسطة</th><th>وقت التسجيل</th></tr></thead><tbody>${l.map((v,i)=>violRow(v,i,0)).join('')}</tbody></table>`)};
+
+/* ===== التقييم والحافز ===== */
+const ropenOn=(m,d)=>!!live('ropen').find(r=>r.id===m+'|'+d&&r.on);
+const rateEvents=(m,dId)=>live('rates').filter(r=>r.month===m&&empById(r.emp)&&empById(r.emp).dept===dId).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+function rateSummary(d,m){const ev=rateEvents(m,d.id);return empsOf(d.id).map(e=>{const l=ev.filter(r=>r.emp===e.id),ded=l.reduce((x,r)=>x+(+r.price||0),0),inc=+d.incentive||0;return{e,n:l.length,ded,inc,net:Math.max(0,inc-ded)}})}
+const rateSumTable=(sm)=>{let ti=0,td=0,tn=0;const rows=sm.map((r,i)=>{ti+=r.inc;td+=r.ded;tn+=r.net;return`<tr><td>${i+1}</td><td>${esc(r.e.no)}</td><td class="n">${esc(r.e.name)}</td><td>${r.inc}</td><td>${r.n}</td><td>${r.ded.toFixed(2)}</td><td><b>${r.net.toFixed(2)}</b></td></tr>`}).join('');
+ return{rows,foot:`<tr><th colspan="3">الإجمالي</th><th>${ti}</th><th></th><th>${td.toFixed(2)}</th><th>${tn.toFixed(2)}</th></tr>`}};
+const rateRow=(r,i,adm)=>{const e=empById(r.emp);return`<tr><td>${i+1}</td><td>${r.date}</td><td>${esc(r.time||'')}</td><td class="n">${esc(e.name)}</td><td>${esc(e.no)}</td><td class="n">${esc(r.lawName)}</td><td>${(+r.price||0).toFixed(2)}</td><td class="n" style="white-space:normal">${esc(r.note)}</td><td>${esc(r.byName)}</td><td>${esc(fmtDT(r.at))}</td>${adm?`<td>${can('rate_open')?`<button class="btn sm d" data-act="delRate" data-v="${r.id}">حذف</button>`:''}</td>`:''}</tr>`};
+function pRate(){const ds=visDepts().filter(d=>d.incentiveOn);
+ if(!ds.length)return`<div class="card"><h2>التقييم والحافز</h2><p class="hint">لا توجد أقسام لديها حافز. فعّل الحافز لقسم من بطاقة الأقسام (تعديل القسم).</p></div>`;
+ if(!ds.some(d=>d.id===ui.rd))ui.rd=ds[0].id;const d=dept(ui.rd),m=ui.rm,open=ropenOn(m,d.id),laws=live('rlaws').sort((a,b)=>a.name.localeCompare(b.name,'ar'));
+ const st=rateSumTable(rateSummary(d,m)),ev=rateEvents(m,d.id);
+ return`<div class="card"><h2>التقييم والحافز</h2><div class="bar"><label>الشهر<input type="month" data-ch="rm" value="${m}"></label><label>القسم<select data-ch="rd">${opts(ds.map(x=>[x.id,x.name]),ui.rd)}</select></label>
+ <span class="pill ${open?'ok':'bad'}">التقييم ${open?'مفتوح':'مغلق'}</span>${can('rate_open')?`<button class="btn s" data-act="togRate">${open?'إغلاق التقييم':'فتح التقييم للمشرفين'}</button>`:''}
+ <span class="sp"></span>${can('rate_do')&&open?`<button class="btn" data-act="addRate">+ تقييم موظف</button>`:''}<button class="btn s" data-act="prRate">طباعة / حفظ PDF</button></div>
+ <div class="hint" style="margin-bottom:8px">يمكن تقييم الموظف أكثر من مرة في الشهر. كل تقييم يختار لائحة لها سعر محدد يُخصم من الحافز، والصافي = الحافز − مجموع الأسعار (لا يقل عن صفر).</div>
+ <h3>ملخص الحافز — ${esc(d.name)} — ${monthLabel(m)}</h3><div class="tw"><table class="t"><thead><tr><th>#</th><th>الرقم</th><th>الموظف</th><th>الحافز</th><th>عدد التقييمات</th><th>إجمالي الخصم</th><th>الصافي</th></tr></thead><tbody>${st.rows||'<tr><td colspan="7" class="hint" style="padding:14px">لا يوجد موظفون.</td></tr>'}</tbody><tfoot>${st.foot}</tfoot></table></div>
+ <h3>سجل التقييمات</h3><div class="tw"><table class="t"><thead><tr><th>#</th><th>التاريخ</th><th>الوقت</th><th>الموظف</th><th>الرقم</th><th>اللائحة</th><th>السعر</th><th>ملاحظات</th><th>قيّمه</th><th>وقت التسجيل</th><th></th></tr></thead><tbody>${ev.map((r,i)=>rateRow(r,i,1)).join('')||'<tr><td colspan="11" class="hint" style="padding:14px">لا توجد تقييمات في هذا الشهر.</td></tr>'}</tbody></table></div></div>
+ <div class="card"><h2>لوائح التقييم وأسعارها</h2><div class="chips">${laws.map(l=>`<span class="chip">${esc(l.name)} — ${(+l.price).toFixed(2)}${can('rate_laws')?` <b data-act="delRL" data-v="${l.id}">×</b>`:''}</span>`).join('')||'<span class="hint">لا توجد لوائح بعد.</span>'}</div>
+ ${can('rate_laws')?`<form id="rlf" class="bar" style="margin-top:10px"><label>اسم اللائحة<input id="rln" required></label><label>السعر (المبلغ المخصوم)<input id="rlp" type="number" min="0" step="any" required></label><button class="btn s">إضافة</button></form>`:''}</div>`}
+function rateSheet(){const d=dept(ui.rd),m=ui.rm,st=rateSumTable(rateSummary(d,m)),ev=rateEvents(m,d.id).reverse();
+ return sheet('تقييم الحافز — '+d.name,monthLabel(m),`<table class="grid"><thead><tr><th>م</th><th>الرقم الوظيفي</th><th class="n">اسم الموظف</th><th>الحافز</th><th>عدد التقييمات</th><th>إجمالي الخصم</th><th>الصافي</th></tr></thead><tbody>${st.rows}${st.foot}</tbody></table>
+ <div class="dt">تفاصيل التقييمات</div><table class="grid"><thead><tr><th>م</th><th>التاريخ</th><th>الوقت</th><th class="n">الموظف</th><th>الرقم</th><th class="n">اللائحة</th><th>السعر</th><th class="n">ملاحظات</th><th>قيّمه</th><th>وقت التسجيل</th></tr></thead><tbody>${ev.map((r,i)=>rateRow(r,i,0)).join('')}</tbody></table>`)}
+
+/* ===== المستخدمون ===== */
+function pUsers(){const on=new Set(onlineUsers().map(([k])=>k));
+ return`<div class="card"><h2>تهيئة المستخدمين</h2><div class="bar"><button class="btn" data-act="addUser">+ مستخدم جديد</button></div>
+ <div class="tw"><table class="t"><thead><tr><th></th><th>الاسم</th><th>اسم الدخول</th><th>الدور</th><th>الصلاحيات</th><th>الأقسام</th><th></th></tr></thead><tbody>${live('users').map(u=>`<tr><td><i class="dot ${on.has('u'+u.id)?'on':''}"></i></td><td>${esc(u.name)}</td><td>${esc(u.username)}</td><td>${ROLES[u.role]}</td><td>${u.role==='admin'?'الكل':PERMS.filter(p=>u.perms?.[p.k]).length+' / '+PERMS.length}</td><td>${u.role==='admin'||!u.depts?.length?'الكل':u.depts.map(i=>esc(dept(i)?.name||'')).join('، ')}</td><td><button class="btn sm s" data-act="editUser" data-v="${u.id}">تعديل</button> ${u.id!==session.id?`<button class="btn sm d" data-act="delUser" data-v="${u.id}">حذف</button>`:''}</td></tr>`).join('')}</tbody></table></div>
+ <p class="hint">الصلاحيات تُفعَّل أو توقَّف لكل مستخدم على حدة. المدير يملك كل الصلاحيات. الدخول بصفة موظف من الرقم الوظيفي يُفعَّل من بطاقة الموظف.</p></div>`}
+function userForm(u){u=u||{name:'',username:'',role:'sup',perms:PRESET.sup,depts:[]};
+ openModal(`<h2>${u.id?'تعديل مستخدم':'مستخدم جديد'}</h2><form id="uf" class="fg" data-id="${u.id||''}">
+ <label>الاسم<input name="name" required value="${esc(u.name)}"></label><label>اسم الدخول<input name="username" required value="${esc(u.username)}"></label>
+ <label>كلمة المرور${u.id?' (فارغة = إبقاء)':''}<input name="pass" type="password" ${u.id?'':'required'} autocomplete="new-password"></label><label>الدور (يعبّئ الصلاحيات)<select name="role" id="urole">${opts(Object.entries(ROLES),u.role)}</select></label>
+ <div class="w"><div class="hint">الصلاحيات</div><div class="permg">${PERMS.map(p=>`<label><input type="checkbox" name="pm" value="${p.k}" ${u.role==='admin'||u.perms?.[p.k]?'checked':''}>${p.t}</label>`).join('')}</div></div>
+ <div class="w"><div class="hint">الأقسام المسموحة (بدون تحديد = كل الأقسام)</div><div class="permg">${live('depts').map(d=>`<label><input type="checkbox" name="dp" value="${d.id}" ${u.depts?.includes(d.id)?'checked':''}>${esc(d.name)}</label>`).join('')}</div></div>
+ <div class="w bar" style="margin:0"><button class="btn">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)}
+
+/* ===== الإعدادات ===== */
+const SWATCH=['#1d4e89','#0f766e','#5b3fa6','#b45309','#9f1d2e','#334155'];
+function snaps(){let m=null;try{m=JSON.parse(ls.get(SMETA)||'null')}catch(e){}
+ if(!m){try{m=(JSON.parse(ls.get(SKEY)||'[]')).map(x=>({id:x.id,at:x.at,month:x.month,label:x.label,auto:!!x.auto,size:x.data?JSON.stringify(x.data).length:0}))}catch(e){m=[]}}
+ return m.sort((x,y)=>y.at.localeCompare(x.at))}
+const saveSMeta=m=>ls.set(SMETA,JSON.stringify(m));
+async function snapData(id){try{const v=await idbGet('snap:'+id);if(v)return JSON.parse(v)}catch(e){}
+ try{const v=ls.get('hr_snapd_'+id);if(v)return JSON.parse(v)}catch(e){}
+ try{const a=JSON.parse(ls.get(SKEY)||'[]'),x=a.find(y=>y.id===id);if(x&&x.data)return x.data}catch(e){}return null}
+function snapAdd(label,auto){const str=JSON.stringify(db),id=uid(),m=snaps();
+ m.push({id,at:new Date().toISOString(),month:monthOf(todayStr()),label,auto:!!auto,size:str.length});m.sort((x,y)=>y.at.localeCompare(x.at));
+ const drop=m.splice(SNAP_KEEP);saveSMeta(m);
+ idbPut('snap:'+id,str).catch(()=>{if(str.length<1200000)ls.set('hr_snapd_'+id,str)});
+ drop.forEach(x=>{idbDel('snap:'+x.id).catch(()=>{});try{localStorage.removeItem('hr_snapd_'+x.id)}catch(e){}})}
+function snapRemove(id){saveSMeta(snaps().filter(x=>x.id!==id));idbDel('snap:'+id).catch(()=>{});try{localStorage.removeItem('hr_snapd_'+id)}catch(e){}}
+function logCard(){const loc_d=t=>{const d=new Date(t);return isNaN(d)?'—':dstr(d)};
+ const td=todayStr(),from=ui.logFrom||addDays(td,-6),to=ui.logTo||td;
+ const all=[...live('log')].sort((a,b)=>b.u-a.u),L=all.filter(l=>{const d=loc_d(l.t);return d>=from&&d<=to}),G={};L.forEach(l=>{(G[loc_d(l.t)]=G[loc_d(l.t)]||[]).push(l)});
+ const days=Object.keys(G).sort().reverse();
+ return`<div class="card"><h2>سجل العمليات</h2><div class="bar"><label>من<input type="date" data-ch="logFrom" value="${from}"></label><label>إلى<input type="date" data-ch="logTo" value="${to}"></label>
+ <button class="btn s sm" data-act="logToday">اليوم</button><button class="btn s sm" data-act="log7">آخر 7 أيام</button><button class="btn s sm" data-act="log30">آخر 30 يومًا</button><span class="pill">${L.length} من ${all.length} عملية</span>${(isAdmin()||can('purge'))&&L.length?`<button class="btn d sm" data-act="purgeLog">تفريغ السجل للفترة</button>`:''}</div>
+ ${days.map((d,i)=>`<details ${i===0?'open':''} style="margin-bottom:6px"><summary><b>${dayName(d)} ${d}</b> — ${G[d].length} عملية</summary><div class="tw" style="max-height:320px;overflow:auto"><table class="t"><tbody>${G[d].map(l=>`<tr><td>${esc(new Date(l.t).toLocaleTimeString('ar-EG'))}</td><td>${esc(l.by)}</td><td>${esc(l.a)}</td><td>${esc(l.x)}</td></tr>`).join('')}</tbody></table></div></details>`).join('')||'<p class="hint">لا توجد عمليات في هذه الفترة.</p>'}</div>`}
+function pSettings(){const s=db.settings,adm=isAdmin();
+ let h=`<div class="card"><h2>المظهر (لهذا الجهاز)</h2><div class="bar"><label>النمط<select data-lc="theme">${opts([['auto','تلقائي'],['light','فاتح'],['dark','داكن']],loc.theme)}</select></label>
+ <div><div class="hint">لون النظام</div><div class="sw">${SWATCH.map(c=>`<i data-act="acc" data-v="${c}" style="background:${c}" class="${loc.acc===c?'on':''}"></i>`).join('')}<input type="color" data-lc="acc" value="${loc.acc}" style="padding:0;width:34px;height:30px"></div></div></div></div>`;
+ if(!adm)return h+'<p class="hint">باقي الإعدادات لمدير النظام.</p>';
+ h+=`<div class="card"><h2>بيانات الجهة</h2><div class="bar"><label>اسم الجهة<input data-st="org" value="${esc(s.org)}" style="min-width:240px"></label><label>رقم التواصل<input data-st="phone" value="${esc(s.phone)}" dir="ltr"></label>
+ <label>الشعار<input type="file" id="logof" accept="image/*"></label>${s.logo?`<img src="${s.logo}" style="height:42px;background:#fff;border-radius:6px;padding:2px"><button class="btn sm d" data-act="rmLogo">إزالة</button>`:''}</div></div>
+ <div class="card"><h2>ترتيب البطاقات</h2><div class="chips">${s.tabs.filter(t=>TABS[t]).map((t,i)=>`<span class="chip">${TABS[t]} <b style="color:var(--acc)" data-act="mv" data-v="${i}" data-d="-1">▶</b><b style="color:var(--acc)" data-act="mv" data-v="${i}" data-d="1">◀</b></span>`).join('')}</div></div>
+ <div class="card"><h2>ما يظهر للموظف عند دخوله برقمه الوظيفي</h2><div class="permg">${[['info','بياناته الوظيفية'],['att','حضوره وحالته اليومية'],['viol','مخالفاته'],['rate','تقييمه وحافزه']].map(([k,t])=>`<label><input type="checkbox" data-pt="${k}" ${s.portal[k]?'checked':''}>${t}</label>`).join('')}</div></div>
+ <div class="card"><h2>المزامنة السحابية (Google Apps Script) والدمج الذكي</h2>
+ <div class="bar"><label>رابط السكربت (Web App URL)<input data-lc="scriptUrl" value="${esc(loc.scriptUrl)}" style="min-width:340px" dir="ltr" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off"></label>
+ <label>مفتاح الأمان (اختياري)<input data-lc="key" value="${esc(loc.key)}" dir="ltr" autocomplete="off"></label></div>
+ <div class="bar"><button class="btn" data-act="syncNow">مزامنة الآن</button><button class="btn s" data-act="pingScript">اختبار الاتصال</button><button class="btn s" data-act="showGS">عرض كود Code.gs</button>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" data-lc="auto" ${loc.auto?'checked':''}>مزامنة تلقائية (بعد كل تعديل وكل دقيقة)</label></div>
+ <p class="hint">لا يحتاج أي جهاز أو مشرف إلى حساب جوجل: يرسل الجهاز بياناته إلى رابط السكربت، فيدمجها السكربت مع ملف Drive التابع لحساب المالك (لكل سجل معرّف فريد وطابع زمني فلا تُلغى بيانات مشرف ببيانات آخر) ثم يعيد النسخة المدمجة فتُحدَّث النسخة المحلية. تُحفظ البيانات محليًا أولًا ويعمل التطبيق دون إنترنت، وتُرفع تلقائيًا عند عودة الاتصال. أدخل الرابط (والمفتاح إن وُجد) على كل جهاز من شاشة الدخول أو من هنا.</p></div>
+ <div class="card"><h2>تحديث التطبيق</h2><p>الإصدار الحالي: <b>${APP_VERSION}</b> · ${window.AndroidApp?'تطبيق أندرويد: الطباعة والحفظ الأصليان يعملان ✔':window.Capacitor?'تطبيق أندرويد: الجسر الأصلي غير موجود ✖':'يعمل في المتصفح'}</p><div class="bar"><button class="btn s" data-act="chkUpd">فحص التحديث</button>${can('notify_send')?`<button class="btn s" data-act="notifyUpd">إشعار المستخدمين بتحديث جديد</button>`:''}</div>
+ <p class="hint">لإرسال تحديث: استبدل ملفي index.html وsw.js على الاستضافة بنفس العنوان والمسار. عند فتح أي مستخدم للتطبيق (وهو متصل) يظهر له شريط أخضر "يتوفر إصدار جديد"، فيضغط "تحديث الآن"، فتُحفظ نسخة احتياطية تلقائيًا وتُزامَن بياناته ثم تُحمَّل النسخة الجديدة. لا تضيع البيانات: هي في متصفح كل جهاز وفي السحابة، ويرقّيها التطبيق تلقائيًا إن تغيّرت بنيتها. لا تغيّر عنوان الموقع لأن بيانات المتصفح مرتبطة به.</p></div>
+ <div class="card"><h2>التخزين على هذا الجهاز</h2><div id="stinfo" class="hint">جارٍ الفحص…</div><div class="bar">${window.AndroidApp?'':'<button class="btn s" data-act="reqPersist">طلب تخزين دائم</button>'}<button class="btn s" data-act="bkExp">تنزيل نسخة كاملة (JSON)</button></div><p class="hint">${window.AndroidApp?'تُحفظ البيانات داخل مساحة التطبيق الخاصة على هاتفك ولا يحذفها النظام تلقائيًا، وهي':'تُحفظ البيانات في ذاكرة المتصفح (IndexedDB) فلا تتقيّد بحدّ 5 م.ب، وهي'} نسخة إضافية عن السحابة. إن ظهر "قارب الامتلاء" أو "فشل" فنزّل نسخة وزامن فورًا.</p></div>
+ <div class="card"><h2>النسخ الاحتياطية</h2><div class="bar"><button class="btn" data-act="snapNow">حفظ نسخة الآن</button><button class="btn s" data-act="bkExp">تنزيل نسخة (JSON)</button><label>دمج ملف نسخة<input type="file" id="bkm" accept=".json"></label><label>استبدال من ملف<input type="file" id="bkr" accept=".json"></label></div>
+ <p class="hint">تُحفظ نسخة تلقائية عند أول فتح لكل شهر جديد، فتراجع بيانات الشهر الماضي بوضع المراجعة (قراءة فقط) دون المساس بالبيانات الحالية.</p>${snapList()}</div>
+ ${logCard()}`;
+ return h}
+function snapList(){const a=snaps();if(!a.length)return'<div class="hint">لا توجد نسخ محفوظة بعد.</div>';const g={};a.forEach(x=>(g[x.month]=g[x.month]||[]).push(x));
+ return Object.keys(g).sort().reverse().map(m=>`<h3>${monthLabel(m)}</h3><div class="tw"><table class="t"><tbody>${g[m].map(x=>`<tr><td>${esc(x.label)}${x.auto?' <span class="pill">تلقائية</span>':''}</td><td>${esc(fmtDT(x.at))}</td><td>${Math.round((x.size||0)/1024)} ك.ب</td><td><button class="btn sm s" data-act="snapView" data-v="${x.id}">مراجعة</button> <button class="btn sm s" data-act="snapDl" data-v="${x.id}">تنزيل</button> <button class="btn sm d" data-act="snapRestoreAsk" data-v="${x.id}">استرجاع</button> <button class="btn sm d" data-act="snapDel" data-v="${x.id}">حذف</button></td></tr>`).join('')}</tbody></table></div>`).join('')}
+function autoSnap(){if(reviewing)return;const m=monthOf(todayStr());const a=snaps();if(!a.some(x=>x.auto&&x.month===m)&&(live('emps').length||Object.keys(db.att).length)){snapAdd('بداية شهر '+monthLabel(m)+' (حالة نهاية الشهر السابق)',true)}}
+function restoreDb(data){const cur=db,n=migrate(JSON.parse(JSON.stringify(data)));snapAdd('قبل الاسترجاع',false);const t=nextU();
+ COLLS.forEach(c=>{const ids=new Set(n[c].map(r=>r.id));n[c].forEach(r=>r.u=t);cur[c].forEach(r=>{if(!ids.has(r.id))n[c].push({id:r.id,d:1,u:t})})});
+ for(const k in n.att)n.att[k].u=t;for(const k in cur.att)if(!n.att[k])n.att[k]={d:1,e:{},u:t};
+ n.settings.u=t;n.presence=cur.presence;db=n;logA('استرجاع نسخة','');dbv++;persist();scheduleSync()}
+
+/* ===== بوابة الموظف ===== */
+function portalHtml(){const e=curEmp(),P=db.settings.portal||{},d=dept(e.dept),td=todayStr(),m1=td.slice(0,8)+'01';let h='';
+ if(P.info)h+=`<div class="card"><h2>بياناتي</h2><div class="stats"><div class="stat"><b style="font-size:20px">${esc(e.no)}</b><span>الرقم الوظيفي</span></div><div class="stat"><b style="font-size:20px">${esc(d?.name||'—')}</b><span>القسم</span></div><div class="stat"><b style="font-size:20px"><span class="nw">${fmtH(+e.from)} - ${fmtH(+e.to)}</span></b><span>الدوام</span></div><div class="stat"><b style="font-size:20px">${brk(e)}</b><span>الراحة</span></div><div class="stat"><b style="font-size:20px">${offTxt(e)}</b><span>الأسبوعية</span></div></div></div>`;
+ if(P.att){const r=empSummary(e,m1,td);let rows='';for(let x=td;x>=m1;x=addDays(x,-1)){const o=dayCalc(e,x);rows+=`<tr><td>${x}</td><td>${dayName(x)}</td><td>${fmtH(+e.from)}-${fmtH(+e.to)}</td><td>${o?o.p:0}</td><td>${o?o.a:0}</td><td><b>${esc(dayStatus(e,x))}</b></td></tr>`}
+  h+=`<div class="card"><h2>حضوري — ${monthLabel(monthOf(td))}</h2><div class="stats"><div class="stat"><b>${r.p}</b><span>ساعات حضور</span></div><div class="stat"><b>${r.a}</b><span>ساعات غياب</span></div><div class="stat"><b>${r.dp}</b><span>أيام حضور</span></div><div class="stat"><b>${r.da}</b><span>أيام غياب</span></div><div class="stat"><b>${r.ent}</b><span>إجازة أسبوعية (ع)</span></div><div class="stat"><b>${r.total}</b><span>الأيام المحتسبة</span></div></div>
+  <div class="tw" style="max-height:420px;overflow:auto"><table class="t"><thead><tr><th>التاريخ</th><th>اليوم</th><th>الدوام</th><th>ساعات حضور</th><th>ساعات غياب</th><th>الحالة</th></tr></thead><tbody>${rows}</tbody></table></div></div>`}
+ if(P.viol){const l=live('viol').filter(v=>v.emp===e.id).sort((a,b)=>b.date.localeCompare(a.date));h+=`<div class="card"><h2>مخالفاتي</h2><div class="tw"><table class="t"><thead><tr><th>التاريخ</th><th>الوقت</th><th>المخالفة</th><th>الجزاء</th><th>ملاحظات</th><th>سُجلت بواسطة</th></tr></thead><tbody>${l.map(v=>`<tr><td>${v.date}</td><td>${esc(v.time)}</td><td>${esc(v.type)}</td><td>${esc(v.pen)}</td><td style="white-space:normal">${esc(v.note)}</td><td>${esc(v.byName)}</td></tr>`).join('')||'<tr><td colspan="6" class="hint" style="padding:14px">لا توجد مخالفات.</td></tr>'}</tbody></table></div></div>`}
+ if(P.rate){const l=live('rates').filter(r=>r.emp===e.id).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time)),mo=monthOf(td),ded=l.filter(r=>r.month===mo).reduce((x,r)=>x+(+r.price||0),0),inc=d&&d.incentiveOn?+d.incentive||0:0;
+  h+=`<div class="card"><h2>تقييمي والحافز</h2>${inc?`<div class="stats"><div class="stat"><b>${inc}</b><span>الحافز</span></div><div class="stat"><b>${ded.toFixed(2)}</b><span>الخصم هذا الشهر</span></div><div class="stat"><b>${Math.max(0,inc-ded).toFixed(2)}</b><span>الصافي المتوقع</span></div></div>`:''}<div class="tw"><table class="t"><thead><tr><th>التاريخ</th><th>الوقت</th><th>اللائحة</th><th>السعر</th><th>ملاحظات</th><th>قيّمه</th></tr></thead><tbody>${l.map(r=>`<tr><td>${r.date}</td><td>${esc(r.time||'')}</td><td>${esc(r.lawName)}</td><td>${(+r.price||0).toFixed(2)}</td><td style="white-space:normal">${esc(r.note)}</td><td>${esc(r.byName)}</td></tr>`).join('')||'<tr><td colspan="6" class="hint" style="padding:14px">لا توجد تقييمات.</td></tr>'}</tbody></table></div></div>`}
+ return h||'<div class="card hint">لا توجد بيانات متاحة لك حاليًا.</div>'}
+
+
+/* ===== الإشعارات ===== */
+const myKey=()=>session?session.k+session.id:'';
+const myNotes=()=>live('notes').filter(n=>n.to===myKey()||n.to==='*'+(session&&session.k)).sort((a,b)=>b.u-a.u);
+const isRead=n=>db.nreads.some(r=>r.id===n.id+'|'+myKey()&&!r.d);
+const unread=()=>myNotes().filter(n=>!isRead(n)&&n.from!==myKey());
+function markRead(list){if(reviewing||!list.length)return;list.forEach(n=>put('nreads',{id:n.id+'|'+myKey()}));save()}
+function updBell(){const c=$('#cBell');if(!c)return;const n=(reviewing||!session)?0:unread().length;c.querySelector('span').textContent=n;c.style.background=n?'#f59e0b':'';c.style.color=n?'#000':'';document.title=(n?'('+n+') ':'')+'نظام الدوام والمتابعة'}
+function pushNotify(list){if(!('Notification' in window)||Notification.permission!=='granted')return;
+ list.slice(0,3).forEach(n=>{const o={body:n.text,tag:n.id,dir:'rtl',lang:'ar'};const t='إشعار من '+n.fromName;
+  (navigator.serviceWorker?navigator.serviceWorker.getRegistration():Promise.resolve(null)).then(r=>r?r.showNotification(t,o):new Notification(t,o)).catch(()=>{try{new Notification(t,o)}catch(e){}})})}
+function checkNotes(){if(!session||reviewing)return;updBell();const fresh=unread().filter(n=>!(loc.notified||[]).includes(n.id));
+ if(fresh.length){loc.notified=[...(loc.notified||[]),...fresh.map(n=>n.id)].slice(-300);saveLoc();toast('🔔 '+fresh[0].fromName+': '+fresh[0].text.slice(0,70));pushNotify(fresh)}}
+const toLabel=n=>n.to==='*u'?'كل المستخدمين':n.to==='*e'?'كل الموظفين':n.to[0]==='u'?(db.users.find(u=>u.id===n.to.slice(1))||{}).name||'مستخدم':(db.emps.find(e=>e.id===n.to.slice(1))||{}).name||'موظف';
+
+/* ===== المزامنة عبر Google Apps Script ===== */
+let syncing=false,syncT=null;
+function beat(){if(!session)return;db.presence[session.k+session.id]={n:who().name,t:Date.now()}}
+const scriptReady=()=>/^https:\/\//i.test((loc.scriptUrl||'').trim());
+async function callScript(payload,o){o=o||{};let last;for(let i=0;i<(o.retry===0?1:3);i++){try{return await callScriptOnce(payload,o.to)}catch(e){last=e;const m=String(e.message||'');if(!/مهلة|تعذر الوصول|ردّ غير متوقع|مشغول/.test(m)||!navigator.onLine)break;await new Promise(r=>setTimeout(r,1500*(i+1)+Math.random()*800))}}throw last}
+async function callScriptOnce(payload,to){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),to||45000);let txt;
+ try{const r=await fetch(loc.scriptUrl.trim(),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...payload,key:loc.key||''}),signal:ac.signal,redirect:'follow'});txt=await r.text()}
+ catch(e){throw new Error(navigator.onLine?(e.name==='AbortError'?'انتهت مهلة الاتصال بالسكربت':'تعذر الوصول إلى السكربت (تحقق من الرابط ومن النشر)'):'لا يوجد اتصال')}finally{clearTimeout(tm)}
+ let j;try{j=JSON.parse(txt)}catch(e){throw new Error('ردّ غير متوقع: تأكد أن الرابط ينتهي بـ /exec وأن السكربت منشور بصلاحية Anyone')}
+ if(!j.ok){const er=new Error(j.error||'خطأ من السكربت');er.code=j.code;throw er}return j}
+/* ===== المزامنة التفاضلية: نرسل المتغيّر فقط ونستلم ما تغيّر منذ آخر رقم خادمي ===== */
+const syKey=()=>session?session.k+session.id:'';
+const syGet=()=>{loc.sy=loc.sy||{};return loc.sy[syKey()]||null};
+function pickChanged(cur){const f=r=>(r.u||0)>cur,o={v:db.v};
+ for(const c of COLLS)o[c]=db[c].filter(f);
+ o.att={};for(const k in db.att)if(f(db.att[k]))o.att[k]=db.att[k];
+ o.presence=db.presence;o.settings=f(db.settings)?db.settings:{u:0};return o}
+async function syncNow(manual){if(reviewing||syncing)return;
+ if(!navigator.onLine){online=false;updChips();setSt('غير متصل — حُفظت البيانات محليًا وستُرفع عند عودة الاتصال');manual&&toast('لا يوجد اتصال — البيانات محفوظة محليًا');return}
+ if(!scriptReady()){manual&&toast('أدخل رابط سكربت المزامنة (https://script.google.com/.../exec) من الإعدادات');return}
+ const tk=session&&loc.toks&&loc.toks[session.k+session.id];
+ if(loc.secure&&!tk){setSt(session?'☁ سجّل الخروج ثم الدخول (بالإنترنت) لتفعيل المزامنة':'☁ سجّل الدخول لبدء المزامنة');manual&&toast('سجّل الدخول من جديد والجهاز متصل بالإنترنت');return}
+ syncing=true;setSt('جارٍ المزامنة…');const c0=saveCnt;
+ try{beat();persist();
+  const st=syGet(),dl=!!(loc.secure&&st&&typeof st.since==='number'&&st.fullAt&&Date.now()-st.fullAt<43200000&&!loc.forceFull&&!manual),cap=Math.max(lastU,Date.now());
+  const j=await callScript({action:'sync',data:dl?pickChanged((st.pushU||0)-5000):db,who:session?{k:session.k,id:session.id}:undefined,tok:tk||undefined,delta:dl,since:dl?st.since:0,sig:dl?st.sig:''});let changed=false;
+  if(loc.secure&&j.seq!==undefined&&session){loc.sy=loc.sy||{};const o=loc.sy[syKey()]||{};o.since=j.seq;o.sig=j.sig;o.pushU=cap;if(j.full)o.fullAt=Date.now();loc.sy[syKey()]=o;loc.forceFull=0;saveLoc()}
+  if(j.data){const before=JSON.stringify(db);db=mergeDb(db,j.data);dbv++;changed=JSON.stringify(db)!==before;persist()}
+  if(saveCnt===c0){loc.dirty=0;saveLoc()}
+  setSt('☁ آخر مزامنة '+new Date().toLocaleTimeString('ar-EG'));if(manual)toast('تمت المزامنة والدمج');checkNotes();
+  if(changed&&!modalOpen()){if(session){const tx=document.activeElement;if(!(tx&&/INPUT|TEXTAREA/.test(tx.tagName)&&tx.type!=='checkbox'))render()}
+   else if(!$('#login').hidden&&$('#lu')&&!$('#lu').value&&!$('#lp').value)showLogin()}
+ }catch(e){if(e.code==='AUTH'){if(session&&loc.toks)delete loc.toks[session.k+session.id];saveLoc();setSt('☁ انتهت الجلسة — سجّل الخروج ثم الدخول');manual&&toast(e.message)}else{setSt('☁ تعذرت المزامنة');manual&&toast('فشلت المزامنة: '+e.message)}}
+ finally{syncing=false;updChips()}}
+function scheduleSync(){if(!loc.auto||!scriptReady()||!navigator.onLine||reviewing)return;clearTimeout(syncT);syncT=setTimeout(()=>syncNow(false),3000)}
+const GS_SRC=()=>($('#gs-src')||{}).textContent.replace(/^\n/,'');
+
+/* ===== الإجراءات ===== */
+const ACT={
+ lt(el){ui.lt=el.dataset.v;showLogin()},
+ tab(el){ui.tab=el.dataset.v;ui.reset=true;render()},gear(){ui.tab='settings';ui.reset=true;render()},
+ logoutAsk(){confirmBox('هل تريد تسجيل الخروج؟','logout',null,'خروج')},
+ logout(){closeModal();session=null;try{sessionStorage.removeItem('hr_s')}catch(e){}if(reviewing)ACT.exitReview();render()},
+ close(){closeModal()},
+ pw(){if(curEmp()||curUser())openModal(`<h2>تغيير كلمة المرور</h2><form id="pwf" class="fg" style="grid-template-columns:1fr"><label>كلمة المرور الجديدة<input type="password" id="np" required minlength="4" autocomplete="new-password"></label><div class="bar" style="margin:0"><button class="btn">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ netInfo(){openModal(`<h2>حالة الاتصال</h2><p>الإنترنت: <b>${online?'متصل':'غير متصل'}</b></p><p>المزامنة السحابية: <b>${scriptReady()?'مفعّلة (رابط السكربت مضبوط)':'غير مفعّلة'}</b></p><p>بيانات غير مرفوعة: <b>${loc.dirty?'نعم (ستُرفع تلقائيًا)':'لا'}</b></p><div class="bar">${scriptReady()?`<button class="btn" data-act="syncNow">مزامنة الآن</button>`:''}<button class="btn s" data-act="close">إغلاق</button></div>`)},
+ syncNow(){closeModal();syncNow(true)},
+ onlineList(){const l=onlineUsers().sort((a,b)=>b[1].t-a[1].t);openModal(`<h2>المتصلون الآن</h2>${l.map(([k,v])=>`<p><i class="dot on"></i> ${esc(v.n)} <span class="hint">— ${k[0]==='e'?'موظف':'مستخدم'} · آخر نشاط ${new Date(v.t).toLocaleTimeString('ar-EG')}</span></p>`).join('')||`<p>${esc(who().name)}</p>`}<p class="hint">يتحدّث الكشف عند المزامنة السحابية (كل دقيقة). بدونها يظهر هذا الجهاز فقط.</p><button class="btn s" data-act="close">إغلاق</button>`)},
+ addEmp(){empForm()},editEmp(el){empForm(empById(el.dataset.v))},
+ togEmp(el){const e=empById(el.dataset.v);e.active=e.active===false;put('emps',e);logA(e.active?'تفعيل موظف':'إيقاف موظف',e.name);save();panel()},
+ delEmp(el){const e=empById(el.dataset.v);confirmBox(`حذف "${esc(e.name)}" نهائيًا؟ يفضَّل الإيقاف للإبقاء على بياناته.`,'delEmpOk',e.id,'حذف')},
+ delEmpOk(el){const e=empById(el.dataset.v);del('emps',el.dataset.v);logA('حذف موظف',e?.name);save();closeModal();panel()},
+ impEmp(){openModal(`<h2>استيراد الموظفين</h2><div class="fg"><label class="w">ملف Excel أو CSV<input type="file" id="ifile" accept=".xlsx,.xls,.csv,.txt"></label>
+ <label class="w">أو الصق البيانات (الرقم الوظيفي، الاسم، القسم، النوع)<textarea id="itxt" rows="6"></textarea></label>
+ <label>النوع الافتراضي<select id="itype"><option>أساسي</option><option>مؤقت</option></select></label>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="icre">إنشاء الأقسام غير الموجودة</label>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" id="iupd">تحديث الموجودين (الاسم والقسم)</label>
+ <div class="hint w">استورد الأقسام أولًا ثم الموظفين. يُطابَق القسم بالاسم، والرقم الوظيفي المكرر يُتجاهل (أو يُحدَّث إن فعّلت التحديث). الموظف بقسم غير موجود يُتجاهل ما لم تفعّل إنشاء الأقسام.</div>
+ <div class="w bar" style="margin:0"><button class="btn" data-act="impEmpOk">استيراد</button><button class="btn s" data-act="close">إلغاء</button></div></div>`)},
+ async impEmpOk(){try{const f=$('#ifile').files[0];const rows=f?await readFileRows(f):parseRows($('#itxt').value);const l=mapEmpRows(rows);if(!l.length)return toast('لا توجد بيانات صالحة');
+  const r=importEmps(l,$('#itype').value,$('#icre').checked,$('#iupd').checked);closeModal();toast(`أُضيف ${r.add} · مكرر ${r.dup} · محدّث ${r.upd} · بقسم غير معروف ${r.nod}`);panel()}catch(e){toast(e.message)}},
+ tpl(){const b=new Blob(['﻿الرقم الوظيفي,الاسم,القسم,النوع\n1001,أحمد علي,الحسابات,أساسي\n1002,سالم محمد,المخازن,مؤقت\n'],{type:'text/csv'});saveFile(b,'قالب-الموظفين.csv')},
+ prEmp(el){const t=el.dataset.v,l=filteredEmps().filter(e=>!t||e.type===t);
+  doPrint(sheet('كشف الموظفين'+(t?' — '+t+'ون':''),'العدد: '+l.length,`<table class="grid"><thead><tr><th>م</th><th>الرقم الوظيفي</th><th class="n">الاسم</th><th>القسم</th><th>النوع</th><th>الدوام</th><th>الراحة</th><th>الأسبوعية</th></tr></thead><tbody>${l.map((e,i)=>`<tr><td>${i+1}</td><td>${esc(e.no)}</td><td class="n">${esc(e.name)}</td><td>${esc(dept(e.dept)?.name)}</td><td>${e.type}</td><td>${fmtH(+e.from)}-${fmtH(+e.to)}</td><td>${brk(e)}</td><td>${offTxt(e)}</td></tr>`).join('')}</tbody></table>`),false)},
+ impDept(){openModal(`<h2>استيراد الأقسام</h2><div class="fg"><label class="w">ملف Excel أو CSV (عمود واحد)<input type="file" id="ifile" accept=".xlsx,.xls,.csv,.txt"></label><label class="w">أو الصق الأسماء (قسم في كل سطر)<textarea id="itxt" rows="6"></textarea></label><div class="w bar" style="margin:0"><button class="btn" data-act="impDeptOk">استيراد</button><button class="btn s" data-act="close">إلغاء</button></div></div>`)},
+ async impDeptOk(){try{const f=$('#ifile').files[0];const rows=f?await readFileRows(f):parseRows($('#itxt').value);let n=0;rows.forEach(r=>{const nm=String(r[0]||'').trim();if(nm&&!/^(القسم|الأقسام)$/.test(nm)&&!deptByName(nm,false)){put('depts',{id:uid(),name:nm,incentiveOn:0,incentive:0});n++}});logA('استيراد أقسام',n+'');save();closeModal();toast('أُضيف '+n+' قسم');panel()}catch(e){toast(e.message)}},
+ editDept(el){const d=dept(el.dataset.v);openModal(`<h2>تعديل القسم</h2><form id="rdf" class="fg" data-id="${d.id}"><label class="w">اسم القسم<input name="name" value="${esc(d.name)}" required></label>
+ <label style="flex-direction:row;align-items:center;gap:6px"><input type="checkbox" name="inc" ${d.incentiveOn?'checked':''}>القسم له حافز تقييم</label><label>قيمة الحافز للموظف<input name="amount" type="number" min="0" step="any" value="${d.incentive||0}"></label>
+ <div class="w bar" style="margin:0"><button class="btn">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ delDept(el){const d=dept(el.dataset.v);if(allEmpsOf(d.id).length)return toast('انقل موظفي القسم أو احذفهم أولاً');confirmBox(`حذف القسم "${esc(d.name)}"؟`,'delDeptOk',d.id,'حذف')},
+ delDeptOk(el){del('depts',el.dataset.v);save();closeModal();panel()},
+ prRoster(){doPrint(sheet('كشف الدوام اليومي',dayName(ui.date)+' '+ui.date,rosterDepts().map(d=>rosterTable(d,ui.date,false)).join('')))},
+ prDaily(){doPrint(dailyHtml(ui.date,'',''))},
+ prReport(){doPrint(reportHtml(),ui.rep.type!=='notes')},
+ async xlRep(){try{await loadXLSX()}catch(e){return toast(e.message)}const wb=XLSX.utils.book_new();const used=new Set();
+  document.querySelectorAll('#repbox table.grid').forEach((t,i)=>{let n=(t.previousElementSibling?.textContent||'ورقة'+(i+1)).replace(/[\\\/?*\[\]:]/g,' ').slice(0,28);while(used.has(n))n+=i;used.add(n);XLSX.utils.book_append_sheet(wb,XLSX.utils.table_to_sheet(t),n)});
+  if(!wb.SheetNames.length)return toast('لا توجد بيانات');saveFile(new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),'تقرير-'+todayStr()+'.xlsx')},
+ restore(el){const c=el.dataset.c,r=db[c].find(x=>x.id===el.dataset.v);if(!r||!isAdmin())return;
+  if(c==='emps'&&db.emps.some(x=>!x.d&&x.id!==r.id&&String(x.no)===String(r.no)))return toast('لا يمكن الاستعادة: الرقم الوظيفي '+r.no+' مستخدم لموظف آخر');
+  if(c==='emps'&&!dept(r.dept))toast('تنبيه: قسم الموظف محذوف، استعده أيضًا من الأقسام المحذوفة');
+  delete r.d;delete r.dt;delete r.dby;put(c,r);logA('استعادة من السلة',trashLbl(c,r).replace(/&[a-z]+;/g,' '));save();toast('تمت الاستعادة');panel()},
+ prCount(){const vd=visDepts().filter(d=>!ui.hd||d.id===ui.hd);let T={a:0,t:0,x:0};
+  const rows=vd.map((d,i)=>{const all=allEmpsOf(d.id),act=all.filter(e=>e.active!==false),a=act.filter(e=>e.type!=='مؤقت').length,t=act.filter(e=>e.type==='مؤقت').length,x=all.length-act.length;T.a+=a;T.t+=t;T.x+=x;
+   return`<tr><td>${i+1}</td><td class="n">${esc(d.name)}</td><td>${a}</td><td>${t}</td><td><b>${a+t}</b></td><td>${x||'—'}</td></tr>`}).join('');
+  doPrint(sheet('أعداد العمال بالأقسام',dayName(todayStr())+' '+todayStr(),`<table class="grid" style="font-size:15px"><thead><tr><th>م</th><th class="n">القسم</th><th>أساسي</th><th>مؤقت</th><th>إجمالي العمال النشطين</th><th>موقوف</th></tr></thead><tbody>${rows||'<tr><td colspan="6">لا توجد أقسام</td></tr>'}<tr><th colspan="2" class="n">الإجمالي</th><th>${T.a}</th><th>${T.t}</th><th>${T.a+T.t}</th><th>${T.x||'—'}</th></tr></tbody></table>`),false)},
+ logToday(){ui.logFrom=ui.logTo=todayStr();panel()},
+ log7(){ui.logTo=todayStr();ui.logFrom=addDays(todayStr(),-6);panel()},
+ log30(){ui.logTo=todayStr();ui.logFrom=addDays(todayStr(),-29);panel()},
+ purgeTrash(){if(!(isAdmin()||can('purge')))return;const f=ui.tc||'emps',tf=ui.tf||'',tt=ui.tt||'',dd=r=>dstr(new Date(r.dt||r.u)),n=db[f].filter(x=>x.d&&!x.p&&(!tf||dd(x)>=tf)&&(!tt||dd(x)<=tt)).length;if(!n)return toast('لا توجد عناصر');
+  confirmBox('تفريغ '+n+' عنصر نهائيًا من «'+(TRASH_C.find(c=>c[0]===f)||[,f])[1]+'» '+(tf||tt?'للفترة '+(tf||'البداية')+' إلى '+(tt||'اليوم'):'(كل التواريخ)')+'؟ لا يمكن التراجع.','purgeTrashOk',null,'تفريغ نهائي')},
+ purgeTrashOk(){if(!(isAdmin()||can('purge')))return;const f=ui.tc||'emps',tf=ui.tf||'',tt=ui.tt||'',dd=r=>dstr(new Date(r.dt||r.u));let n=0;
+  db[f].forEach(r=>{if(r.d&&!r.p&&(!tf||dd(r)>=tf)&&(!tt||dd(r)<=tt)){r.p=1;r.u=nextU();n++}});logA('تفريغ سلة المحذوفات',n+' عنصر ('+f+') '+(tf||'—')+' إلى '+(tt||'—'));save();closeModal();panel();toast('تم تفريغ '+n+' عنصر')},
+ purgeLog(){if(!(isAdmin()||can('purge')))return;const td=todayStr(),from=ui.logFrom||addDays(td,-6),to=ui.logTo||td,n=live('log').filter(l=>{const d=dstr(new Date(l.t));return d>=from&&d<=to}).length;if(!n)return toast('لا توجد عمليات');
+  confirmBox('تفريغ '+n+' عملية من السجل للفترة '+from+' إلى '+to+' نهائيًا؟ لا يمكن التراجع.','purgeLogOk',null,'تفريغ نهائي')},
+ purgeLogOk(){if(!(isAdmin()||can('purge')))return;const td=todayStr(),from=ui.logFrom||addDays(td,-6),to=ui.logTo||td;let n=0;
+  db.log.forEach(l=>{if(l.d)return;const d=dstr(new Date(l.t));if(d>=from&&d<=to){l.d=1;l.p=1;l.u=nextU();l.dt=l.t;delete l.a;delete l.x;delete l.by;n++}});
+  logA('تفريغ السجل',n+' عملية '+from+' إلى '+to);save();closeModal();panel();toast('تم تفريغ '+n+' عملية')},
+ trashAll(){ui.tf='';ui.tt='';panel()},
+ prNotes(){doPrint(notesHtml(ui.date,''),false)},
+ prViol(){doPrint(violSheet())},
+ prViolNo(){if(!ui.vf.nfrom&&!ui.vf.nto)return toast('اكتب رقم البداية و/أو النهاية');doPrint(violSheet())},
+ vSelAll(){ui.vchk=ui.vchk||{};violList().forEach(v=>{if(vOpen(v))ui.vchk[v.id]=1});panel()},
+ vSelNone(){ui.vchk={};panel()},
+ vApplyPen(){if(!can('viol_edit'))return;const pen=($('#vpen')||{}).value||'';const ids=Object.keys(ui.vchk||{});if(!ids.length)return toast('حدد مخالفة واحدة على الأقل');if(!pen.trim())return toast('اكتب الجزاء');
+  const n=ids.length;confirmBox('تطبيق الجزاء «'+esc(pen.trim())+'» على '+n+' مخالفة؟','vApplyPenOk',pen.trim(),'تطبيق')},
+ vApplyPenOk(el){if(!can('viol_edit'))return;const pen=el.dataset.v;let n=0;Object.keys(ui.vchk||{}).forEach(id=>{const v=db.viol.find(x=>x.id===id);if(!v||v.d||!vOpen(v)||!violVisible(v))return;v.pen=pen;v.eby=who().name;v.eat=new Date().toISOString();v.u=nextU();n++});
+  logA('تطبيق جزاء جماعي',n+' مخالفة — '+pen);ui.vchk={};save();closeModal();toast('تم تطبيق الجزاء على '+n+' مخالفة');panel()},
+ prViolReg(){if(!(isAdmin()||can('viol_print')))return;doPrint(violSheetReg(),1)},
+ prViolUser(){if(!(isAdmin()||can('viol_print')))return;doPrint(violSheetBy(),1)},
+ prRate(){doPrint(rateSheet(),false)},
+ ck(el){const h=+el.dataset.h,id=el.dataset.e,k=akey(ui.date,ui.deptId,h),ex=attRec(k);if(!can('att_take')&&!(ex&&can('att_unlock')))return;
+  const dr=ui.draft[k]||(ui.draft[k]=ex&&ui.unl[k]?{...ex.e}:{});const v=dr[id]===2?2:dr[id]?1:0,n=v===0?1:v===1?2:0;dr[id]=n;el.className='ckb s'+n;el.textContent=n===2?'ر':n?'✓':'✗'},
+ allP(el){const h=+el.dataset.v,k=akey(ui.date,ui.deptId,h);const d=ui.draft[k]||(ui.draft[k]={});const ex=attRec(k);if(ex&&ui.unl[k]&&!Object.keys(d).length)Object.assign(d,ex.e);empsOf(ui.deptId).filter(e=>inShift(e,ui.date,h)).forEach(e=>d[e.id]=1);panel()},
+ saveH(el){saveHour(+el.dataset.v)},
+ goNow(){const n=nowSlot();if(ui.date!==n.day){ui.date=n.day;panel()}scrollNow()},
+ unl(el){if(!can('att_unlock'))return;ui.unl[akey(ui.date,ui.deptId,+el.dataset.v)]=1;panel()},
+ addViol(){ui.vsel=[];const now=new Date().toTimeString().slice(0,5);openModal(`<h2>تسجيل مخالفة</h2><form id="vf" class="fg"><div class="w"><label>أضف موظفًا (اكتب الرقم أو الاسم ثم Enter أو زر إضافة) — يمكن إضافة أكثر من موظف<input name="emp" list="el" data-vadd="1" autocomplete="off"></label>
+ <div class="bar" style="margin:6px 0 0"><button class="btn s sm" type="button" data-act="vAddBtn">+ إضافة</button><select id="vdept">${deptOpts('','إضافة قسم كامل…')}</select><button class="btn s sm" type="button" data-act="vAddDept">إضافة القسم</button><button class="btn s sm" type="button" data-act="vClear">مسح الكل</button></div>
+ <div class="vsel" id="vchips"><span class="hint">لم يُضَف أي موظف بعد</span></div></div>
+ <datalist id="el">${live('emps').filter(e=>e.active!==false&&visDepts().some(d=>d.id===e.dept)).map(e=>`<option value="${esc(e.no)} — ${esc(e.name)}">`).join('')}</datalist>
+ <label>التاريخ<input type="date" name="date" value="${todayStr()}" required></label><label>الوقت<input type="time" name="time" value="${now}" required></label>
+ <label>المخالفة<select name="type">${opts([...live('vtypes').map(t=>[t.name,t.name]),['__other','— أخرى (اكتب يدويًا) —']])}</select></label><label id="vtc" style="display:none">اكتب المخالفة<input name="typeC"></label><label>الجزاء<input name="pen" placeholder="إنذار / خصم / ..."></label>
+ <label class="w">ملاحظات<textarea name="note" rows="3"></textarea></label><div class="hint w">تُسجَّل مخالفة مستقلة لكل موظف مختار، ويُسجَّل تلقائيًا اسمك (${esc(who().name)}) ووقت التسجيل.</div>
+ <div class="w bar" style="margin:0"><button class="btn">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ editViol(el){const v=db.viol.find(x=>x.id===el.dataset.v);if(!v||v.d||!can('viol_edit')||!violVisible(v)||!vOpen(v))return toast('مخالفات الأشهر السابقة مغلقة؛ التعديل للمدير فقط');const e=empById(v.emp)||{},tn=live('vtypes').map(t=>t.name),oth=!tn.includes(v.type);
+  openModal(`<h2>تعديل مخالفة</h2><form id="vef" class="fg"><input type="hidden" name="vid" value="${v.id}"><div class="w"><b>${esc(e.name||'؟')}</b> — ${esc(e.no||'')}</div>
+ <label>التاريخ<input type="date" name="date" value="${esc(v.date)}" required></label><label>الوقت<input type="time" name="time" value="${esc(v.time||'')}" required></label>
+ <label>المخالفة<select name="type">${opts([...tn.map(t=>[t,t]),['__other','— أخرى (اكتب يدويًا) —']],oth?'__other':v.type)}</select></label><label id="vtc" style="display:${oth?'':'none'}">اكتب المخالفة<input name="typeC" value="${oth?esc(v.type):''}"></label><label>الجزاء<input name="pen" value="${esc(v.pen||'')}"></label>
+ <label class="w">ملاحظات<textarea name="note" rows="3">${esc(v.note||'')}</textarea></label>
+ <div class="w bar" style="margin:0"><button class="btn">حفظ التعديل</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ vAddBtn(){vAddFromInput()},
+ vAddDept(){const id=$('#vdept').value;if(!id)return;empsOf(id).forEach(e=>{if(!ui.vsel.includes(e.id))ui.vsel.push(e.id)});vChips()},
+ vClear(){ui.vsel=[];vChips()},
+ vRm(el){ui.vsel=ui.vsel.filter(x=>x!==el.dataset.v);vChips()},
+ delViol(el){const v0=db.viol.find(x=>x.id===el.dataset.v);if(v0&&!vOpen(v0))return toast('مخالفات الأشهر السابقة مغلقة؛ الحذف للمدير فقط');confirmBox('حذف هذه المخالفة؟','delViolOk',el.dataset.v,'حذف')},
+ delViolOk(el){del('viol',el.dataset.v);logA('حذف مخالفة','');save();closeModal();panel()},
+ delVT(el){del('vtypes',el.dataset.v);save();panel()},
+ addRate(){const d=dept(ui.rd),m=ui.rm,td=todayStr(),dt=monthOf(td)===m?td:m+'-01',last=new Date(+m.slice(0,4),+m.slice(5,7),0).getDate();const laws=live('rlaws');if(!laws.length)return toast('أضف لائحة تقييم أولاً');
+  openModal(`<h2>تقييم موظف — ${esc(d.name)}</h2><form id="rf" class="fg"><label class="w">الموظف (الرقم أو الاسم)<input name="emp" list="rel" required></label><datalist id="rel">${empsOf(d.id).map(e=>`<option value="${esc(e.no)} — ${esc(e.name)}">`).join('')}</datalist>
+  <label>التاريخ<input type="date" name="date" value="${dt}" min="${m}-01" max="${m}-${pad(last)}" required></label><label>الوقت<input type="time" name="time" value="${new Date().toTimeString().slice(0,5)}" required></label>
+  <label class="w">اللائحة (السعر المخصوم)<select name="law">${opts(laws.map(l=>[l.id,l.name+' — '+(+l.price).toFixed(2)]))}</select></label><label class="w">ملاحظات<textarea name="note" rows="2"></textarea></label>
+  <div class="w bar" style="margin:0"><button class="btn">حفظ</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ delRate(el){confirmBox('حذف هذا التقييم؟','delRateOk',el.dataset.v,'حذف')},
+ delRateOk(el){del('rates',el.dataset.v);logA('حذف تقييم','');save();closeModal();panel()},
+ delRL(el){del('rlaws',el.dataset.v);save();panel()},
+ togRate(){if(!can('rate_open'))return;const id=ui.rm+'|'+ui.rd,r=db.ropen.find(x=>x.id===id)||{id,on:0};r.on=r.on?0:1;put('ropen',r);logA(r.on?'فتح التقييم':'إغلاق التقييم',id);save();panel()},
+ addUser(){userForm()},editUser(el){userForm(live('users').find(u=>u.id===el.dataset.v))},
+ delUser(el){const u=live('users').find(x=>x.id===el.dataset.v);if(u.role==='admin'&&live('users').filter(x=>x.role==='admin').length<2)return toast('لا يمكن حذف آخر مدير');confirmBox(`حذف المستخدم "${esc(u.name)}"؟`,'delUserOk',u.id,'حذف')},
+ delUserOk(el){del('users',el.dataset.v);save();closeModal();panel()},
+ mv(el){const vis=db.settings.tabs.filter(t=>TABS[t]);const i=+el.dataset.v,j=i+ +el.dataset.d;if(j<0||j>=vis.length)return;[vis[i],vis[j]]=[vis[j],vis[i]];db.settings.tabs=vis;db.settings.u=nextU();save();render()},
+ acc(el){loc.acc=el.dataset.v;saveLoc();applyUI();panel()},
+ rmLogo(){db.settings.logo='';db.settings.u=nextU();save();panel()},
+ notif(){if(!session||reviewing)return;const un=new Set(unread().map(n=>n.id)),list=myNotes().slice(0,60),canS=can('notify_send');
+  const sent=canS?live('notes').filter(n=>n.from===myKey()).sort((a,b)=>b.u-a.u).slice(0,15):[];
+  openModal(`<h2>الإشعارات</h2><div class="bar">${canS?`<button class="btn" data-act="newNote">+ إرسال إشعار</button>`:''}${('Notification' in window&&Notification.permission==='default')?`<button class="btn s" data-act="askPerm">تفعيل تنبيهات الجهاز</button>`:''}</div>
+  ${list.map(n=>`<div class="card" style="margin:0 0 8px;${un.has(n.id)?'border-color:var(--btn)':''}"><div class="hint">${esc(n.fromName)} — ${esc(fmtDT(n.at))} ${un.has(n.id)?'<span class="pill ok">جديد</span>':''}</div><div style="white-space:pre-wrap">${esc(n.text)}</div></div>`).join('')||'<p class="hint">لا توجد إشعارات.</p>'}
+  ${sent.length?`<h3>أرسلتُها</h3>${sent.map(n=>`<div class="hint" style="margin-bottom:6px">إلى ${esc(toLabel(n))} — ${esc(fmtDT(n.at))}: ${esc(n.text.slice(0,60))} <button class="btn sm d" data-act="delNote" data-v="${n.id}">حذف</button></div>`).join('')}`:''}
+  <div class="bar"><button class="btn s" data-act="close">إغلاق</button></div>`);markRead([...un].map(id=>db.notes.find(n=>n.id===id)).filter(Boolean));updBell()},
+ askPerm(){Notification.requestPermission().then(p=>{toast(p==='granted'?'تم تفعيل تنبيهات الجهاز':'لم يُمنح الإذن');ACT.notif()})},
+ newNote(){if(!can('notify_send'))return;openModal(`<h2>إرسال إشعار</h2><form id="nf" class="fg" style="grid-template-columns:1fr"><label>إلى<select name="to">${opts([['*u','كل المستخدمين (المشرفون)'],['*e','كل الموظفين'],...live('users').filter(u=>'u'+u.id!==myKey()).map(u=>['u'+u.id,'👤 '+u.name])],'*u')}</select></label>
+  <label>أو موظف بعينه (الرقم الوظيفي أو الاسم — يتجاوز الاختيار أعلاه)<input name="emp"></label><label>نص الإشعار<textarea name="text" rows="4" required></textarea></label>
+  <div class="hint">يصل الإشعار عند مزامنة الجهاز المستلم، ويظهر له جرس وتنبيه إن فعّل تنبيهات الجهاز.</div><div class="bar" style="margin:0"><button class="btn">إرسال</button><button class="btn s" type="button" data-act="notif">رجوع</button></div></form>`)},
+ delNote(el){const n=db.notes.find(x=>x.id===el.dataset.v);if(n&&(n.from===myKey()||isAdmin())){del('notes',n.id);save();ACT.notif()}},
+ reqPersist(){if(window.AndroidApp)return toast('التخزين دائم داخل تطبيق أندرويد ولا يحتاج طلبًا');(navigator.storage&&navigator.storage.persist?navigator.storage.persist():Promise.resolve(false)).then(ok=>{persistedOK=ok;toast(ok?'تم طلب التخزين الدائم':'لم يمنح المتصفح التخزين الدائم (ثبّت التطبيق ثم أعد المحاولة)');updStore()})},
+ chkUpd(){checkUpdate(true)},
+ notifyUpd(){if(!can('notify_send'))return;put('notes',{id:uid(),to:'*u',from:myKey(),fromName:who().name,text:'يتوفر تحديث جديد للنظام. أعد فتح التطبيق أو اضغط "تحديث الآن" عند ظهور الشريط الأخضر. بياناتك محفوظة.',at:new Date().toISOString()});put('notes',{id:uid(),to:'*e',from:myKey(),fromName:who().name,text:'يتوفر تحديث جديد للنظام. أعد فتح التطبيق لتحصل عليه.',at:new Date().toISOString()});save();toast('أُرسل إشعار التحديث')},
+ async applyUpd(){const b=$('#upd button');b.disabled=true;b.textContent='جارٍ الحفظ والتحديث…';
+  try{snapAdd('قبل تحديث التطبيق '+(updPending||''),true)}catch(e){}pDirty=true;await persistNow();
+  if(scriptReady()&&navigator.onLine){await Promise.race([syncNow(false),new Promise(r=>setTimeout(r,7000))])}
+  try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)));const rg=await navigator.serviceWorker.getRegistration();if(rg)await rg.update()}catch(e){}
+  location.reload()},
+ exitApp(){window.__exiting=true;closeModal();try{window.Capacitor&&Capacitor.Plugins.App.exitApp()}catch(e){}try{window.close()}catch(e){}try{history.back()}catch(e){}setTimeout(()=>{if(document.visibilityState==='visible'){window.__exiting=false;gesturePushed=false;pushGuard();toast('تعذّر الإغلاق تلقائيًا — اضغط زر الصفحة الرئيسية في الهاتف')}},1800)},
+ async pingScript(){if(!scriptReady())return toast('أدخل رابط السكربت أولاً');if(!navigator.onLine)return toast('لا يوجد اتصال');try{await callScript({action:'ping'});toast('الاتصال بالسكربت سليم ✓')}catch(e){toast(e.message)}},
+ showGS(){openModal(`<h2>كود Code.gs</h2><p class="hint">انشره في حساب جوجل الرئيسي: Deploy ← New deployment ← Web app ← Execute as: Me ← Who has access: Anyone.</p><textarea id="gstext" rows="16" readonly dir="ltr" style="width:100%;font-family:monospace;font-size:12px">${esc(GS_SRC())}</textarea><div class="bar" style="margin-top:8px"><button class="btn" data-act="copyGS">نسخ الكود</button><button class="btn s" data-act="dlGS">تنزيل Code.gs</button><button class="btn s" data-act="close">إغلاق</button></div>`)},
+ copyGS(){const t=$('#gstext');t.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}if(!ok&&navigator.clipboard)navigator.clipboard.writeText(t.value).catch(()=>{});toast('تم نسخ الكود')},
+ dlGS(){saveFile(new Blob([GS_SRC()],{type:'text/plain'}),'Code.gs')},
+ loginSync(){openModal(`<h2>إعداد المزامنة لهذا الجهاز</h2><form id="lsf" class="fg" style="grid-template-columns:1fr"><label>رابط السكربت (Web App URL)<input id="gu" dir="ltr" value="${esc(loc.scriptUrl)}" placeholder="https://script.google.com/macros/s/.../exec" required></label><label>مفتاح الأمان (إن وُجد)<input id="gk" dir="ltr" value="${esc(loc.key)}" autocomplete="off"></label><div class="hint">بعد الحفظ تُجلب المستخدمون والبيانات من السحابة فتتمكن من تسجيل الدخول بحسابك.</div><div class="bar" style="margin:0"><button class="btn">حفظ ومزامنة</button><button class="btn s" type="button" data-act="close">إلغاء</button></div></form>`)},
+ snapNow(){snapAdd('نسخة يدوية',false);toast('تم حفظ النسخة');panel()},
+ async snapView(el){const s=snaps().find(x=>x.id===el.dataset.v);if(!s)return;const d=await snapData(s.id);if(!d)return toast('تعذر قراءة النسخة');realDb=db;reviewing={id:s.id,label:s.label+' — '+fmtDT(s.at)};db=migrate(JSON.parse(JSON.stringify(d)));dbv++;ui.tab='home';ui.reset=true;render()},
+ exitReview(){if(!reviewing)return;db=realDb;realDb=null;reviewing=null;dbv++;ui.tab='settings';persist();render()},
+ async snapDl(el){const s=snaps().find(x=>x.id===el.dataset.v);if(!s)return;const d=await snapData(s.id);if(!d)return toast('تعذر قراءة النسخة');const b=new Blob([JSON.stringify(d)],{type:'application/json'});saveFile(b,'backup-'+s.at.slice(0,10)+'.json')},
+ snapDel(el){snapRemove(el.dataset.v);panel()},
+ snapRestoreAsk(el){confirmBox('سيُستبدل محتوى النظام الحالي بهذه النسخة (مع حفظ نسخة من الوضع الحالي أولاً)، وستنتقل هذه الحالة إلى السحابة. متابعة؟','snapRestore',el.dataset.v,'استرجاع')},
+ async snapRestore(el){const s=snaps().find(x=>x.id===el.dataset.v);if(!s)return;const d=await snapData(s.id);if(!d)return toast('تعذر قراءة النسخة');restoreDb(d);closeModal();toast('تم الاسترجاع');render()},
+ bkExp(){const b=new Blob([JSON.stringify(db)],{type:'application/json'});saveFile(b,'attendance-backup-'+todayStr()+'.json')}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(el&&ACT[el.dataset.act])ACT[el.dataset.act](el);if(e.target.id==='modal')closeModal()});
+let vqT=null;
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.vchk){ui.vchk=ui.vchk||{};if(t.checked)ui.vchk[t.dataset.vchk]=1;else delete ui.vchk[t.dataset.vchk];const c=$('#vcnt');if(c)c.textContent=Object.keys(ui.vchk).length;return}if(t.name==='type'&&t.closest&&t.closest('#vf,#vef')){const l=document.getElementById('vtc');if(l)l.style.display=t.value==='__other'?'':'none'}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.vadd){e.preventDefault();vAddFromInput()}});
+document.addEventListener('change',e=>{if(e.target.dataset&&e.target.dataset.vadd&&findEmpByInput(e.target.value))vAddFromInput()});
+document.addEventListener('input',e=>{const t=e.target,d=t.dataset;
+ if(d.in==='q'){ui.q=t.value;$('#eb').innerHTML=empRows()}
+ else if(d.vf==='q'){ui.vf.q=t.value;clearTimeout(vqT);vqT=setTimeout(()=>{panel();const x=$('[data-vf=q]');if(x){x.focus();x.setSelectionRange(99,99)}},300)}
+ else if(d.st==='org'||d.st==='phone'){db.settings[d.st]=t.value;db.settings.u=nextU();save();if(d.st==='org')$('#ttl').textContent=orgName()}
+ else if(d.lc==='scriptUrl'||d.lc==='key'){loc[d.lc]=t.value.trim();saveLoc()}});
+document.addEventListener('change',e=>{const t=e.target,d=t.dataset;
+ if(d.ch){ui[d.ch]=t.value;panel()}
+ else if(d.rp){ui.rep[d.rp]=t.value;if(d.rp==='from'&&ui.rep.to<t.value)ui.rep.to=t.value;panel()}
+ else if(d.vf&&d.vf!=='q'){ui.vf[d.vf]=t.value;panel()}
+ else if(d.lc==='theme'){loc.theme=t.value;saveLoc();applyUI()}
+ else if(d.lc==='acc'){loc.acc=t.value;saveLoc();applyUI();panel()}
+ else if(d.lc==='auto'){loc.auto=t.checked;saveLoc()}
+ else if(d.an){saveNote(d.an,t.value)}
+ else if(d.lc==='attOrder'){loc.attOrder=t.value;saveLoc();ui.reset=true;panel()}
+ else if(d.pt){db.settings.portal[d.pt]=t.checked?1:0;db.settings.u=nextU();save()}
+
+
+ else if(d.rk){if(!can('roster_edit'))return;const emp=empById(d.e),k=d.rk;const val=(k==='off'||k==='offType')?t.value:(t.value===''?'':+t.value);const n={...emp,[k]:val};
+  if(n.bf!==''&&n.bt==='')n.bt=n.bf;if(n.bf==='')n.bt='';if(+n.from>+n.to){toast('بداية الدوام يجب ألا تتأخر عن نهايته');panel();return}
+  if(n.bf!==''&&+n.bf>+n.bt){toast('بداية الراحة يجب ألا تتأخر عن نهايتها');panel();return}
+  Object.assign(emp,n);put('emps',emp);logA('تعديل دوام',emp.name);save();panel()}
+ else if(t.id==='logof'&&t.files[0]){const f=t.files[0],img=new Image(),u=URL.createObjectURL(f);img.onload=()=>{const h=Math.min(160,img.height),w=Math.round(img.width*h/img.height),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);db.settings.logo=c.toDataURL('image/png');db.settings.u=nextU();save();panel()};img.src=u}
+ else if((t.id==='bkm'||t.id==='bkr')&&t.files[0]){const mode=t.id;t.files[0].text().then(s=>{try{const j=JSON.parse(s);if(mode==='bkm'){db=mergeDb(db,j);dbv++;save();toast('تم دمج النسخة');render()}else confirmBoxRestore(j)}catch(x){toast('ملف غير صالح')}})}});
+let pendingRestore=null;function confirmBoxRestore(j){pendingRestore=j;confirmBox('استبدال البيانات الحالية بمحتوى الملف؟ (تُحفظ نسخة من الحالي أولاً)','bkRestoreOk',null,'استبدال')}
+ACT.bkRestoreOk=()=>{if(pendingRestore){restoreDb(pendingRestore);pendingRestore=null;closeModal();toast('تم الاسترجاع');render()}};
+document.addEventListener('submit',async e=>{e.preventDefault();const f=e.target,fd=Object.fromEntries(new FormData(f));
+ if(f.id==='lf'){const un=$('#lu').value.trim(),p=$('#lp').value;let ok=false,viaServer=false;
+  /* 1) تحقق محلي سريع (جهاز سبق الدخول عليه) */
+  if(ui.lt==='u'){const u=live('users').find(x=>x.username===un);ok=!!u&&(u.def?p==='admin123':(await sha(u.username+':'+p))===u.pass);if(ok)session={k:'u',id:u.id}}
+  else{const no=normNo(un),emp=live('emps').find(x=>String(normNo(x.no))===no);ok=!!emp&&!!emp.portal&&emp.active!==false&&(emp.pass?(await sha('e:'+no+':'+p))===emp.pass:p===String(emp.no));if(ok)session={k:'e',id:emp.id}}
+  /* 2) جهاز جديد أو بيانات غير مطابقة: تحقق من الخادم (مهلة قصيرة) */
+  if(!ok&&scriptReady()&&navigator.onLine){$('#le').textContent='جارٍ التحقق من الخادم…';
+   try{const j=await callScript({action:'login',type:ui.lt,un,pw:p},{to:15000,retry:0});
+    if(j.token){loc.secure=1;loc.toks=loc.toks||{};loc.toks[j.k+j.id]=j.token;saveLoc();db=mergeDb(db,j.data);dbv++;persist();session={k:j.k,id:j.id};loc.sy=loc.sy||{};loc.sy[j.k+j.id]={since:j.seq,sig:j.sig,pushU:0,fullAt:Date.now()};saveLoc();ok=true;viaServer=true}}
+   catch(e){if(e.code==='BAD'||e.code==='LOCK'){$('#le').textContent=e.message;return}}}
+  if(!ok){$('#le').textContent='بيانات الدخول غير صحيحة أو الحساب غير مفعّل'+(loc.secure&&!navigator.onLine?' (يلزم اتصال بالإنترنت لأول دخول على هذا الجهاز)':'');return}
+  try{sessionStorage.setItem('hr_s',session.k+session.id)}catch(x){}ui.tab='home';beat();render();autoSnap();setTimeout(checkNotes,600);
+  /* 3) تحديث مفتاح الجلسة في الخلفية دون تأخير الدخول */
+  const me={...session},k=me.k+me.id;
+  if(!viaServer&&scriptReady()&&navigator.onLine&&(!loc.toks||!loc.toks[k])){callScript({action:'login',type:ui.lt,un,pw:p},{to:20000,retry:0}).then(j=>{if(j.token){loc.secure=1;loc.toks=loc.toks||{};loc.toks[j.k+j.id]=j.token;loc.sy=loc.sy||{};loc.sy[j.k+j.id]={since:j.seq,sig:j.sig,pushU:0,fullAt:Date.now()};saveLoc();db=mergeDb(db,j.data);dbv++;persist();syncNow(false)}}).catch(e=>{if(e.code==='BAD'&&session&&session.k+session.id===k){ACT.logout();toast('تغيّرت بيانات دخولك. سجّل الدخول من جديد')}})}
+  else syncNow(false)}
+ else if(f.id==='nf'){if(!can('notify_send'))return;let to=fd.to;const q=(fd.emp||'').trim();if(q){const no=normNo(q.split('—')[0]),em=live('emps').find(x=>String(normNo(x.no))===no)||live('emps').find(x=>x.name===q);if(!em)return toast('الموظف غير موجود');to='e'+em.id}
+  put('notes',{id:uid(),to,from:myKey(),fromName:who().name,text:fd.text.trim(),at:new Date().toISOString()});logA('إرسال إشعار',to);save();closeModal();toast('تم إرسال الإشعار');scheduleSync()}
+ else if(f.id==='lsf'){loc.scriptUrl=$('#gu').value.trim();loc.key=$('#gk').value.trim();saveLoc();if(!scriptReady())return toast('الرابط يجب أن يبدأ بـ https://');closeModal();toast('جارٍ الاتصال…');try{const j=await callScript({action:'ping'});loc.secure=j.secure?1:0;saveLoc()}catch(e){toast('تعذر الاتصال: '+e.message);return}if(loc.secure){toast('تم الحفظ. سجّل الدخول بحسابك والجهاز متصل بالإنترنت.');showLogin();return}await syncNow(true);if(!session)showLogin()}
+ else if(f.id==='ef'){if(!can('emps_edit'))return;const id=f.dataset.id,no=normNo(fd.no);
+  if(live('emps').some(x=>String(normNo(x.no))===no&&x.id!==id))return toast('الرقم الوظيفي مستخدم من قبل');
+  const rec={no,name:fd.name.trim(),dept:fd.dept,type:fd.type,from:+fd.from,to:+fd.to,bf:fd.bf===''?'':+fd.bf,bt:fd.bt===''?'':+fd.bt,off:fd.off,offType:fd.offType,active:!!fd.active,portal:!!fd.portal};
+  if(rec.from>rec.to)return toast('بداية الدوام يجب ألا تتأخر عن نهايته');if(rec.bf!==''&&rec.bt==='')rec.bt=rec.bf;if(rec.bf===''){rec.bt=''}if(rec.bf!==''&&rec.bf>rec.bt)return toast('بداية الراحة يجب ألا تتأخر عن نهايتها');
+  if(fd.pass)rec.pass=await sha('e:'+no+':'+fd.pass);else if(id){const o=empById(id);if(o.pass&&normNo(o.no)!==no)rec.pass=''; }
+  const o=id?empById(id):null;put('emps',o?Object.assign(o,rec):{id:uid(),...rec});logA(id?'تعديل موظف':'إضافة موظف',rec.name);save();closeModal();panel()}
+ else if(f.id==='df'){const n=$('#dn').value.trim();if(deptByName(n,false))return toast('القسم موجود');put('depts',{id:uid(),name:n,incentiveOn:0,incentive:0});save();panel()}
+ else if(f.id==='rdf'){const d=dept(f.dataset.id);d.name=fd.name.trim();d.incentiveOn=fd.inc?1:0;d.incentive=+fd.amount||0;put('depts',d);save();closeModal();panel()}
+ else if(f.id==='vef'){if(!can('viol_edit'))return;const v=db.viol.find(x=>x.id===fd.vid);if(!v||v.d)return;const vt=fd.type==='__other'?(fd.typeC||'').trim():fd.type;if(!vt)return toast('اكتب نوع المخالفة');
+  const old=v.type+' | '+v.date+' | '+(v.pen||'');v.date=fd.date;v.time=fd.time;v.type=vt;v.pen=fd.pen;v.note=fd.note;v.eby=who().name;v.eat=new Date().toISOString();v.u=nextU();
+  logA('تعديل مخالفة',(empById(v.emp)||{}).name+' — قبل: '+old+' — بعد: '+vt+' | '+fd.date+' | '+(fd.pen||''));save();closeModal();toast('تم تعديل المخالفة');panel()}
+ else if(f.id==='vf'){if(!can('viol_add'))return;if(!vAddFromInput())return;if(!ui.vsel.length)return toast('أضف موظفًا واحدًا على الأقل');
+  const vtype=fd.type==='__other'?(fd.typeC||'').trim():fd.type;if(!vtype)return toast('اكتب نوع المخالفة');
+  const ids=[...ui.vsel],names=[];ids.forEach(id=>{const emp=db.emps.find(x=>x.id===id);if(!emp)return;names.push(emp.name);put('viol',{id:uid(),emp:emp.id,date:fd.date,time:fd.time,type:vtype,pen:fd.pen,note:fd.note,by:who().id,byName:who().name,at:new Date().toISOString(),...(scriptReady()?{}:{vn:Math.max(0,...db.viol.map(x=>x.vn||0))+1})})});
+  logA('تسجيل مخالفة',names.join('، ')+' — '+vtype);ui.vsel=[];save();closeModal();toast('تم تسجيل '+names.length+' مخالفة');panel()}
+ else if(f.id==='rf'){if(!can('rate_do'))return;const no=normNo(fd.emp.split('—')[0]),emp=empsOf(ui.rd).find(x=>String(normNo(x.no))===no)||empsOf(ui.rd).find(x=>x.name===fd.emp.trim());if(!emp)return toast('الموظف غير موجود في هذا القسم');
+  const law=live('rlaws').find(l=>l.id===fd.law);if(!law)return toast('اختر لائحة');const mo=fd.date.slice(0,7);if(!ropenOn(mo,emp.dept))return toast('التقييم مغلق لهذا الشهر');
+  put('rates',{id:uid(),emp:emp.id,dept:emp.dept,month:mo,date:fd.date,time:fd.time,law:law.id,lawName:law.name,price:+law.price,note:fd.note,by:who().id,byName:who().name,at:new Date().toISOString()});logA('تقييم',emp.name+' — '+law.name);save();closeModal();panel()}
+ else if(f.id==='rlf'){if(!can('rate_laws'))return;put('rlaws',{id:uid(),name:$('#rln').value.trim(),price:+$('#rlp').value||0});save();panel()}
+ else if(f.id==='vtf'){put('vtypes',{id:uid(),name:$('#vtn').value.trim()});save();panel()}
+ else if(f.id==='pwf'){const np=$('#np').value;if(curUser()){const u=curUser();u.pass=await sha(u.username+':'+np);u.def=false;put('users',u)}else{const em=curEmp();em.pass=await sha('e:'+normNo(em.no)+':'+np);put('emps',em)}save();closeModal();toast('تم تغيير كلمة المرور');if(loc.secure&&scriptReady()){const me=session,un2=curUser()?curUser().username:(curEmp()||{}).no;await syncNow(false);try{const j=await callScript({action:'login',type:me.k,un:un2,pw:np});if(j.token){loc.toks=loc.toks||{};loc.toks[j.k+j.id]=j.token;saveLoc()}}catch(e){}}}
+ else if(f.id==='uf'){const id=f.dataset.id,un=fd.username.trim();if(live('users').some(x=>x.username===un&&x.id!==id))return toast('اسم الدخول مستخدم');
+  const dp=[...f.querySelectorAll('[name=dp]:checked')].map(x=>x.value),pm={};f.querySelectorAll('[name=pm]:checked').forEach(x=>pm[x.value]=1);
+  const rec={name:fd.name.trim(),username:un,role:fd.role,perms:pm,depts:dp};const o=id?live('users').find(x=>x.id===id):null;
+  if(fd.pass){rec.pass=await sha(un+':'+fd.pass);rec.def=false}else if(o&&o.username!==un&&!o.def)return toast('أدخل كلمة مرور جديدة عند تغيير اسم الدخول');
+  if(o){if(o.role==='admin'&&rec.role!=='admin'&&live('users').filter(x=>x.role==='admin').length<2)return toast('يجب بقاء مدير واحد على الأقل');put('users',Object.assign(o,rec))}else put('users',{id:uid(),...rec});
+  logA(id?'تعديل مستخدم':'إضافة مستخدم',rec.name);save();closeModal();panel()}});
+document.addEventListener('change',e=>{if(e.target.id==='urole'){const r=e.target.value,p=PRESET[r]||{};document.querySelectorAll('#uf [name=pm]').forEach(c=>c.checked=!!p[c.value])}});
+window.addEventListener('online',()=>{online=true;updChips();setTimeout(()=>checkUpdate(false),1500);setSt('عاد الاتصال — جارٍ المزامنة…');if(!session&&!$('#login').hidden)showLogin();if(scriptReady())setTimeout(()=>syncNow(false),500);else setSt('')});
+window.addEventListener('offline',()=>{online=false;updChips();setSt('غير متصل — يعمل محليًا');if(!session&&!$('#login').hidden)showLogin()});
+let lastSlot='';setInterval(()=>{if(session&&ui.tab==='att'&&!modalOpen()){const k=nowSlot().day+nowSlot().h;if(k!==lastSlot){lastSlot=k;panel()}}},20000);
+setInterval(()=>{if(session){beat();updChips();if(scriptReady()&&loc.auto&&!document.hidden)syncNow(false)}},60000);
+try{const s=sessionStorage.getItem('hr_s');if(s){const k=s[0],id=s.slice(1);if((k==='u'&&live('users').some(u=>u.id===id))||(k==='e'&&live('emps').some(x=>x.id===id)))session={k,id}}}catch(e){}
+
+/* ===== PWA: manifest + service worker + التثبيت ===== */
+function swBody(){const C='hr-pwa-v4';
+ self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.add(new Request(self.registration.scope,{cache:'reload'}))).catch(()=>{}).then(()=>self.skipWaiting()))});
+ self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
+ self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET')return;const u=new URL(r.url);if(u.searchParams.has('_chk'))return;const own=u.origin===self.location.origin,cdn=u.hostname==='cdnjs.cloudflare.com';if(!own&&!cdn)return;
+  const upd=()=>fetch(r).then(res=>{if(res&&(res.ok||res.type==='opaque')){const a=res.clone(),b=res.clone();caches.open(C).then(c=>{c.put(r,a);if(r.mode==='navigate')c.put(self.registration.scope,b)})}return res});
+  if(r.mode==='navigate'){e.respondWith(caches.match(r,{ignoreSearch:true}).then(h=>h||caches.match(self.registration.scope)).then(h=>{const n=upd().catch(()=>null);return h||n.then(x=>x||new Response('غير متصل',{status:503,headers:{'Content-Type':'text/plain;charset=utf-8'}}))}));return}
+  e.respondWith(caches.match(r).then(h=>{const n=upd().catch(()=>h);return h||n}))})}
+const SW_SRC='('+swBody.toString()+')();';
+
+async function updStore(){const b=document.getElementById('stw');if(b)b.hidden=!persistFail;const el=document.getElementById('stinfo');if(!el)return;
+ let est={};try{est=await navigator.storage.estimate()}catch(e){}let per='—';try{per=window.AndroidApp?'دائم داخل التطبيق ✔':((await navigator.storage.persisted())?'مفعّل ✔':'غير مفعّل')}catch(e){}
+ const mb=n=>(n/1048576).toFixed(1),sz=lastSize||JSON.stringify(db).length,hi=est.quota&&est.usage/est.quota>0.8;
+ el.innerHTML=`حجم البيانات الحالي: <b>${mb(sz)} م.ب</b> · المستخدم في المتصفح: <b>${est.usage?mb(est.usage):'—'}</b> من <b>${est.quota?mb(est.quota):'—'} م.ب</b>${hi?' <b style="color:var(--bad)">⚠ قارب الامتلاء</b>':''} · التخزين الدائم: <b>${per}</b> · الحفظ على الجهاز: <b>${persistFail?'فشل ⚠':'سليم ✔'}</b>`}
+/* ===== تحديث التطبيق دون فقد البيانات ===== */
+let updPending=null;
+function showUpd(){const b=$('#upd');if(!b)return;$('#updt').textContent='يتوفر إصدار جديد ('+updPending+'). بياناتك محفوظة ولن تُفقد.';b.hidden=false}
+async function checkUpdate(manual){if(!navigator.onLine||!/^https?:$/.test(location.protocol)){manual&&toast('لا يمكن فحص التحديث الآن (يلزم اتصال واستضافة)');return}
+ try{const r=await fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const APP_VERSION='(\d[^']*)'/);
+  if(m&&m[1]!==APP_VERSION){updPending=m[1];showUpd()}else if(manual)toast('أنت على أحدث إصدار ('+APP_VERSION+')')}catch(e){manual&&toast('تعذر فحص التحديث')}}
+/* ===== زر الرجوع في التطبيق المثبّت ===== */
+let trapOn=false;
+function askExit(){openModal(`<h2>الخروج من التطبيق</h2><p>هل تريد الخروج من نظام الدوام؟ بياناتك محفوظة.</p><div class="bar"><button class="btn d" data-act="exitApp">خروج</button><button class="btn s" data-act="close">البقاء</button></div>`);$('#mbox').dataset.exit='1'}
+let gesturePushed=false,pushN=0;
+function pushGuard(){try{history.pushState({app:1},'');pushN++;return true}catch(e){return false}}
+function initBackTrap(){if(trapOn||!(isStandalone()||window.Capacitor||/[?&]source=pwa/.test(location.search)))return;trapOn=true;
+ try{history.replaceState({root:1},'')}catch(e){return}pushGuard();
+ /* المتصفح يتجاهل مدخلات السجل المضافة دون لمسة مستخدم، فنضيف مدخلًا جديدًا عند أول لمسة بعد كل رجوع */
+ const arm=()=>{if(!gesturePushed&&!window.__exiting){pushGuard();gesturePushed=true}};
+ ['pointerdown','touchstart','keydown','click'].forEach(ev=>document.addEventListener(ev,arm,true));
+ window.addEventListener('popstate',()=>{
+  if(window.__exiting){setTimeout(()=>{try{history.back()}catch(e){}},0);return}
+  gesturePushed=false;pushGuard();
+  if(modalOpen()&&!$('#mbox').dataset.exit){closeModal();return}
+  if($('#mbox')&&$('#mbox').dataset.exit&&modalOpen())return;
+  if(curUser()&&ui.tab!=='home'&&!reviewing){ui.tab='home';ui.reset=true;render();return}
+  askExit()})}
+let deferredPrompt=null,swState='لم يبدأ',swOK=false;
+function mkIcon(sz,mask){const c=document.createElement('canvas');c.width=c.height=sz;const g=c.getContext('2d');g.fillStyle='#1d4e89';g.fillRect(0,0,sz,sz);
+ const n=9,w=sz*(mask?0.5:0.7),bw=w/(n*1.55),gap=bw*0.55,tw=n*bw+(n-1)*gap,x0=(sz-tw)/2,bh=sz*(mask?0.22:0.3),y0=(sz-bh)/2;
+ for(let i=0;i<n;i++){g.fillStyle=(i>=1&&i<=6&&i!==3)?'#ffffff':'rgba(255,255,255,.3)';g.fillRect(x0+i*(bw+gap),y0,bw,bh)}return c.toDataURL('image/png')}
+let pwaDir='';
+function setupManifest(){if(!/^https?:$/.test(location.protocol))return false;
+ const base=location.href.split('#')[0].split('?')[0];pwaDir=base.slice(0,base.lastIndexOf('/')+1);
+ const m={name:'نظام الدوام والمتابعة',short_name:'الدوام',description:'إدارة الموظفين ومتابعة الدوام بالساعة',id:base,start_url:base+'?source=pwa',scope:pwaDir,display:'standalone',orientation:'any',lang:'ar',dir:'rtl',background_color:'#f2f4f8',theme_color:'#1d4e89',
+  icons:[{src:mkIcon(192),sizes:'192x192',type:'image/png',purpose:'any'},{src:mkIcon(512),sizes:'512x512',type:'image/png',purpose:'any'},{src:mkIcon(512,1),sizes:'512x512',type:'image/png',purpose:'maskable'}]};
+ const st=document.querySelector('link[rel=manifest]');
+ fetch('manifest.webmanifest',{method:'HEAD',cache:'no-store'}).then(r=>{if(!r.ok)throw 0}).catch(()=>{if(st)st.remove();const l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}));document.head.appendChild(l);const a=document.querySelector('link[rel=apple-touch-icon]');if(a)a.href=mkIcon(180)});return true}
+async function setupSW(){if(!('serviceWorker' in navigator)){swState='غير مدعوم في هذا المتصفح';return}
+ if(!/^https?:$/.test(location.protocol)){swState='يتطلب فتح الصفحة من https أو localhost (لا يعمل من ملف مباشر)';return}
+ try{const h=await fetch('sw.js',{method:'HEAD',cache:'no-store'});if(!h.ok)throw 0;await navigator.serviceWorker.register('sw.js',{scope:pwaDir});swOK=true;swState='مفعّل (sw.js)';return}catch(e2){}
+ try{await navigator.serviceWorker.register(URL.createObjectURL(new Blob([SW_SRC],{type:'text/javascript'})),{scope:pwaDir});swOK=true;swState='مفعّل (مدمج)';return}catch(e1){swState='المتصفح يمنع تسجيل Service Worker من Blob؛ ضع ملف sw.js بجانب index.html'}}
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+function updInstall(){document.querySelectorAll('.inst').forEach(b=>b.hidden=isStandalone())}
+function installHelp(){const ok=/^https?:$/.test(location.protocol);
+ openModal(`<h2>تثبيت التطبيق</h2><p>الخدمة دون اتصال: <b>${esc(swState)}</b></p>
+ ${ok?'':'<p class="hint" style="color:var(--bad)">الصفحة مفتوحة من ملف مباشر. التثبيت يتطلب نشرها على https (مثل GitHub Pages أو Netlify) أو تشغيلها عبر localhost.</p>'}
+ <p>إن لم يظهر نافذة التثبيت تلقائيًا: في Chrome اختر القائمة ⋮ ثم "تثبيت التطبيق" أو "إضافة إلى الشاشة الرئيسية". في Safari (آيفون) اضغط مشاركة ثم "إضافة إلى الشاشة الرئيسية".</p>
+ <div class="bar">${swOK?'':`<button class="btn s" data-act="dlSW">تنزيل sw.js</button>`}<button class="btn s" data-act="close">إغلاق</button></div>
+ ${swOK?'':'<p class="hint">ملف sw.js يوضع في نفس مجلد index.html على الخادم ثم تُعاد زيارة الصفحة، فيعمل التثبيت والتشغيل دون اتصال.</p>'}`)}
+ACT.install=async()=>{if(deferredPrompt){deferredPrompt.prompt();try{await deferredPrompt.userChoice}catch(e){}deferredPrompt=null;updInstall();return}installHelp()};
+ACT.dlSW=()=>{const b=new Blob([SW_SRC+'\n'],{type:'text/javascript'});saveFile(b,'sw.js')};
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;updInstall()});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;toast('تم تثبيت التطبيق');updInstall()});
+try{if(setupManifest())window.addEventListener('load',()=>setupSW())}catch(e){}
+window.addEventListener('pagehide',()=>{persistNow()});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')persistNow()});
+applyUI();if(session){beat();autoSnap()}render();updInstall();idbBoot();if(loc.auto)syncNow(false);initBackTrap();setTimeout(()=>checkUpdate(false),4000);setInterval(()=>checkUpdate(false),1800000);setTimeout(checkNotes,800);
+</script>
+</body>
+</html>
